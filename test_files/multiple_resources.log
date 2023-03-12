@@ -1,0 +1,124 @@
+null_resource.previous: Refreshing state... [id=2096816983628005446]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+  - destroy
+
+Terraform will perform the following actions:
+
+  # null_resource.previous will be destroyed
+  # (because null_resource.previous is not in configuration)
+  - resource "null_resource" "previous" {
+      - id = "2096816983628005446" -> null
+    }
+
+  # time_sleep.count[0] will be created
+  + resource "time_sleep" "count" {
+      + create_duration = "0s"
+      + id              = (known after apply)
+    }
+
+  # time_sleep.count[1] will be created
+  + resource "time_sleep" "count" {
+      + create_duration = "1s"
+      + id              = (known after apply)
+    }
+
+  # time_sleep.count[2] will be created
+  + resource "time_sleep" "count" {
+      + create_duration = "2s"
+      + id              = (known after apply)
+    }
+
+  # time_sleep.count[3] will be created
+  + resource "time_sleep" "count" {
+      + create_duration = "3s"
+      + id              = (known after apply)
+    }
+
+  # time_sleep.count[4] will be created
+  + resource "time_sleep" "count" {
+      + create_duration = "4s"
+      + id              = (known after apply)
+    }
+
+  # time_sleep.count[5] will be created
+  + resource "time_sleep" "count" {
+      + create_duration = "5s"
+      + id              = (known after apply)
+    }
+
+  # time_sleep.count[6] will be created
+  + resource "time_sleep" "count" {
+      + create_duration = "6s"
+      + id              = (known after apply)
+    }
+
+  # time_sleep.count[7] will be created
+  + resource "time_sleep" "count" {
+      + create_duration = "7s"
+      + id              = (known after apply)
+    }
+
+  # time_sleep.count[8] will be created
+  + resource "time_sleep" "count" {
+      + create_duration = "8s"
+      + id              = (known after apply)
+    }
+
+  # time_sleep.count[9] will be created
+  + resource "time_sleep" "count" {
+      + create_duration = "9s"
+      + id              = (known after apply)
+    }
+
+  # time_sleep.for_each["a"] will be created
+  + resource "time_sleep" "for_each" {
+      + create_duration = "1s"
+      + id              = (known after apply)
+    }
+
+  # time_sleep.for_each["b"] will be created
+  + resource "time_sleep" "for_each" {
+      + create_duration = "2s"
+      + id              = (known after apply)
+    }
+
+  # time_sleep.for_each["c"] will be created
+  + resource "time_sleep" "for_each" {
+      + create_duration = "1s"
+      + id              = (known after apply)
+    }
+
+Plan: 13 to add, 0 to change, 1 to destroy.
+null_resource.previous: Destroying... [id=2096816983628005446]
+null_resource.previous: Destruction complete after 0s
+time_sleep.count[2]: Creating...
+time_sleep.for_each["b"]: Creating...
+time_sleep.count[0]: Creating...
+time_sleep.for_each["a"]: Creating...
+time_sleep.count[4]: Creating...
+time_sleep.for_each["c"]: Creating...
+time_sleep.count[3]: Creating...
+time_sleep.count[9]: Creating...
+time_sleep.count[1]: Creating...
+time_sleep.count[5]: Creating...
+time_sleep.count[0]: Creation complete after 0s [id=2023-03-12T16:44:26Z]
+time_sleep.count[6]: Creating...
+time_sleep.count[1]: Creation complete after 1s [id=2023-03-12T16:44:27Z]
+time_sleep.for_each["a"]: Creation complete after 1s [id=2023-03-12T16:44:27Z]
+time_sleep.for_each["c"]: Creation complete after 1s [id=2023-03-12T16:44:27Z]
+time_sleep.count[8]: Creating...
+time_sleep.count[7]: Creating...
+time_sleep.for_each["b"]: Creation complete after 2s [id=2023-03-12T16:44:28Z]
+time_sleep.count[2]: Creation complete after 2s [id=2023-03-12T16:44:28Z]
+time_sleep.count[3]: Creation complete after 3s [id=2023-03-12T16:44:29Z]
+time_sleep.count[4]: Creation complete after 4s [id=2023-03-12T16:44:30Z]
+time_sleep.count[5]: Creation complete after 5s [id=2023-03-12T16:44:31Z]
+time_sleep.count[6]: Creation complete after 6s [id=2023-03-12T16:44:32Z]
+time_sleep.count[7]: Creation complete after 7s [id=2023-03-12T16:44:34Z]
+time_sleep.count[9]: Creation complete after 9s [id=2023-03-12T16:44:35Z]
+time_sleep.count[8]: Creation complete after 8s [id=2023-03-12T16:44:35Z]
+
+Apply complete! Resources: 13 added, 0 changed, 1 destroyed.
