@@ -1,15 +1,8 @@
 package readers
 
-// A Reader reads a terraform log and calculates profiling metrics
-// for all resources found in the logs
-type Reader interface {
-	ReadFile() []ResourceMetric
-}
+import "bufio"
 
-// Data structure that holds all metrics for one particular resource
-type ResourceMetric struct {
-	Resource  string
-	NumCalls  int64
-	TotalTime float64
-	AvgTime   float64
+// A Reader creates a Scanner to read a log line by line
+type Reader interface {
+	OpenFile() *bufio.Scanner
 }
