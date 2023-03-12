@@ -1,4 +1,4 @@
-package readers
+package reader
 
 import (
 	"bufio"
