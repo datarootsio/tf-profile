@@ -3,7 +3,7 @@ locals {
     a = "1s"
     b = "2s"
     c = "1s"
-    b = "2s"
+    d = "2s"
   }
 }
 
@@ -15,5 +15,4 @@ resource "time_sleep" "count" {
 resource "time_sleep" "for_each" {
   for_each = local.foreach
   create_duration = each.value
-
 }
