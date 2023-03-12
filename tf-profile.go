@@ -7,7 +7,9 @@ import (
 	"os"
 
 	"github.com/QuintenBruynseraede/tf-profile/parser"
-	"github.com/QuintenBruynseraede/tf-profile/readers"
+	print "github.com/QuintenBruynseraede/tf-profile/printer"
+	"github.com/QuintenBruynseraede/tf-profile/reader"
+
 	"github.com/urfave/cli"
 )
 
@@ -38,6 +40,11 @@ func main() {
 				Name:  "tee",
 				Usage: "print to stdout while profiling",
 			},
+			cli.StringFlag{
+				Name:  "sort",
+				Usage: "Sort specification",
+				Value: "tot_time=desc,idx_created=asc",
+			},
 		},
 		Action: func(c *cli.Context) error {
 			fmt.Println("==== tf-profile ====")
@@ -47,6 +54,7 @@ func main() {
 			fmt.Printf("- stats: %v\n", c.Bool("stats"))
 			fmt.Printf("- tee: %v\n", c.Bool("tee"))
 			fmt.Printf("- max_depth: %v\n", c.Int("max_depth"))
+			fmt.Printf("- sort: %v\n", c.String("sort"))
 			fmt.Println("====================")
 
 			ValidateArgs(c)
@@ -67,27 +75,24 @@ func main() {
 // exitcode if incompatible arguments are detected.
 func ValidateArgs(c *cli.Context) {
 	// TODO: check that the file comes last, i.e. tf-profile --tee logs.txt | NOT tf-profile logs.txt --tee
-	// TODO:
+	// TODO: sort spec format
 }
 
 func Run(c *cli.Context) {
 	inputFile := ""
-	var reader *bufio.Scanner
+	var file *bufio.Scanner
 
 	c.NumFlags()
 	if c.NArg() == 1 {
 		inputFile = c.Args().Get(0)
 		fmt.Printf("Input: from file %v\n", inputFile)
-		reader = readers.FileReader{File: inputFile}.Read()
+		file = reader.FileReader{File: inputFile}.Read()
 	} else {
 		fmt.Printf("Input: from stdin\n")
-		reader = readers.StdinReader{}.Read()
+		file = reader.StdinReader{}.Read()
 	}
 
-	tflog := parser.Parse(reader, c.Bool("tee"))
+	tflog := parser.Parse(file, c.Bool("tee"))
 
-	fmt.Printf("Output of parse phase: \n")
-	for k, v := range tflog {
-		fmt.Printf("Resource %v, Metric: %v\n", k, *v)
-	}
+	print.Table(&tflog, c.String("sort"))
 }
