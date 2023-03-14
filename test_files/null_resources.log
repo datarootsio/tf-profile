@@ -1,0 +1,39 @@
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # null_resource.next will be created
+  + resource "null_resource" "next" {
+      + id = (known after apply)
+    }
+
+  # null_resource.previous will be created
+  + resource "null_resource" "previous" {
+      + id = (known after apply)
+    }
+
+  # time_sleep.wait_30_seconds will be created
+  + resource "time_sleep" "wait_30_seconds" {
+      + create_duration = "75s"
+      + id              = (known after apply)
+    }
+
+Plan: 3 to add, 0 to change, 0 to destroy.
+null_resource.previous: Creating...
+null_resource.previous: Creation complete after 0s [id=5144705655797302376]
+time_sleep.wait_30_seconds: Creating...
+time_sleep.wait_30_seconds: Still creating... [10s elapsed]
+time_sleep.wait_30_seconds: Still creating... [20s elapsed]
+time_sleep.wait_30_seconds: Still creating... [30s elapsed]
+time_sleep.wait_30_seconds: Still creating... [40s elapsed]
+time_sleep.wait_30_seconds: Still creating... [50s elapsed]
+time_sleep.wait_30_seconds: Still creating... [1m0s elapsed]
+time_sleep.wait_30_seconds: Still creating... [1m10s elapsed]
+time_sleep.wait_30_seconds: Creation complete after 1m15s [id=2023-03-11T20:04:18Z]
+null_resource.next: Creating...
+null_resource.next: Creation complete after 0s [id=1766626192520212902]
+
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
