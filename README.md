@@ -8,7 +8,7 @@ Basic usage
 ```
 terraform plan | tf-profile 
 terraform plan -no-color > log.txt && tf-profile log.txt  # Read from file 
-terraform plan | tf-profile -stats  # Print global stats only
+terraform plan | tf-profile --stats  # Print global stats only
 ```
 
 tf-profile can handle different types of logs 
@@ -21,6 +21,6 @@ TF_LOG=TRACE && terraform apply -auto-approve | tf-profile  # Use detailed trace
 Limit which resources are included
 
 ```
-terraform plan | tf-profile -target=module.mymodule  # Only include logs for certain resources
-terraform plan | tf-profile -depth=1  # Only profile the root module, aggregating metrics from submodules
+terraform plan | tf-profile --target=module.mymodule  # Only include logs for certain resources
+terraform plan | tf-profile --depth=1  # Only profile the root module, aggregating metrics from submodules
 ```
