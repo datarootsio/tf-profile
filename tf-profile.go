@@ -74,8 +74,18 @@ func main() {
 // will print an error message and exit with a non-zero
 // exitcode if incompatible arguments are detected.
 func ValidateArgs(c *cli.Context) {
+	if c.Int("max_depth") != -1 {
+		log.Fatal("--max_depth is not implemented yet!")
+	}
+	if c.Bool("stats") {
+		log.Fatal("--stats is not implemented yet!")
+	}
+	if c.NArg() > 1 {
+		log.Fatalf("Only one input file is expected, got %v\n", c.Args())
+	}
+
 	// TODO: check that the file comes last, i.e. tf-profile --tee logs.txt | NOT tf-profile logs.txt --tee
-	// TODO: sort spec format
+	// TODO: check spec format
 }
 
 func Run(c *cli.Context) {
