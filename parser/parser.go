@@ -21,7 +21,7 @@ type ResourceMetric struct {
 // Parsing a log results in a map of resource names and their metrics
 type ParsedLog = map[string]*ResourceMetric
 
-func Parse(file *bufio.Scanner, tee bool) ParsedLog {
+func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 	num_created := 0
 
 	tflog := make(ParsedLog)
@@ -35,15 +35,16 @@ func Parse(file *bufio.Scanner, tee bool) ParsedLog {
 		if match {
 			resource, time, err := ParseResourceCreated(line)
 			if err != nil {
-				log.Fatalln(`This line was detected to contain resource creation, 
-				            but tf-profile is unable to parse it!`)
+				msg := `This line was detected to contain resource creation, 
+				            but tf-profile is unable to parse it!`
+				return nil, errors.New(msg)
 			}
 			InsertResourceMetric(&tflog, resource, time, num_created)
 			num_created += 1
 		}
 	}
 
-	return tflog
+	return tflog, nil
 }
 
 // Insert a new ResourceMetric into the log

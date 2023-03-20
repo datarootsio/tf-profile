@@ -2,7 +2,6 @@ package reader
 
 import (
 	"bufio"
-	"log"
 	"os"
 )
 
@@ -10,11 +9,11 @@ type FileReader struct {
 	File string
 }
 
-func (r FileReader) Read() *bufio.Scanner {
+func (r FileReader) Read() (*bufio.Scanner, error) {
 	file, err := os.Open(r.File)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
-	return bufio.NewScanner(file)
+	return bufio.NewScanner(file), nil
 }
