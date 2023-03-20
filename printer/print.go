@@ -12,7 +12,7 @@ import (
 
 // Print a parsed log in tabular format, optionally sorting by certain columns
 // sort_spec is a comma-separated list of "column_name=(asc|desc)", e.g. "n=asc,tot_time=desc"
-func Table(log *parser.ParsedLog, sort_spec string) {
+func Table(log *parser.ParsedLog, sort_spec string) error {
 	headerFmt := color.New(color.FgHiBlue, color.Underline).SprintfFunc()
 	columnFmt := color.New(color.FgBlue).SprintfFunc()
 
@@ -37,6 +37,8 @@ func Table(log *parser.ParsedLog, sort_spec string) {
 
 	fmt.Println() // Create space above the table
 	tbl.Print()
+
+	return nil
 }
 
 type SortSpecItem struct {

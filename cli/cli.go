@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
-	"log"
 
 	"github.com/QuintenBruynseraede/tf-profile/parser"
 	print "github.com/QuintenBruynseraede/tf-profile/printer"
@@ -48,12 +47,12 @@ func Create() *cli.App {
 		Action: func(c *cli.Context) error {
 			args, err := parseArgs(c)
 			if err != nil {
-				log.Fatalf("Error during argument parsing: \n%v\n", err)
+				return errors.New("Error during argument parsing")
 			}
 
 			err2 := validateArgs(args)
 			if err2 != nil {
-				log.Fatalf("Error during argument validation: \n%v\n", err)
+				return errors.New("Error during argument validation")
 			}
 
 			if args.debug {
@@ -62,7 +61,7 @@ func Create() *cli.App {
 
 			err3 := run(args)
 			if err3 != nil {
-				log.Fatalf("Error during tf-profile run:\n%v\n", err)
+				return errors.New("Error during tf-profile run")
 			}
 
 			return nil
@@ -120,10 +119,10 @@ func printArgs(args *InputArgs) {
 // exitcode if incompatible arguments are detected.
 func validateArgs(args *InputArgs) error {
 	if args.max_depth != -1 {
-		log.Fatal("--max_depth is not implemented yet!")
+		return errors.New("--max_depth is not implemented yet!")
 	}
 	if args.stats {
-		log.Fatal("--stats is not implemented yet!")
+		return errors.New("--stats is not implemented yet!")
 	}
 
 	// TODO: check that the file comes last, i.e. tf-profile --tee logs.txt | NOT tf-profile logs.txt --tee
@@ -133,17 +132,34 @@ func validateArgs(args *InputArgs) error {
 
 func run(args *InputArgs) error {
 	var file *bufio.Scanner
+	var err1 error
 
 	if args.input_file != "" {
-		fmt.Printf("Input: from file %v\n", args.input_file)
-		file = reader.FileReader{File: args.input_file}.Read()
+		if args.debug {
+			fmt.Printf("Input: from file %v\n", args.input_file)
+		}
+		file, err1 = reader.FileReader{File: args.input_file}.Read()
 	} else {
-		fmt.Printf("Input: from stdin\n")
-		file = reader.StdinReader{}.Read()
+		if args.debug {
+			fmt.Printf("Input: from stdin\n")
+
+		}
+		file, err1 = reader.StdinReader{}.Read()
 	}
 
-	tflog := parser.Parse(file, args.tee)
+	if err1 != nil {
+		return err1
+	}
 
-	print.Table(&tflog, args.sort)
+	tflog, err2 := parser.Parse(file, args.tee)
+	if err2 != nil {
+		return err2
+	}
+
+	err3 := print.Table(&tflog, args.sort)
+	if err3 != nil {
+		return err3
+	}
+
 	return nil
 }

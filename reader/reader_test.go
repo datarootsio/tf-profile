@@ -8,7 +8,7 @@ import (
 
 func TestFileReader(t *testing.T) {
 	inputfile := "../test_files/test_file.txt"
-	file := FileReader{File: inputfile}.Read()
+	file, _ := FileReader{File: inputfile}.Read()
 
 	file.Scan()
 	assert.Equal(t, file.Text(), "Used to test reader module")
@@ -18,4 +18,10 @@ func TestFileReader(t *testing.T) {
 	assert.Equal(t, file.Text(), "Another line2")
 	assert.Equal(t, false, file.Scan())
 	assert.Equal(t, file.Text(), "")
+}
+
+func TestNonExistentFile(t *testing.T) {
+	file, err := FileReader{File: "does-not-exist"}.Read()
+	assert.Nil(t, file)
+	assert.NotNil(t, err)
 }

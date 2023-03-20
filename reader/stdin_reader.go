@@ -7,6 +7,6 @@ import (
 
 type StdinReader struct{}
 
-func (r StdinReader) Read() *bufio.Scanner {
-	return bufio.NewScanner(os.Stdin)
+func (r StdinReader) Read() (*bufio.Scanner, error) {
+	return bufio.NewScanner(os.Stdin), nil
 }

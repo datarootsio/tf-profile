@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestBasicParseResourceCreated(t *testing.T) {
@@ -35,7 +37,9 @@ func TestFullParse(t *testing.T) {
 	file, _ := os.Open("../test_files/multiple_resources.log")
 	s := bufio.NewScanner(file)
 
-	log := Parse(s, false)
+	log, err := Parse(s, false)
+	assert.Nil(t, err)
+
 	metrics := log["time_sleep.count[9]"]
 	expected := ResourceMetric{
 		NumCalls:      1,

@@ -27,7 +27,8 @@ func TestParseSortSpec(t *testing.T) {
 func TestSort(t *testing.T) {
 	file, _ := os.Open("../test_files/multiple_resources.log")
 	s := bufio.NewScanner(file)
-	log := parser.Parse(s, false)
+	log, err := parser.Parse(s, false)
+	assert.Nil(t, err)
 
 	sorted := Sort(&log, "tot_time=asc,idx_created=asc")
 	expected := []string{
