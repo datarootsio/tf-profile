@@ -21,7 +21,7 @@ jobs:
         
     - name: Check formatting with go fmt
       run: |
-        output=$(go fmt -d ./...)
+        output=$(gofmt -l -w -d ./pkg/tf-profile)
         if [ -n "$output" ]; then
           echo "Code needs to be reformatted:"
           echo "$output"
@@ -46,7 +46,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        github-script: |
+        script: |
           const body = 'All checks passed!'
           github.issues.createComment({
             issue_number: context.issue.number,
