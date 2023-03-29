@@ -17,10 +17,10 @@ func TestBasicParseResourceCreated(t *testing.T) {
 	}
 
 	line2 := "x[\"a\"]: Creation complete after 5s [id=xyz]"
-	name2, time2, err2 := ParseResourceCreated(line2)
+	name, time, err = ParseResourceCreated(line2)
 
-	if err2 != nil || name2 != "x[\"a\"]" || time2 != 5000 {
-		t.Fatalf("%v - %v - %v\n", name2, time2, err2)
+	if err != nil || name != "x[\"a\"]" || time != 5000 {
+		t.Fatalf("%v - %v - %v\n", name, time, err)
 	}
 }
 
@@ -49,7 +49,7 @@ func TestFullParse(t *testing.T) {
 		CreationIndex: -1, // Not implemented
 		CreatedIndex:  12,
 	}
-	if *metrics != expected {
+	if metrics != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, metrics)
 	}
 
@@ -60,7 +60,7 @@ func TestFullParse(t *testing.T) {
 		CreationIndex: -1, // Not implemented
 		CreatedIndex:  1,
 	}
-	if *metrics2 != expected2 {
+	if metrics2 != expected2 {
 		t.Fatalf("Expected %v, got %v\n", expected2, metrics2)
 	}
 }

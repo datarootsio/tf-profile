@@ -29,7 +29,7 @@ func TestSort(t *testing.T) {
 	log, err := Parse(s, false)
 	assert.Nil(t, err)
 
-	sorted := Sort(&log, "tot_time=asc,idx_created=asc")
+	sorted := Sort(log, "tot_time=asc,idx_created=asc")
 	expected := []string{
 		"time_sleep.count[0]",
 		"time_sleep.for_each[\"a\"]",
@@ -48,9 +48,9 @@ func TestSort(t *testing.T) {
 	}
 	assert.Equal(t, sorted, expected)
 
-	sorted2 := Sort(&log, "tot_time=desc,idx_created=desc")
+	sorted2 := Sort(log, "tot_time=desc,idx_created=desc")
 	for i := 0; i < len(expected); i++ {
 		assert.Equal(t, expected[i], sorted2[len(expected)-i-1])
 	}
-	Table(&log, "tot_time=asc,idx_created=asc")
+	Table(log, "tot_time=asc,idx_created=asc")
 }

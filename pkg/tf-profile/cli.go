@@ -2,14 +2,40 @@ package tfprofile
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 
 	"github.com/urfave/cli"
 )
 
-func Create() *cli.App {
-	return &cli.App{
+type (
+	ArgumentParseError      struct{ Msg string }
+	ArgumentValidationError struct{ Msg string }
+	RunError                struct{ Msg string }
+	InputArgs               struct {
+		debug      bool
+		log_level  string
+		stats      bool
+		tee        bool
+		max_depth  int
+		sort       string
+		input_file string
+	}
+)
+
+func (e *ArgumentParseError) Error() string {
+	return e.Msg
+}
+
+func (e *ArgumentValidationError) Error() string {
+	return e.Msg
+}
+
+func (e *RunError) Error() string {
+	return e.Msg
+}
+
+func Create() cli.App {
+	return cli.App{
 		Name:    "tf-profile",
 		Usage:   "CLI tool to profile Terraform runs, written in Go",
 		Author:  "Quinten Bruynseraede",
@@ -43,21 +69,21 @@ func Create() *cli.App {
 		Action: func(c *cli.Context) error {
 			args, err := parseArgs(c)
 			if err != nil {
-				return errors.New("Error during argument parsing")
+				return err
 			}
 
-			err2 := validateArgs(args)
-			if err2 != nil {
-				return errors.New("Error during argument validation")
+			err = validateArgs(args)
+			if err != nil {
+				return err
 			}
 
 			if args.debug {
 				printArgs(args)
 			}
 
-			err3 := run(args)
-			if err3 != nil {
-				return errors.New("Error during tf-profile run")
+			err = run(args)
+			if err != nil {
+				return err
 			}
 
 			return nil
@@ -65,17 +91,7 @@ func Create() *cli.App {
 	}
 }
 
-type InputArgs struct {
-	debug      bool
-	log_level  string
-	stats      bool
-	tee        bool
-	max_depth  int
-	sort       string
-	input_file string
-}
-
-func parseArgs(c *cli.Context) (*InputArgs, error) {
+func parseArgs(c *cli.Context) (InputArgs, error) {
 	var input_file string
 	if c.NArg() == 1 {
 		input_file = c.Args().Get(0)
@@ -85,10 +101,10 @@ func parseArgs(c *cli.Context) (*InputArgs, error) {
 
 	if c.NArg() > 1 {
 		msg := fmt.Sprintf("Expected at most 1 argument, received %v: %v\n", c.NArg(), c.Args())
-		return nil, errors.New(msg)
+		return InputArgs{}, &ArgumentParseError{msg}
 	}
 
-	return &InputArgs{
+	return InputArgs{
 		debug:      c.Bool("debug"),
 		log_level:  c.String("log_level"),
 		stats:      c.Bool("stats"),
@@ -99,7 +115,7 @@ func parseArgs(c *cli.Context) (*InputArgs, error) {
 	}, nil
 }
 
-func printArgs(args *InputArgs) {
+func printArgs(args InputArgs) {
 	fmt.Println("==== tf-profile ====")
 	fmt.Printf("Running with config:\n")
 	fmt.Printf("- log_level: %v\n", args.log_level)
@@ -113,12 +129,12 @@ func printArgs(args *InputArgs) {
 // Validate all arguments passed into the CLI tool
 // will print an error message and exit with a non-zero
 // exitcode if incompatible arguments are detected.
-func validateArgs(args *InputArgs) error {
+func validateArgs(args InputArgs) error {
 	if args.max_depth != -1 {
-		return errors.New("--max_depth is not implemented yet!")
+		return &ArgumentParseError{"--max_depth is not implemented yet!"}
 	}
 	if args.stats {
-		return errors.New("--stats is not implemented yet!")
+		return &ArgumentParseError{"--stats is not implemented yet!"}
 	}
 
 	// TODO: check that the file comes last, i.e. tf-profile --tee logs.txt | NOT tf-profile logs.txt --tee
@@ -126,35 +142,35 @@ func validateArgs(args *InputArgs) error {
 	return nil
 }
 
-func run(args *InputArgs) error {
+func run(args InputArgs) error {
 	var file *bufio.Scanner
-	var err1 error
+	var err error
 
 	if args.input_file != "" {
 		if args.debug {
 			fmt.Printf("Input: from file %v\n", args.input_file)
 		}
-		file, err1 = FileReader{File: args.input_file}.Read()
+		file, err = FileReader{File: args.input_file}.Read()
 	} else {
 		if args.debug {
 			fmt.Printf("Input: from stdin\n")
 
 		}
-		file, err1 = StdinReader{}.Read()
+		file, err = StdinReader{}.Read()
 	}
 
-	if err1 != nil {
-		return err1
+	if err != nil {
+		return err
 	}
 
-	tflog, err2 := Parse(file, args.tee)
-	if err2 != nil {
-		return err2
+	tflog, err := Parse(file, args.tee)
+	if err != nil {
+		return err
 	}
 
-	err3 := Table(&tflog, args.sort)
-	if err3 != nil {
-		return err3
+	err = Table(tflog, args.sort)
+	if err != nil {
+		return err
 	}
 
 	return nil
