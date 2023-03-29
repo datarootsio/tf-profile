@@ -1,0 +1,56 @@
+name: Go Linting, Verification, and Testing
+
+on:
+  push:
+    branches-ignore:
+      - 'main'
+  pull_request:
+
+jobs:
+  lint-verify-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+        
+    - name: Check formatting with go fmt
+      run: |
+        output=$(go fmt -d ./...)
+        if [ -n "$output" ]; then
+          echo "Code needs to be reformatted:"
+          echo "$output"
+          exit 1
+        fi
+      
+    - name: Verify code with go vet
+      run: |
+        output=$(go vet ./...)
+        if [ -n "$output" ]; then
+          echo "Code has issues that need to be fixed:"
+          echo "$output"
+          exit 1
+        fi
+      
+    - name: Run tests
+      run: go test -v ./...
+      
+    - name: Add comment to PR
+      if: always()
+      uses: actions/github-script@v4
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        github-script: |
+          const body = 'All checks passed!'
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: body
+          })
