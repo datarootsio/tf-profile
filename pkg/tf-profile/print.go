@@ -2,6 +2,7 @@ package tfprofile
 
 import (
 	"fmt"
+	"reflect"
 	"sort"
 	"strings"
 
@@ -103,10 +104,12 @@ func Sort(log ParsedLog, sort_spec string) []string {
 		proxy_log = append(proxy_log, ProxyRecord{k, proxy_item_values})
 	}
 
+	N := reflect.TypeOf(ProxyRecord{}).NumField()
+
 	// Sort the proxy log
 	sort.Slice(proxy_log, func(i, j int) bool {
 		// Custom sort function: sort by all values in 'items'
-		for item := 0; item < 4; item++ {
+		for item := 0; item < N; item++ {
 			if proxy_log[i].items[item] != proxy_log[j].items[item] {
 				return proxy_log[i].items[item] < proxy_log[j].items[item]
 			}
