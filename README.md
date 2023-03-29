@@ -24,3 +24,5 @@ Limit which resources are included
 terraform plan | tf-profile --target=module.mymodule  # Only include logs for certain resources
 terraform plan | tf-profile --max_depth=1  # Only profile the root module, aggregating metrics from submodules
 ```
+
+
