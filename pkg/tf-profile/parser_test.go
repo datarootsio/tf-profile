@@ -49,7 +49,7 @@ func TestFullParse(t *testing.T) {
 		CreationIndex: -1, // Not implemented
 		CreatedIndex:  12,
 	}
-	if *metrics != expected {
+	if metrics != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, metrics)
 	}
 
@@ -60,7 +60,7 @@ func TestFullParse(t *testing.T) {
 		CreationIndex: -1, // Not implemented
 		CreatedIndex:  1,
 	}
-	if *metrics2 != expected2 {
+	if metrics2 != expected2 {
 		t.Fatalf("Expected %v, got %v\n", expected2, metrics2)
 	}
 }

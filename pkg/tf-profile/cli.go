@@ -8,8 +8,8 @@ import (
 	"github.com/urfave/cli"
 )
 
-func Create() *cli.App {
-	return &cli.App{
+func Create() cli.App {
+	return cli.App{
 		Name:    "tf-profile",
 		Usage:   "CLI tool to profile Terraform runs, written in Go",
 		Author:  "Quinten Bruynseraede",
@@ -75,7 +75,7 @@ type InputArgs struct {
 	input_file string
 }
 
-func parseArgs(c *cli.Context) (*InputArgs, error) {
+func parseArgs(c *cli.Context) (InputArgs, error) {
 	var input_file string
 	if c.NArg() == 1 {
 		input_file = c.Args().Get(0)
@@ -88,7 +88,7 @@ func parseArgs(c *cli.Context) (*InputArgs, error) {
 		return nil, errors.New(msg)
 	}
 
-	return &InputArgs{
+	return InputArgs{
 		debug:      c.Bool("debug"),
 		log_level:  c.String("log_level"),
 		stats:      c.Bool("stats"),
@@ -99,7 +99,7 @@ func parseArgs(c *cli.Context) (*InputArgs, error) {
 	}, nil
 }
 
-func printArgs(args *InputArgs) {
+func printArgs(args InputArgs) {
 	fmt.Println("==== tf-profile ====")
 	fmt.Printf("Running with config:\n")
 	fmt.Printf("- log_level: %v\n", args.log_level)
@@ -113,7 +113,7 @@ func printArgs(args *InputArgs) {
 // Validate all arguments passed into the CLI tool
 // will print an error message and exit with a non-zero
 // exitcode if incompatible arguments are detected.
-func validateArgs(args *InputArgs) error {
+func validateArgs(args InputArgs) error {
 	if args.max_depth != -1 {
 		return errors.New("--max_depth is not implemented yet!")
 	}
@@ -126,7 +126,7 @@ func validateArgs(args *InputArgs) error {
 	return nil
 }
 
-func run(args *InputArgs) error {
+func run(args InputArgs) error {
 	var file *bufio.Scanner
 	var err error
 
@@ -152,7 +152,7 @@ func run(args *InputArgs) error {
 		return err
 	}
 
-	err = Table(&tflog, args.sort)
+	err = Table(tflog, args.sort)
 	if err != nil {
 		return err
 	}

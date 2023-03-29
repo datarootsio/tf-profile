@@ -19,7 +19,7 @@ type ResourceMetric struct {
 }
 
 // Parsing a log results in a map of resource names and their metrics
-type ParsedLog = map[string]*ResourceMetric
+type ParsedLog = map[string]ResourceMetric
 
 func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 	num_created := 0
@@ -39,7 +39,7 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 				            but tf-profile is unable to parse it!`
 				return nil, errors.New(msg)
 			}
-			InsertResourceMetric(&tflog, resource, time, num_created)
+			InsertResourceMetric(tflog, resource, time, num_created)
 			num_created += 1
 		}
 	}
@@ -48,16 +48,16 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 }
 
 // Insert a new ResourceMetric into the log
-func InsertResourceMetric(log *ParsedLog, resource string, duration float64, idx int) {
-	metric, exists := (*log)[resource]
+func InsertResourceMetric(log ParsedLog, resource string, duration float64, idx int) {
+	metric, exists := (log)[resource]
 
 	// We have seen this resource before
 	if exists {
-		(*metric).NumCalls += 1
-		(*metric).TotalTime += 1
+		(metric).NumCalls += 1
+		(metric).TotalTime += 1
 	} else {
 		// Add new resource with some default values
-		(*log)[resource] = &ResourceMetric{
+		(log)[resource] = ResourceMetric{
 			NumCalls:      1,
 			TotalTime:     duration,
 			CreationIndex: -1, // Not implemented

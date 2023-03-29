@@ -35,7 +35,7 @@ func TestIncorrectArguments(t *testing.T) {
 }
 
 func TestBasicRun(t *testing.T) {
-	args := &InputArgs{
+	args := InputArgs{
 		debug:      true,
 		log_level:  "INFO",
 		stats:      false,
@@ -51,7 +51,7 @@ func TestBasicRun(t *testing.T) {
 }
 
 func TestFileDoesntExist(t *testing.T) {
-	args := &InputArgs{
+	args := InputArgs{
 		debug:      true,
 		log_level:  "INFO",
 		stats:      false,

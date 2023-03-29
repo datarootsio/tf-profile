@@ -11,7 +11,7 @@ import (
 
 // Print a parsed log in tabular format, optionally sorting by certain columns
 // sort_spec is a comma-separated list of "column_name=(asc|desc)", e.g. "n=asc,tot_time=desc"
-func Table(log *ParsedLog, sort_spec string) error {
+func Table(log ParsedLog, sort_spec string) error {
 	headerFmt := color.New(color.FgHiBlue, color.Underline).SprintfFunc()
 	columnFmt := color.New(color.FgBlue).SprintfFunc()
 
@@ -20,14 +20,14 @@ func Table(log *ParsedLog, sort_spec string) error {
 
 	// Sort the resources according to the sort_spec and create rows
 	for _, r := range Sort(log, sort_spec) {
-		for resource, metric := range *log {
+		for resource, metric := range log {
 			if r == resource {
 				tbl.AddRow(
 					resource,
-					(*&metric.NumCalls),
-					(*&metric.TotalTime),
-					(*&metric.CreationIndex),
-					(*&metric.CreatedIndex),
+					(metric.NumCalls),
+					(metric.TotalTime),
+					(metric.CreationIndex),
+					(metric.CreatedIndex),
 				)
 				break
 			}
@@ -64,7 +64,7 @@ type ProxyRecord struct {
 }
 
 // Sort a parsed log according to the provided sort_spec
-func Sort(log *ParsedLog, sort_spec string) []string {
+func Sort(log ParsedLog, sort_spec string) []string {
 	// Because we can not construct a custom sort function upfront,
 	// we "rebuild" the log such that the "sorting" metrics come first,
 	// and values for columns that are to be sorted descendingly are
@@ -73,7 +73,7 @@ func Sort(log *ParsedLog, sort_spec string) []string {
 
 	sort_spec_p := parseSortSpec(sort_spec)
 
-	for k, v := range *log {
+	for k, v := range log {
 		proxy_item_values := []float64{0, 0, 0, 0}
 
 		// With values in the order of the sort_spec, create a proxy record
