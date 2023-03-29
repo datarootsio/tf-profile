@@ -59,7 +59,7 @@ func Table(log ParsedLog, sort_spec string) error {
 func parseSortSpec(in string) []SortSpecItem {
 	tokens := strings.Split(in, ",")
 
-	result := make([]SortSpecItem, 0)
+	result := []SortSpecItem{}
 	for _, spec := range tokens {
 		split := strings.Split(spec, "=")
 		result = append(result, SortSpecItem{split[0], split[1]})
@@ -73,7 +73,7 @@ func Sort(log ParsedLog, sort_spec string) []string {
 	// we "rebuild" the log such that the "sorting" metrics come first,
 	// and values for columns that are to be sorted descendingly are
 	// inverted. This way, the sorting function is always the same
-	proxy_log := make([]ProxyRecord, 0)
+	proxy_log := []ProxyRecord{}
 
 	sort_spec_p := parseSortSpec(sort_spec)
 
@@ -115,7 +115,7 @@ func Sort(log ParsedLog, sort_spec string) []string {
 	})
 
 	// Finally, extract the resource names out of the sorted slice
-	result := make([]string, 0)
+	result := []string{}
 	for _, v := range proxy_log {
 		result = append(result, v.resource)
 	}

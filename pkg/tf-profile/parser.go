@@ -36,7 +36,7 @@ func (e *LineParseError) Error() string {
 func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 	num_created := 0
 
-	tflog := make(ParsedLog)
+	tflog := ParsedLog{}
 	for file.Scan() {
 		line := file.Text()
 		if tee {
