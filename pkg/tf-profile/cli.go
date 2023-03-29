@@ -1,13 +1,9 @@
-package cli
+package tfprofile
 
 import (
 	"bufio"
 	"errors"
 	"fmt"
-
-	"github.com/QuintenBruynseraede/tf-profile/parser"
-	print "github.com/QuintenBruynseraede/tf-profile/printer"
-	"github.com/QuintenBruynseraede/tf-profile/reader"
 
 	"github.com/urfave/cli"
 )
@@ -138,25 +134,25 @@ func run(args *InputArgs) error {
 		if args.debug {
 			fmt.Printf("Input: from file %v\n", args.input_file)
 		}
-		file, err1 = reader.FileReader{File: args.input_file}.Read()
+		file, err1 = FileReader{File: args.input_file}.Read()
 	} else {
 		if args.debug {
 			fmt.Printf("Input: from stdin\n")
 
 		}
-		file, err1 = reader.StdinReader{}.Read()
+		file, err1 = StdinReader{}.Read()
 	}
 
 	if err1 != nil {
 		return err1
 	}
 
-	tflog, err2 := parser.Parse(file, args.tee)
+	tflog, err2 := Parse(file, args.tee)
 	if err2 != nil {
 		return err2
 	}
 
-	err3 := print.Table(&tflog, args.sort)
+	err3 := Table(&tflog, args.sort)
 	if err3 != nil {
 		return err3
 	}

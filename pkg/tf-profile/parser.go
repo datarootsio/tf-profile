@@ -1,4 +1,4 @@
-package parser
+package tfprofile
 
 import (
 	"bufio"

@@ -1,11 +1,10 @@
-package printer
+package tfprofile
 
 import (
 	"bufio"
 	"os"
 	"testing"
 
-	"github.com/QuintenBruynseraede/tf-profile/parser"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -25,9 +24,9 @@ func TestParseSortSpec(t *testing.T) {
 }
 
 func TestSort(t *testing.T) {
-	file, _ := os.Open("../test_files/multiple_resources.log")
+	file, _ := os.Open("../../test/multiple_resources.log")
 	s := bufio.NewScanner(file)
-	log, err := parser.Parse(s, false)
+	log, err := Parse(s, false)
 	assert.Nil(t, err)
 
 	sorted := Sort(&log, "tot_time=asc,idx_created=asc")
