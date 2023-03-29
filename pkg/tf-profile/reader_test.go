@@ -7,7 +7,7 @@ import (
 )
 
 func TestFileReader(t *testing.T) {
-	inputfile := "../../test_files/test_file.txt"
+	inputfile := "../../test/test_file.txt"
 	file, _ := FileReader{File: inputfile}.Read()
 
 	file.Scan()

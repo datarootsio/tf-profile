@@ -34,7 +34,7 @@ func TestParseResourceCreatedMinutes(t *testing.T) {
 }
 
 func TestFullParse(t *testing.T) {
-	file, _ := os.Open("../../test_files/multiple_resources.log")
+	file, _ := os.Open("../../test/multiple_resources.log")
 	s := bufio.NewScanner(file)
 
 	log, err := Parse(s, false)

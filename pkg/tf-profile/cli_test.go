@@ -18,7 +18,7 @@ func TestCorrectArguments(t *testing.T) {
 	app := Create()
 	assert.Nil(t, app.Run([]string{"../../tf-profile", "--tee"}))
 	assert.Nil(t, app.Run([]string{"../../tf-profile"}))
-	assert.Nil(t, app.Run([]string{"../../tf-profile", "../../test_files/multiple_resources.log"}))
+	assert.Nil(t, app.Run([]string{"../../tf-profile", "../../test/multiple_resources.log"}))
 }
 
 func TestIncorrectArguments(t *testing.T) {
