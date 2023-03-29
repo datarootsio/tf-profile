@@ -12,10 +12,10 @@ import (
 
 // Data structure that holds all metrics for one particular resource
 type ResourceMetric struct {
-	NumCalls      int64
+	NumCalls      int
 	TotalTime     float64
-	CreationIndex int64 // Resource was the Nth to start creation, not implemented
-	CreatedIndex  int   // Resource was the Nth to finish creation
+	CreationIndex int // Resource was the Nth to start creation, not implemented
+	CreatedIndex  int // Resource was the Nth to finish creation
 }
 
 // Parsing a log results in a map of resource names and their metrics
