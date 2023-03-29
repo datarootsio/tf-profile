@@ -9,6 +9,20 @@ import (
 	"github.com/rodaine/table"
 )
 
+type (
+	SortSpecItem struct {
+		col   string
+		order string
+	}
+
+	// Fake record we construct to allow sorting on (multiple) custom columns.
+	// See Sort() for usage.
+	ProxyRecord struct {
+		resource string
+		items    []float64
+	}
+)
+
 // Print a parsed log in tabular format, optionally sorting by certain columns
 // sort_spec is a comma-separated list of "column_name=(asc|desc)", e.g. "n=asc,tot_time=desc"
 func Table(log ParsedLog, sort_spec string) error {
@@ -40,11 +54,6 @@ func Table(log ParsedLog, sort_spec string) error {
 	return nil
 }
 
-type SortSpecItem struct {
-	col   string
-	order string
-}
-
 // Parse a sort_spec into a map
 // e.g "n=asc,tot_time=desc" => {n: asc, tot_time: desc}
 func parseSortSpec(in string) []SortSpecItem {
@@ -56,11 +65,6 @@ func parseSortSpec(in string) []SortSpecItem {
 		result = append(result, SortSpecItem{split[0], split[1]})
 	}
 	return result
-}
-
-type ProxyRecord struct {
-	resource string
-	items    []float64
 }
 
 // Sort a parsed log according to the provided sort_spec

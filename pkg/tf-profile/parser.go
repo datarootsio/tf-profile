@@ -10,16 +10,23 @@ import (
 	"strings"
 )
 
-// Data structure that holds all metrics for one particular resource
-type ResourceMetric struct {
-	NumCalls      int
-	TotalTime     float64
-	CreationIndex int // Resource was the Nth to start creation, not implemented
-	CreatedIndex  int // Resource was the Nth to finish creation
-}
+var (
+	ResourceName    = `[a-zA-Z0-9_.["\]]*` // Simplified regex but it will do
+	ResourceCreated = fmt.Sprintf("%v: Creation complete after", ResourceName)
+)
 
-// Parsing a log results in a map of resource names and their metrics
-type ParsedLog = map[string]ResourceMetric
+type (
+	// Data structure that holds all metrics for one particular resource
+	ResourceMetric struct {
+		NumCalls      int
+		TotalTime     float64
+		CreationIndex int // Resource was the Nth to start creation, not implemented
+		CreatedIndex  int // Resource was the Nth to finish creation
+	}
+
+	// Parsing a log results in a map of resource names and their metrics
+	ParsedLog = map[string]ResourceMetric
+)
 
 func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 	num_created := 0
@@ -66,9 +73,7 @@ func InsertResourceMetric(log ParsedLog, resource string, duration float64, idx 
 	}
 }
 
-var ResourceName string = `[a-zA-Z0-9_.["\]]*` // Simplified regex but it will do
-var ResourceCreated string = fmt.Sprintf("%v: Creation complete after", ResourceName)
-
+// Parse one line containing resource creation text
 func ParseResourceCreated(line string) (string, float64, error) {
 	tokens := strings.Split(line, ":")
 	if len(tokens) < 2 {

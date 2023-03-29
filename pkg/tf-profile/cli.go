@@ -8,6 +8,16 @@ import (
 	"github.com/urfave/cli"
 )
 
+type InputArgs struct {
+	debug      bool
+	log_level  string
+	stats      bool
+	tee        bool
+	max_depth  int
+	sort       string
+	input_file string
+}
+
 func Create() cli.App {
 	return cli.App{
 		Name:    "tf-profile",
@@ -63,16 +73,6 @@ func Create() cli.App {
 			return nil
 		},
 	}
-}
-
-type InputArgs struct {
-	debug      bool
-	log_level  string
-	stats      bool
-	tee        bool
-	max_depth  int
-	sort       string
-	input_file string
 }
 
 func parseArgs(c *cli.Context) (InputArgs, error) {
