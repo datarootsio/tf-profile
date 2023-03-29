@@ -1,9 +1,7 @@
-name: Go Linting, Verification, and Testing
+name: Go fmt, go vet, go test
 
 on:
   push:
-    branches-ignore:
-      - 'main'
   pull_request:
 
 jobs:
@@ -21,7 +19,7 @@ jobs:
         
     - name: Check formatting with go fmt
       run: |
-        output=$(go fmt -d ./...)
+        output=$(gofmt -l -w -d ./pkg/tf-profile)
         if [ -n "$output" ]; then
           echo "Code needs to be reformatted:"
           echo "$output"
@@ -39,18 +37,3 @@ jobs:
       
     - name: Run tests
       run: go test -v ./...
-      
-    - name: Add comment to PR
-      if: always()
-      uses: actions/github-script@v4
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        github-script: |
-          const body = 'All checks passed!'
-          github.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: body
-          })
