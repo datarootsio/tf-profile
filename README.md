@@ -1,5 +1,9 @@
 # tf-profile
+
+[![Go Linting, Verification, and Testing](https://github.com/QuintenBruynseraede/tf-profile/actions/workflows/go-fmt-vet-tests.yml/badge.svg?branch=main)](https://github.com/QuintenBruynseraede/tf-profile/actions/workflows/go-fmt-vet-tests.yml)
+
 CLI tool to profile Terraform runs, written in Go
+
 
 ## Usage
 
