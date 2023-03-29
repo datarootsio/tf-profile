@@ -1,18 +1,17 @@
-package printer
+package tfprofile
 
 import (
 	"fmt"
 	"sort"
 	"strings"
 
-	"github.com/QuintenBruynseraede/tf-profile/parser"
 	"github.com/fatih/color"
 	"github.com/rodaine/table"
 )
 
 // Print a parsed log in tabular format, optionally sorting by certain columns
 // sort_spec is a comma-separated list of "column_name=(asc|desc)", e.g. "n=asc,tot_time=desc"
-func Table(log *parser.ParsedLog, sort_spec string) error {
+func Table(log *ParsedLog, sort_spec string) error {
 	headerFmt := color.New(color.FgHiBlue, color.Underline).SprintfFunc()
 	columnFmt := color.New(color.FgBlue).SprintfFunc()
 
@@ -65,7 +64,7 @@ type ProxyRecord struct {
 }
 
 // Sort a parsed log according to the provided sort_spec
-func Sort(log *parser.ParsedLog, sort_spec string) []string {
+func Sort(log *ParsedLog, sort_spec string) []string {
 	// Because we can not construct a custom sort function upfront,
 	// we "rebuild" the log such that the "sorting" metrics come first,
 	// and values for columns that are to be sorted descendingly are

@@ -4,12 +4,12 @@ import (
 	"log"
 	"os"
 
-	cli "github.com/QuintenBruynseraede/tf-profile/cli"
+	tfprofile "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile"
 )
 
 // Main entrypoint to the CLI
 func main() {
-	tfprofile := cli.Create()
+	tfprofile := tfprofile.Create()
 	err := tfprofile.Run(os.Args)
 
 	if err != nil {

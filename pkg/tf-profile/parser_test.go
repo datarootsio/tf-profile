@@ -1,4 +1,4 @@
-package parser
+package tfprofile
 
 import (
 	"bufio"
@@ -34,13 +34,15 @@ func TestParseResourceCreatedMinutes(t *testing.T) {
 }
 
 func TestFullParse(t *testing.T) {
-	file, _ := os.Open("../test_files/multiple_resources.log")
+	file, _ := os.Open("../../test_files/multiple_resources.log")
 	s := bufio.NewScanner(file)
 
 	log, err := Parse(s, false)
 	assert.Nil(t, err)
 
-	metrics := log["time_sleep.count[9]"]
+	metrics, ok := log["time_sleep.count[9]"]
+	assert.True(t, ok)
+
 	expected := ResourceMetric{
 		NumCalls:      1,
 		TotalTime:     10000,
