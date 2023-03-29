@@ -23,14 +23,14 @@ func TestCorrectArguments(t *testing.T) {
 
 func TestIncorrectArguments(t *testing.T) {
 	app := Create()
-	err1 := app.Run([]string{"./tf-profile", "--stats"})
-	assert.NotNil(t, err1) // --stats is not implemented yet
+	err := app.Run([]string{"./tf-profile", "--stats"})
+	assert.NotNil(t, err) // --stats is not implemented yet
 
-	err2 := app.Run([]string{"./tf-profile", "--max_depth=1234"})
-	assert.NotNil(t, err2) // --max_depth is not implemented yet
+	err = app.Run([]string{"./tf-profile", "--max_depth=1234"})
+	assert.NotNil(t, err) // --max_depth is not implemented yet
 
-	err3 := app.Run([]string{"./tf-profile", "arg1", "arg2"})
-	assert.NotNil(t, err3) // Only one input file is supported
+	err = app.Run([]string{"./tf-profile", "arg1", "arg2"})
+	assert.NotNil(t, err) // Only one input file is supported
 
 }
 

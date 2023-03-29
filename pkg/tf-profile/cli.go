@@ -46,8 +46,8 @@ func Create() *cli.App {
 				return errors.New("Error during argument parsing")
 			}
 
-			err2 := validateArgs(args)
-			if err2 != nil {
+			err = validateArgs(args)
+			if err != nil {
 				return errors.New("Error during argument validation")
 			}
 
@@ -55,8 +55,8 @@ func Create() *cli.App {
 				printArgs(args)
 			}
 
-			err3 := run(args)
-			if err3 != nil {
+			err = run(args)
+			if err != nil {
 				return errors.New("Error during tf-profile run")
 			}
 
@@ -128,33 +128,33 @@ func validateArgs(args *InputArgs) error {
 
 func run(args *InputArgs) error {
 	var file *bufio.Scanner
-	var err1 error
+	var err error
 
 	if args.input_file != "" {
 		if args.debug {
 			fmt.Printf("Input: from file %v\n", args.input_file)
 		}
-		file, err1 = FileReader{File: args.input_file}.Read()
+		file, err = FileReader{File: args.input_file}.Read()
 	} else {
 		if args.debug {
 			fmt.Printf("Input: from stdin\n")
 
 		}
-		file, err1 = StdinReader{}.Read()
+		file, err = StdinReader{}.Read()
 	}
 
-	if err1 != nil {
-		return err1
+	if err != nil {
+		return err
 	}
 
-	tflog, err2 := Parse(file, args.tee)
-	if err2 != nil {
-		return err2
+	tflog, err := Parse(file, args.tee)
+	if err != nil {
+		return err
 	}
 
-	err3 := Table(&tflog, args.sort)
-	if err3 != nil {
-		return err3
+	err = Table(&tflog, args.sort)
+	if err != nil {
+		return err
 	}
 
 	return nil
