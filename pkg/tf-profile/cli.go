@@ -2,20 +2,36 @@ package tfprofile
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 
 	"github.com/urfave/cli"
 )
 
-type InputArgs struct {
-	debug      bool
-	log_level  string
-	stats      bool
-	tee        bool
-	max_depth  int
-	sort       string
-	input_file string
+type (
+	ArgumentParseError      struct{ Msg string }
+	ArgumentValidationError struct{ Msg string }
+	RunError                struct{ Msg string }
+	InputArgs               struct {
+		debug      bool
+		log_level  string
+		stats      bool
+		tee        bool
+		max_depth  int
+		sort       string
+		input_file string
+	}
+)
+
+func (e *ArgumentParseError) Error() string {
+	return e.Msg
+}
+
+func (e *ArgumentValidationError) Error() string {
+	return e.Msg
+}
+
+func (e *RunError) Error() string {
+	return e.Msg
 }
 
 func Create() cli.App {
@@ -53,12 +69,12 @@ func Create() cli.App {
 		Action: func(c *cli.Context) error {
 			args, err := parseArgs(c)
 			if err != nil {
-				return errors.New("Error during argument parsing")
+				return err
 			}
 
 			err = validateArgs(args)
 			if err != nil {
-				return errors.New("Error during argument validation")
+				return err
 			}
 
 			if args.debug {
@@ -67,7 +83,7 @@ func Create() cli.App {
 
 			err = run(args)
 			if err != nil {
-				return errors.New("Error during tf-profile run")
+				return err
 			}
 
 			return nil
@@ -85,7 +101,7 @@ func parseArgs(c *cli.Context) (InputArgs, error) {
 
 	if c.NArg() > 1 {
 		msg := fmt.Sprintf("Expected at most 1 argument, received %v: %v\n", c.NArg(), c.Args())
-		return nil, errors.New(msg)
+		return InputArgs{}, &ArgumentParseError{msg}
 	}
 
 	return InputArgs{
@@ -115,10 +131,10 @@ func printArgs(args InputArgs) {
 // exitcode if incompatible arguments are detected.
 func validateArgs(args InputArgs) error {
 	if args.max_depth != -1 {
-		return errors.New("--max_depth is not implemented yet!")
+		return &ArgumentParseError{"--max_depth is not implemented yet!"}
 	}
 	if args.stats {
-		return errors.New("--stats is not implemented yet!")
+		return &ArgumentParseError{"--stats is not implemented yet!"}
 	}
 
 	// TODO: check that the file comes last, i.e. tf-profile --tee logs.txt | NOT tf-profile logs.txt --tee

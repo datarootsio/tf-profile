@@ -2,7 +2,6 @@ package tfprofile
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"log"
 	"regexp"
@@ -16,6 +15,8 @@ var (
 )
 
 type (
+	LineParseError struct{ Msg string }
+
 	// Data structure that holds all metrics for one particular resource
 	ResourceMetric struct {
 		NumCalls      int
@@ -27,6 +28,10 @@ type (
 	// Parsing a log results in a map of resource names and their metrics
 	ParsedLog = map[string]ResourceMetric
 )
+
+func (e *LineParseError) Error() string {
+	return e.Msg
+}
 
 func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 	num_created := 0
@@ -44,7 +49,7 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 			if err != nil {
 				msg := `This line was detected to contain resource creation, 
 				            but tf-profile is unable to parse it!`
-				return nil, errors.New(msg)
+				return nil, &LineParseError{msg}
 			}
 			InsertResourceMetric(tflog, resource, time, num_created)
 			num_created += 1
@@ -77,14 +82,16 @@ func InsertResourceMetric(log ParsedLog, resource string, duration float64, idx 
 func ParseResourceCreated(line string) (string, float64, error) {
 	tokens := strings.Split(line, ":")
 	if len(tokens) < 2 {
-		return "", -1, errors.New("Unable to parse line to extract created resource.")
+		msg := fmt.Sprintf("Unable to parse resource creation line: %v\n", line)
+		return "", -1, &LineParseError{msg}
 	}
 	resource := tokens[0]
 
 	// The next token will contain the create time (" Creation complete after ...s [id=...]")
 	tokens2 := strings.Split(tokens[1], " [id=")
 	if len(tokens2) < 2 {
-		return "", -1, errors.New("Unable to parse line to extract create time")
+		msg := fmt.Sprintf("Unable to parse creation duration: %v\n", tokens[1])
+		return "", -1, &LineParseError{msg}
 	}
 	create_duration := ParseCreateDurationString(tokens2[0][25:])
 	return resource, create_duration, nil
