@@ -35,14 +35,14 @@ func Table(log ParsedLog, sort_spec string) error {
 
 	// Sort the resources according to the sort_spec and create rows
 	for _, r := range Sort(log, sort_spec) {
-		for resource, metric := range log {
+		for resource, metric := range log.resources {
 			if r == resource {
 				tbl.AddRow(
 					resource,
 					(metric.NumCalls),
 					(metric.TotalTime),
-					(metric.CreationIndex),
-					(metric.CreatedIndex),
+					(metric.CreationStartedIndex),
+					(metric.CreationCompletedIndex),
 				)
 				break
 			}
@@ -78,7 +78,7 @@ func Sort(log ParsedLog, sort_spec string) []string {
 
 	sort_spec_p := parseSortSpec(sort_spec)
 
-	for k, v := range log {
+	for k, v := range log.resources {
 		proxy_item_values := []float64{0, 0, 0, 0}
 
 		// With values in the order of the sort_spec, create a proxy record
@@ -91,9 +91,9 @@ func Sort(log ParsedLog, sort_spec string) []string {
 			} else if column == "tot_time" {
 				value = float64(v.TotalTime)
 			} else if column == "idx_creation" {
-				value = float64(v.CreationIndex)
+				value = float64(v.CreationStartedIndex)
 			} else if column == "idx_created" {
-				value = float64(v.CreatedIndex)
+				value = float64(v.CreationCompletedIndex)
 			}
 			if order == "desc" {
 				value = -value

@@ -10,23 +10,36 @@ import (
 )
 
 var (
-	ResourceName    = `[a-zA-Z0-9_.["\]]*` // Simplified regex but it will do
-	ResourceCreated = fmt.Sprintf("%v: Creation complete after", ResourceName)
+	ResourceName            = `[a-zA-Z0-9_.["\]]*` // Simplified regex but it will do
+	ResourceCreated         = fmt.Sprintf("%v: Creation complete after", ResourceName)
+	ResourceCreationStarted = fmt.Sprintf("%v: Creating...", ResourceName)
+)
+
+const (
+	Created    Status = 2
+	Started    Status = 1
+	NotStarted Status = 0
 )
 
 type (
+	Status         int
 	LineParseError struct{ Msg string }
 
 	// Data structure that holds all metrics for one particular resource
 	ResourceMetric struct {
-		NumCalls      int
-		TotalTime     float64
-		CreationIndex int // Resource was the Nth to start creation, not implemented
-		CreatedIndex  int // Resource was the Nth to finish creation
+		NumCalls               int
+		TotalTime              float64
+		CreationStartedIndex   int // Resource was the Nth to start creation, not implemented
+		CreationCompletedIndex int // Resource was the Nth to finish creation
+		CreationStatus         Status
 	}
 
 	// Parsing a log results in a map of resource names and their metrics
-	ParsedLog = map[string]ResourceMetric
+	ParsedLog struct {
+		creationStartedCount  int
+		createdCompletedCount int
+		resources             map[string]ResourceMetric
+	}
 )
 
 func (e *LineParseError) Error() string {
@@ -34,9 +47,11 @@ func (e *LineParseError) Error() string {
 }
 
 func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
-	num_created := 0
+	CreationStarted := 0
+	CreationCompleted := 0
 
-	tflog := ParsedLog{}
+	tflog := ParsedLog{0, 0, make(map[string]ResourceMetric)}
+
 	for file.Scan() {
 		line := file.Text()
 		if tee {
@@ -49,10 +64,22 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 			if err != nil {
 				msg := `This line was detected to contain resource creation, 
 				            but tf-profile is unable to parse it!`
-				return nil, &LineParseError{msg}
+				return ParsedLog{}, &LineParseError{msg}
 			}
-			InsertResourceMetric(tflog, resource, time, num_created)
-			num_created += 1
+			FinishResourceCreation(tflog, resource, time, CreationCompleted)
+			CreationCompleted += 1
+		}
+
+		match, _ = regexp.MatchString(ResourceCreationStarted, line)
+		if match {
+			resource, err := ParseResourceCreationStarted(line)
+			if err != nil {
+				msg := `This line was detected to contain resource creation, 
+				            but tf-profile is unable to parse it!`
+				return ParsedLog{}, &LineParseError{msg}
+			}
+			InsertResourceMetric(tflog, resource, CreationStarted)
+			CreationStarted += 1
 		}
 	}
 
@@ -60,22 +87,29 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 }
 
 // Insert a new ResourceMetric into the log
-func InsertResourceMetric(log ParsedLog, resource string, duration float64, idx int) {
-	metric, exists := (log)[resource]
-
-	// We have seen this resource before
-	if exists {
-		(metric).NumCalls += 1
-		(metric).TotalTime += 1
-	} else {
-		// Add new resource with some default values
-		(log)[resource] = ResourceMetric{
-			NumCalls:      1,
-			TotalTime:     duration,
-			CreationIndex: -1, // Not implemented
-			CreatedIndex:  idx,
-		}
+func InsertResourceMetric(log ParsedLog, resource string, idx int) {
+	(log.resources)[resource] = ResourceMetric{
+		NumCalls:               1,
+		TotalTime:              -1, // Not finished yet
+		CreationStartedIndex:   idx,
+		CreationCompletedIndex: -1, // Not finished yet
 	}
+}
+
+// When creation is done, update the record in the log
+func FinishResourceCreation(log ParsedLog, resource string, duration float64, idx int) error {
+	record, exists := log.resources[resource]
+
+	if exists == false {
+		msg := fmt.Sprintf("Resource %v finished creation, but start was not recorded!\n", resource)
+		return &LineParseError{msg}
+	}
+
+	record.CreationCompletedIndex = idx
+	record.TotalTime = duration
+	log.resources[resource] = record
+
+	return nil
 }
 
 // Parse one line containing resource creation text
@@ -95,6 +129,16 @@ func ParseResourceCreated(line string) (string, float64, error) {
 	}
 	create_duration := ParseCreateDurationString(tokens2[0][25:])
 	return resource, create_duration, nil
+}
+
+// Parse one line containing resource creation text
+func ParseResourceCreationStarted(line string) (string, error) {
+	tokens := strings.Split(line, ":")
+	if len(tokens) < 2 {
+		msg := fmt.Sprintf("Unable to parse resource creation line: %v\n", line)
+		return "", &LineParseError{msg}
+	}
+	return tokens[0], nil
 }
 
 // Convert a create duration string into milliseconds
