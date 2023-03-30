@@ -40,7 +40,7 @@ func TestFullParse(t *testing.T) {
 	log, err := Parse(s, false)
 	assert.Nil(t, err)
 
-	metrics, ok := log.resources["time_sleep.count[9]"]
+	metrics, ok := log.resources["time_sleep.count_9"]
 	assert.True(t, ok)
 
 	expected := ResourceMetric{
@@ -53,7 +53,7 @@ func TestFullParse(t *testing.T) {
 		t.Fatalf("Expected %v, got %v\n", expected, metrics)
 	}
 
-	metrics2 := log.resources["time_sleep.for_each[\"a\"]"]
+	metrics2 := log.resources["time_sleep.for_each_a"]
 	expected2 := ResourceMetric{
 		NumCalls:               1,
 		TotalTime:              1000,

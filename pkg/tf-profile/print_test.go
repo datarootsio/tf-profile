@@ -31,20 +31,20 @@ func TestSort(t *testing.T) {
 
 	sorted := Sort(log, "tot_time=asc,idx_created=asc")
 	expected := []string{
-		"time_sleep.count[0]",
-		"time_sleep.for_each[\"a\"]",
-		"time_sleep.count[1]",
-		"time_sleep.for_each[\"c\"]",
-		"time_sleep.count[2]",
-		"time_sleep.for_each[\"d\"]",
-		"time_sleep.for_each[\"b\"]",
-		"time_sleep.count[3]",
-		"time_sleep.count[4]",
-		"time_sleep.count[5]",
-		"time_sleep.count[6]",
-		"time_sleep.count[7]",
-		"time_sleep.count[8]",
-		"time_sleep.count[9]",
+		"time_sleep.count_0",
+		"time_sleep.for_each_a",
+		"time_sleep.count_1",
+		"time_sleep.for_each_c",
+		"time_sleep.count_2",
+		"time_sleep.for_each_d",
+		"time_sleep.for_each_b",
+		"time_sleep.count_3",
+		"time_sleep.count_4",
+		"time_sleep.count_5",
+		"time_sleep.count_6",
+		"time_sleep.count_7",
+		"time_sleep.count_8",
+		"time_sleep.count_9",
 	}
 	assert.Equal(t, sorted, expected)
 
