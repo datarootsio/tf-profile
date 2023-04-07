@@ -49,8 +49,7 @@ $ tf-profile stats log.txt
 - **idx_created**: order in which resource creation _ended_. this means that the resource with `idx_created = 0` was the first resource to be fully creatd.
 - **status**: For single resources, status can be any of: `Started|NotStarted|Created|Failed`. For aggregated resources, status can be any of: `AllCreated|AllFailed|SomeFailed|NoneStarted|AllStarted|SomeStarted`.
    
-    With resource aggregation, more informative statuses have precedence over less informative statuses. For example, `AllCreated` implies `AllStarted`, but will be shown.
-
+    With resource aggregation, more informative statuses have precedence over less informative statuses. For example, `AllCreated` will be shown over `AllStarted`.
 ```bash
 $ terraform apply -auto-approve > log.txt
 $ tf-profile table log.txt
@@ -83,7 +82,7 @@ time_sleep.count[*]                 5  11000     0             13           AllC
 
 ### Mirroring input with `--tee`
 
-When piping stdinput into `tf-profile`, it is convenient to use the `--tee` flag. This flag instructs `tf-profile` to print evry line it parses. This way you don't lose your detailed Terraform logs, but still get a table at the end.
+When piping stdinput into `tf-profile`, it is convenient to use the `--tee` flag. This flag instructs `tf-profile` to print every line it parses. This way you don't lose your detailed Terraform logs, but still get a table at the end.
 
 Example:
 ```bash
@@ -109,7 +108,7 @@ module.test[0].time_sleep.count[*]  3  4000      9             7            AllC
 ### Limit output with `--max_depth`
 🚧 Under construction (not implemented) 🚧
 
-When working with deeply nested modules, a large codebase may generate long names and resource-level statistics can be too detailed. You can limit the maximum module depth that `tf-profile` parses with `--max_depth` (default: -1, no limit). Any nested modules deeper than `--max_depth` are simply shown as their module name. Statistics of resources within that module are aggregated.
+When working with a large codebase, viewing statistics for every resource may be too detailed. You can limit the maximum module depth that `tf-profile` parses with `--max_depth` (default: -1, no limit). Any nested modules deeper than `--max_depth` are simply shown as their module name. Statistics of resources within that module are aggregated.
 
 ```bash
 $ terraform apply -auto-approve | tf-profile table --max_depth 1 --tee
