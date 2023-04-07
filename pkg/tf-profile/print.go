@@ -26,7 +26,7 @@ type (
 
 // Print a parsed log in tabular format, optionally sorting by certain columns
 // sort_spec is a comma-separated list of "column_name=(asc|desc)", e.g. "n=asc,tot_time=desc"
-func Table(log ParsedLog, sort_spec string) error {
+func PrintTable(log ParsedLog, sort_spec string) error {
 	headerFmt := color.New(color.FgHiBlue, color.Underline).SprintfFunc()
 	columnFmt := color.New(color.FgBlue).SprintfFunc()
 

@@ -52,5 +52,5 @@ func TestSort(t *testing.T) {
 	for i := 0; i < len(expected); i++ {
 		assert.Equal(t, expected[i], sorted2[len(expected)-i-1])
 	}
-	Table(log, "tot_time=asc,idx_created=asc")
+	PrintTable(log, "tot_time=asc,idx_created=asc")
 }
