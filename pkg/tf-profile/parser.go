@@ -16,9 +16,18 @@ var (
 )
 
 const (
-	Created    Status = 2
-	Started    Status = 1
+	// For individual resources
 	NotStarted Status = 0
+	Started    Status = 1
+	Created    Status = 2
+	Failed     Status = 3
+	// For aggregated resources
+	SomeStarted Status = 4
+	AllStarted  Status = 5
+	NoneStarted Status = 6
+	SomeFailed  Status = 7
+	AllFailed   Status = 8
+	AllCreated  Status = 9
 )
 
 type (
@@ -90,9 +99,10 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 func InsertResourceMetric(log ParsedLog, resource string, idx int) {
 	(log.resources)[resource] = ResourceMetric{
 		NumCalls:               1,
-		TotalTime:              -1, // Not finished yet
+		TotalTime:              -1, // Not finished yet, will be overwritten
 		CreationStartedIndex:   idx,
-		CreationCompletedIndex: -1, // Not finished yet
+		CreationCompletedIndex: -1, // Not finished yet, will be overwritten
+		CreationStatus:         Started,
 	}
 }
 
@@ -107,6 +117,7 @@ func FinishResourceCreation(log ParsedLog, resource string, duration float64, id
 
 	record.CreationCompletedIndex = idx
 	record.TotalTime = duration
+	record.CreationStatus = Created
 	log.resources[resource] = record
 
 	return nil
@@ -161,5 +172,32 @@ func ParseCreateDurationString(in string) float64 {
 			log.Fatal("Unable to parse resource create duration.")
 		}
 		return float64(1000.0 * seconds)
+	}
+}
+
+func (s Status) String() string {
+	switch s {
+	case NotStarted:
+		return "NotStarted"
+	case Started:
+		return "Started"
+	case Created:
+		return "Created"
+	case Failed:
+		return "Failed"
+	case SomeStarted:
+		return "SomeStarted"
+	case AllStarted:
+		return "AllStarted"
+	case NoneStarted:
+		return "NoneStarted"
+	case SomeFailed:
+		return "SomeFailed"
+	case AllFailed:
+		return "AllFailed"
+	case AllCreated:
+		return "AllCreated"
+	default:
+		return fmt.Sprintf("%d (unknown)", int(s))
 	}
 }
