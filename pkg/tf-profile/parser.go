@@ -16,9 +16,18 @@ var (
 )
 
 const (
-	Created    Status = 2
-	Started    Status = 1
+	// For individual resources
 	NotStarted Status = 0
+	Started    Status = 1
+	Created    Status = 2
+	Failed     Status = 3
+	// For aggregated resources
+	SomeStarted Status = 4
+	AllStarted  Status = 5
+	NoneStarted Status = 6
+	SomeFailed  Status = 7
+	AllFailed   Status = 8
+	AllCreated  Status = 9
 )
 
 type (
@@ -90,9 +99,9 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 func InsertResourceMetric(log ParsedLog, resource string, idx int) {
 	(log.resources)[resource] = ResourceMetric{
 		NumCalls:               1,
-		TotalTime:              -1, // Not finished yet
+		TotalTime:              -1, // Not finished yet, will be overwritten
 		CreationStartedIndex:   idx,
-		CreationCompletedIndex: -1, // Not finished yet
+		CreationCompletedIndex: -1, // Not finished yet, will be overwritten
 	}
 }
 

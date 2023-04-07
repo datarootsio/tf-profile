@@ -168,6 +168,11 @@ func run(args InputArgs) error {
 		return err
 	}
 
+	tflog, err = Aggregate(tflog)
+	if err != nil {
+		return err
+	}
+
 	err = Table(tflog, args.sort)
 	if err != nil {
 		return err
