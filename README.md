@@ -10,6 +10,21 @@ Main features:
 - Can generate global stats, resource-level stats or vizualization
 - Provides many levels of granularity and aggregation, customizable outputs
 
+## Installation
+
+For now, the only supported way is to build the binary yourself. This requires at least version 1.20 of the `go` cli.
+
+```bash
+$ git clone git@github.com:QuintenBruynseraede/tf-profile.git
+$ cd tf-profile && go build .
+$ sudo ln -s $(pwd)/tf-profile /usr/local/bin  # Optional: only if you want to run tf-profile from other directories
+$ tf-profile --help
+tf-profile is a CLI tool to profile Terraform runs
+
+Usage:
+  tf-profile [command]
+```
+
 ## Basic usage
 
 `tf-profile` handles input from stdin and from files. These two commands are therefore equivalent:
