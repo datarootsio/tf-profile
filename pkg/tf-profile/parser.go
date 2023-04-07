@@ -102,6 +102,7 @@ func InsertResourceMetric(log ParsedLog, resource string, idx int) {
 		TotalTime:              -1, // Not finished yet, will be overwritten
 		CreationStartedIndex:   idx,
 		CreationCompletedIndex: -1, // Not finished yet, will be overwritten
+		CreationStatus:         Started,
 	}
 }
 
@@ -116,6 +117,7 @@ func FinishResourceCreation(log ParsedLog, resource string, duration float64, id
 
 	record.CreationCompletedIndex = idx
 	record.TotalTime = duration
+	record.CreationStatus = Created
 	log.resources[resource] = record
 
 	return nil
@@ -170,5 +172,32 @@ func ParseCreateDurationString(in string) float64 {
 			log.Fatal("Unable to parse resource create duration.")
 		}
 		return float64(1000.0 * seconds)
+	}
+}
+
+func (s Status) String() string {
+	switch s {
+	case NotStarted:
+		return "NotStarted"
+	case Started:
+		return "Started"
+	case Created:
+		return "Created"
+	case Failed:
+		return "Failed"
+	case SomeStarted:
+		return "SomeStarted"
+	case AllStarted:
+		return "AllStarted"
+	case NoneStarted:
+		return "NoneStarted"
+	case SomeFailed:
+		return "SomeFailed"
+	case AllFailed:
+		return "AllFailed"
+	case AllCreated:
+		return "AllCreated"
+	default:
+		return fmt.Sprintf("%d (unknown)", int(s))
 	}
 }

@@ -30,7 +30,7 @@ func Table(log ParsedLog, sort_spec string) error {
 	headerFmt := color.New(color.FgHiBlue, color.Underline).SprintfFunc()
 	columnFmt := color.New(color.FgBlue).SprintfFunc()
 
-	tbl := table.New("resource", "n", "tot_time", "idx_creation", "idx_created")
+	tbl := table.New("resource", "n", "tot_time", "idx_creation", "idx_created", "status")
 	tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
 
 	// Sort the resources according to the sort_spec and create rows
@@ -43,6 +43,7 @@ func Table(log ParsedLog, sort_spec string) error {
 					(metric.TotalTime),
 					(metric.CreationStartedIndex),
 					(metric.CreationCompletedIndex),
+					(metric.CreationStatus),
 				)
 				break
 			}
@@ -94,6 +95,8 @@ func Sort(log ParsedLog, sort_spec string) []string {
 				value = float64(v.CreationStartedIndex)
 			} else if column == "idx_created" {
 				value = float64(v.CreationCompletedIndex)
+			} else if column == "status" {
+				value = float64(v.CreationStatus)
 			}
 			if order == "desc" {
 				value = -value

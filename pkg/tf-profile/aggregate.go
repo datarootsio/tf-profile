@@ -1,6 +1,7 @@
 package tfprofile
 
 import (
+	"fmt"
 	"sort"
 	"strings"
 )
@@ -43,10 +44,12 @@ func Aggregate(log ParsedLog) (ParsedLog, error) {
 	}
 
 	// Aggregate leftovers in the list to get the final result
-	AggName, AggMetric := aggregateResources(log, ToAgg)
-	NewLog := New.resources
-	NewLog[AggName] = AggMetric
-	New.resources = NewLog
+	if len(ToAgg) > 0 {
+		AggName, AggMetric := aggregateResources(log, ToAgg)
+		NewLog := New.resources
+		NewLog[AggName] = AggMetric
+		New.resources = NewLog
+	}
 
 	return New, nil
 }
@@ -81,6 +84,7 @@ func canAggregate(Resource1 string, Resource2 string) bool {
 // Given a log and resources names to aggregate, find an aggregated name and
 // an aggregated ResourceMetric
 func aggregateResources(log ParsedLog, resources []string) (string, ResourceMetric) {
+	fmt.Printf("Aggregating %v\n", resources)
 	// Singleton, just return it
 	if len(resources) == 1 {
 		return resources[0], log.resources[resources[0]]

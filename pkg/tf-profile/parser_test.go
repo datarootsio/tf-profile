@@ -48,6 +48,7 @@ func TestFullParse(t *testing.T) {
 		TotalTime:              10000,
 		CreationStartedIndex:   10, // Not implemented
 		CreationCompletedIndex: 12,
+		CreationStatus:         Created,
 	}
 	if metrics != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, metrics)
@@ -59,6 +60,7 @@ func TestFullParse(t *testing.T) {
 		TotalTime:              1000,
 		CreationStartedIndex:   5, // Not implemented
 		CreationCompletedIndex: 1,
+		CreationStatus:         Created,
 	}
 	if metrics2 != expected2 {
 		t.Fatalf("Expected %v, got %v\n", expected2, metrics2)
