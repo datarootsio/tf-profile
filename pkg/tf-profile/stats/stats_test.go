@@ -89,11 +89,11 @@ func TestModuleStats(t *testing.T) {
 }
 
 func TestFullStats(t *testing.T) {
-	err := Stats([]string{"../../../test/aggregate.log"}, true)
+	err := Stats([]string{"../../../test/aggregate.log"}, false)
 	assert.Nil(t, err)
-	err = Stats([]string{"../../../test/multiple_resources.log"}, true)
+	err = Stats([]string{"../../../test/multiple_resources.log"}, false)
 	assert.Nil(t, err)
-	err = Stats([]string{"../../../test/null_resources.log"}, true)
+	err = Stats([]string{"../../../test/null_resources.log"}, false)
 	assert.Nil(t, err)
 
 	err = Stats([]string{"does-not-exist"}, false)
