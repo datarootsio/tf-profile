@@ -87,3 +87,15 @@ func TestModuleStats(t *testing.T) {
 	}
 	assert.Equal(t, Expected, Out)
 }
+
+func TestFullStats(t *testing.T) {
+	err := Stats([]string{"../../../test/aggregate.log"}, true)
+	assert.Nil(t, err)
+	err = Stats([]string{"../../../test/multiple_resources.log"}, true)
+	assert.Nil(t, err)
+	err = Stats([]string{"../../../test/null_resources.log"}, true)
+	assert.Nil(t, err)
+
+	err = Stats([]string{"does-not-exist"}, false)
+	assert.NotNil(t, err)
+}
