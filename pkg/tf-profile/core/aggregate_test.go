@@ -57,7 +57,7 @@ func TestCanAgg(t *testing.T) {
 // No aggregation possible
 func TestNoAgg(t *testing.T) {
 	In := ParsedLog{
-		resources: map[string]ResourceMetric{
+		Resources: map[string]ResourceMetric{
 			"resource1": ResourceMetric{},
 			"resource2": ResourceMetric{},
 			"resource3": ResourceMetric{},
@@ -70,14 +70,14 @@ func TestNoAgg(t *testing.T) {
 
 func TestBasicAgg(t *testing.T) {
 	In := ParsedLog{
-		resources: map[string]ResourceMetric{
+		Resources: map[string]ResourceMetric{
 			"r1[1]": ResourceMetric{1, 1, 0, 0, Created},
 			"r1[2]": ResourceMetric{1, 1, 1, 1, Created},
 			"r1[3]": ResourceMetric{1, 1, 2, 2, Created},
 		},
 	}
 	Out := ParsedLog{
-		resources: map[string]ResourceMetric{
+		Resources: map[string]ResourceMetric{
 			"r1[*]": ResourceMetric{3, 3, 0, 2, AllCreated},
 		},
 	}
@@ -88,7 +88,7 @@ func TestBasicAgg(t *testing.T) {
 
 func TestMixedAgg(t *testing.T) {
 	In := ParsedLog{
-		resources: map[string]ResourceMetric{
+		Resources: map[string]ResourceMetric{
 			"r1[1]":     ResourceMetric{1, 1, 0, 0, Created},
 			"r1[2]":     ResourceMetric{1, 1, 1, 1, Created},
 			"r1[3]":     ResourceMetric{1, 1, 2, 2, Created},
@@ -99,7 +99,7 @@ func TestMixedAgg(t *testing.T) {
 		},
 	}
 	Out := ParsedLog{
-		resources: map[string]ResourceMetric{
+		Resources: map[string]ResourceMetric{
 			"r1[*]": ResourceMetric{3, 3, 0, 2, AllCreated},
 			"r2[*]": ResourceMetric{2, 2, 3, 4, AllCreated},
 			"r3":    ResourceMetric{1, 1, 5, 5, Created},
@@ -113,7 +113,7 @@ func TestMixedAgg(t *testing.T) {
 
 func TestFullAgg(t *testing.T) {
 	In := ParsedLog{
-		resources: map[string]ResourceMetric{
+		Resources: map[string]ResourceMetric{
 			// Can be aggregated on name
 			"module.x.r[1]": ResourceMetric{1, 1, 0, 0, Created},
 			"module.x.r[2]": ResourceMetric{1, 2, 0, 0, Created},
@@ -138,7 +138,7 @@ func TestFullAgg(t *testing.T) {
 		},
 	}
 	Out := ParsedLog{
-		resources: map[string]ResourceMetric{
+		Resources: map[string]ResourceMetric{
 			"module.x.r[*]":                ResourceMetric{3, 6, 0, 0, AllCreated},
 			"module.y[1].module.y[1].r[*]": ResourceMetric{3, 6, 0, 0, AllCreated},
 			"module.z[1].module.z[1].r[*]": ResourceMetric{3, 6, 2, 9, AllCreated},

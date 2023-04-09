@@ -42,15 +42,33 @@ Three major commands are supported:
 
 ## `tf-profile stats`
 <a name="anchor_stats"></a>
-🚧 Under construction (not implemented) 🚧
 
 `tf-profile stats` is the most basic command. Given a Terraform log, it will only provide high-level statistics.
 
-Example:
 ```bash
 $ terraform apply -auto-approve > log.txt
 $ tf-profile stats log.txt
-... <TBD>
+> tf-profile stats test/many_modules.log
+
+Key                                Value    
+-----------------------------------------------------------------                       
+Number of resources created        1510                            
+                                                                   
+Cumulative duration                36m19s                          
+Longest apply time                 7m18s                           
+Longest apply resource             time_sleep.foo[*]               
+                                                                   
+No. resources in state AllCreated  800                             
+No. resources in state Created     695                             
+No. resources in state Started     15                              
+                                                                   
+Number of top-level modules        13                              
+Largest top-level module           module.core[2]                  
+Size of largest top-level module   170                             
+Deepest module                     module.core[2].module.role[47]  
+Deepest module depth               2                               
+Largest leaf module                module.dbt[4]                   
+Size of largest leaf module        40  
 ```
 
 ## `tf-profile table`
@@ -139,3 +157,9 @@ module.test[0]                      3  4000      9             7            AllC
 ## `tf-profile graph`
 <a name="anchor_graph"></a>
 🚧 Under construction (not implemented) 🚧
+
+## Screenshots
+
+![stats.png](https://github.com/QuintenBruynseraede/tf-profile/blob/main/.github/stats.png?raw=true)
+
+![table.png](https://github.com/QuintenBruynseraede/tf-profile/blob/main/.github/table.png?raw=true)

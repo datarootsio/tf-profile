@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	tfprofile "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile"
+	table "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/table"
 	"github.com/spf13/cobra"
 )
 
@@ -37,6 +37,6 @@ var tableCmd = &cobra.Command{
 	Long: `The 'table' command is used to do in-depth profiling on a resource level.
 	It will parse a log, extract metrics about all resources and show tabular output.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return tfprofile.Table(args, max_depth, tee, sort)
+		return table.Table(args, max_depth, tee, sort)
 	},
 }
