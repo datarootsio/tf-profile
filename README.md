@@ -72,19 +72,6 @@ Largest leaf module                module.dbt[4]
 Size of largest leaf module        40  
 ```
 
-Statistics are divided into four categories:
-1. Basic:
-    - Number of resources created
-2. Related to time:
-    - Cumulative duration of all resource creation
-    - Which resource took the longest to create (and how long)
-3. Related to resource statuses
-    - For each possible status (see `tf-profile table`), the number of resources
-4. Module statistics:
-    - Number of root modules, largest root module
-    - Nested module depth, name and size of the deepest module
-    - Largest leaf module and its size
-
 ## `tf-profile table`
 <a name="anchor_table"></a>
 `tf-profile table` will parse a log and provide per-resource metrics. By default, resources created with `for_each` and `count` are aggregated into one entry (e.g. `aws_subnet[0]` and `aws_subnet[1]` become `aws_subnet[*]`). The following statistics are shown:
