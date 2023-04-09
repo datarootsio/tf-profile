@@ -45,7 +45,6 @@ Three major commands are supported:
 
 `tf-profile stats` is the most basic command. Given a Terraform log, it will only provide high-level statistics.
 
-Example:
 ```bash
 $ terraform apply -auto-approve > log.txt
 $ tf-profile stats log.txt
