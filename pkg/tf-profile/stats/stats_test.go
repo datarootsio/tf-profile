@@ -10,10 +10,10 @@ import (
 func TestBasicStats(t *testing.T) {
 	In := ParsedLog{
 		Resources: map[string]ResourceMetric{
-			"a": ResourceMetric{1, 0, 0, 0, Created},
-			"b": ResourceMetric{1, 0, 0, 0, Created},
-			"c": ResourceMetric{1, 0, 0, 0, Created},
-			"d": ResourceMetric{1, 0, 0, 0, Created},
+			"a": ResourceMetric{NumCalls: 1, CreationStatus: Created},
+			"b": ResourceMetric{NumCalls: 1, CreationStatus: Created},
+			"c": ResourceMetric{NumCalls: 1, CreationStatus: Created},
+			"d": ResourceMetric{NumCalls: 1, CreationStatus: Created},
 		},
 	}
 	Out := GetBasicStats(In)
@@ -25,10 +25,10 @@ func TestBasicStats(t *testing.T) {
 func TestTimeStats(t *testing.T) {
 	In := ParsedLog{
 		Resources: map[string]ResourceMetric{
-			"a": ResourceMetric{1, 1000, 0, 0, Created},
-			"b": ResourceMetric{1, 2000, 0, 0, Created},
-			"c": ResourceMetric{1, 3000, 0, 0, Created},
-			"d": ResourceMetric{1, 59000, 0, 0, Created},
+			"a": ResourceMetric{NumCalls: 1, TotalTime: 1000, CreationStatus: Created},
+			"b": ResourceMetric{NumCalls: 1, TotalTime: 2000, CreationStatus: Created},
+			"c": ResourceMetric{NumCalls: 1, TotalTime: 3000, CreationStatus: Created},
+			"d": ResourceMetric{NumCalls: 1, TotalTime: 59000, CreationStatus: Created},
 		},
 	}
 	Out := GetTimeStats(In)
@@ -46,11 +46,11 @@ func TestTimeStats(t *testing.T) {
 func TestStatusStats(t *testing.T) {
 	In := ParsedLog{
 		Resources: map[string]ResourceMetric{
-			"a": ResourceMetric{1, 0, 0, 0, Created},
-			"b": ResourceMetric{1, 0, 0, 0, Failed},
-			"c": ResourceMetric{1, 0, 0, 0, Failed},
-			"d": ResourceMetric{1, 0, 0, 0, AllCreated},
-			"e": ResourceMetric{1, 0, 0, 0, SomeFailed},
+			"a": ResourceMetric{NumCalls: 1, CreationStatus: Created},
+			"b": ResourceMetric{NumCalls: 1, CreationStatus: Failed},
+			"c": ResourceMetric{NumCalls: 1, CreationStatus: Failed},
+			"d": ResourceMetric{NumCalls: 1, CreationStatus: AllCreated},
+			"e": ResourceMetric{NumCalls: 1, CreationStatus: SomeFailed},
 		},
 	}
 	Out := GetCreationStatusStats(In)
@@ -67,13 +67,13 @@ func TestStatusStats(t *testing.T) {
 func TestModuleStats(t *testing.T) {
 	In := ParsedLog{
 		Resources: map[string]ResourceMetric{
-			"r.test":                                            ResourceMetric{1, 0, 0, 0, Created},
-			"module.test1.resource.test1":                       ResourceMetric{1, 0, 0, 0, Created},
-			"module.test1.resource.test2":                       ResourceMetric{1, 0, 0, 0, Created},
-			"module.test1.resource.test3":                       ResourceMetric{1, 0, 0, 0, Created},
-			"module.test2.resource.test1":                       ResourceMetric{1, 0, 0, 0, Created},
-			"module.test2.resource.test2":                       ResourceMetric{1, 0, 0, 0, Created},
-			"module.a.module.b.module.c.module.d.resource.test": ResourceMetric{1, 0, 0, 0, Created},
+			"r.test":                                            ResourceMetric{NumCalls: 1, CreationStatus: Created},
+			"module.test1.resource.test1":                       ResourceMetric{NumCalls: 1, CreationStatus: Created},
+			"module.test1.resource.test2":                       ResourceMetric{NumCalls: 1, CreationStatus: Created},
+			"module.test1.resource.test3":                       ResourceMetric{NumCalls: 1, CreationStatus: Created},
+			"module.test2.resource.test1":                       ResourceMetric{NumCalls: 1, CreationStatus: Created},
+			"module.test2.resource.test2":                       ResourceMetric{NumCalls: 1, CreationStatus: Created},
+			"module.a.module.b.module.c.module.d.resource.test": ResourceMetric{NumCalls: 1, CreationStatus: Created},
 		},
 	}
 	Out := GetModuleStats(In)
