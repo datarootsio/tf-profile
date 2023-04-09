@@ -8,11 +8,11 @@ import (
 // Take a parsed log and aggregate resources created
 // by the same `foreach` or `count` loop.
 func Aggregate(log ParsedLog) (ParsedLog, error) {
-	New := ParsedLog{resources: make(map[string]ResourceMetric)}
+	New := ParsedLog{Resources: make(map[string]ResourceMetric)}
 
 	// Collect all resource names in slice and sort
 	ResourceNames := []string{}
-	for k, _ := range log.resources {
+	for k, _ := range log.Resources {
 		ResourceNames = append(ResourceNames, k)
 	}
 	sort.Strings(ResourceNames)
@@ -33,9 +33,9 @@ func Aggregate(log ParsedLog) (ParsedLog, error) {
 			AggName, AggMetric := aggregateResources(log, ToAgg)
 
 			// Add aggregated resource to log we're building
-			NewLog := New.resources
+			NewLog := New.Resources
 			NewLog[AggName] = AggMetric
-			New.resources = NewLog
+			New.Resources = NewLog
 
 			// Start over with what the resource we just saw
 			ToAgg = []string{name}
@@ -45,9 +45,9 @@ func Aggregate(log ParsedLog) (ParsedLog, error) {
 	// Aggregate leftovers in the list to get the final result
 	if len(ToAgg) > 0 {
 		AggName, AggMetric := aggregateResources(log, ToAgg)
-		NewLog := New.resources
+		NewLog := New.Resources
 		NewLog[AggName] = AggMetric
-		New.resources = NewLog
+		New.Resources = NewLog
 	}
 
 	return New, nil
@@ -85,12 +85,12 @@ func canAggregate(Resource1 string, Resource2 string) bool {
 func aggregateResources(log ParsedLog, resources []string) (string, ResourceMetric) {
 	// Singleton, just return it
 	if len(resources) == 1 {
-		return resources[0], log.resources[resources[0]]
+		return resources[0], log.Resources[resources[0]]
 	}
 
 	Metrics := []ResourceMetric{}
 	for _, r := range resources {
-		Metrics = append(Metrics, log.resources[r])
+		Metrics = append(Metrics, log.Resources[r])
 	}
 
 	return aggregateResourceNames(resources...), aggregateResourceMetrics(Metrics...)

@@ -34,13 +34,13 @@ func TestParseResourceCreatedMinutes(t *testing.T) {
 }
 
 func TestFullParse(t *testing.T) {
-	file, _ := os.Open("../../test/multiple_resources.log")
+	file, _ := os.Open("../../../test/multiple_resources.log")
 	s := bufio.NewScanner(file)
 
 	log, err := Parse(s, false)
 	assert.Nil(t, err)
 
-	metrics, ok := log.resources["time_sleep.count_9"]
+	metrics, ok := log.Resources["time_sleep.count_9"]
 	assert.True(t, ok)
 
 	expected := ResourceMetric{
@@ -54,7 +54,7 @@ func TestFullParse(t *testing.T) {
 		t.Fatalf("Expected %v, got %v\n", expected, metrics)
 	}
 
-	metrics2 := log.resources["time_sleep.for_each_a"]
+	metrics2 := log.Resources["time_sleep.for_each_a"]
 	expected2 := ResourceMetric{
 		NumCalls:               1,
 		TotalTime:              1000,

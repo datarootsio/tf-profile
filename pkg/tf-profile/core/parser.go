@@ -47,7 +47,7 @@ type (
 	ParsedLog struct {
 		creationStartedCount  int
 		createdCompletedCount int
-		resources             map[string]ResourceMetric
+		Resources             map[string]ResourceMetric
 	}
 )
 
@@ -97,7 +97,7 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 
 // Insert a new ResourceMetric into the log
 func InsertResourceMetric(log ParsedLog, resource string, idx int) {
-	(log.resources)[resource] = ResourceMetric{
+	(log.Resources)[resource] = ResourceMetric{
 		NumCalls:               1,
 		TotalTime:              -1, // Not finished yet, will be overwritten
 		CreationStartedIndex:   idx,
@@ -108,7 +108,7 @@ func InsertResourceMetric(log ParsedLog, resource string, idx int) {
 
 // When creation is done, update the record in the log
 func FinishResourceCreation(log ParsedLog, resource string, duration float64, idx int) error {
-	record, exists := log.resources[resource]
+	record, exists := log.Resources[resource]
 
 	if exists == false {
 		msg := fmt.Sprintf("Resource %v finished creation, but start was not recorded!\n", resource)
@@ -118,7 +118,7 @@ func FinishResourceCreation(log ParsedLog, resource string, duration float64, id
 	record.CreationCompletedIndex = idx
 	record.TotalTime = duration
 	record.CreationStatus = Created
-	log.resources[resource] = record
+	log.Resources[resource] = record
 
 	return nil
 }

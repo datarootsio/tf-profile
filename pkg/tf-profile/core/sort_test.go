@@ -24,7 +24,7 @@ func TestParseSortSpec(t *testing.T) {
 }
 
 func TestSort(t *testing.T) {
-	file, _ := os.Open("../../test/multiple_resources.log")
+	file, _ := os.Open("../../../test/multiple_resources.log")
 	s := bufio.NewScanner(file)
 	log, err := Parse(s, false)
 	assert.Nil(t, err)
@@ -52,5 +52,4 @@ func TestSort(t *testing.T) {
 	for i := 0; i < len(expected); i++ {
 		assert.Equal(t, expected[i], sorted2[len(expected)-i-1])
 	}
-	PrintTable(log, "tot_time=asc,idx_created=asc")
 }
