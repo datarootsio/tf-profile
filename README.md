@@ -159,3 +159,7 @@ module.test[0]                      3  4000      9             7            AllC
 🚧 Under construction (not implemented) 🚧
 
 ## Screenshots
+
+![stats.png](https://github.com/QuintenBruynseraede/tf-profile/blob/main/.github/stats.png?raw=true)
+
+![table.png](https://github.com/QuintenBruynseraede/tf-profile/blob/main/.github/table.png?raw=true)
