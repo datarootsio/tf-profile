@@ -70,6 +70,7 @@ func TestModuleStats(t *testing.T) {
 			"r.test":                                            ResourceMetric{1, 0, 0, 0, Created},
 			"module.test1.resource.test1":                       ResourceMetric{1, 0, 0, 0, Created},
 			"module.test1.resource.test2":                       ResourceMetric{1, 0, 0, 0, Created},
+			"module.test1.resource.test3":                       ResourceMetric{1, 0, 0, 0, Created},
 			"module.test2.resource.test1":                       ResourceMetric{1, 0, 0, 0, Created},
 			"module.test2.resource.test2":                       ResourceMetric{1, 0, 0, 0, Created},
 			"module.a.module.b.module.c.module.d.resource.test": ResourceMetric{1, 0, 0, 0, Created},
@@ -79,11 +80,11 @@ func TestModuleStats(t *testing.T) {
 	Expected := []Stat{
 		Stat{"Number of top-level modules", "3"},
 		Stat{"Largest top-level module", "module.test1"},
-		Stat{"Size of largest top-level module", "2"},
+		Stat{"Size of largest top-level module", "3"},
 		Stat{"Deepest module", "module.a.module.b.module.c.module.d"},
 		Stat{"Deepest module depth", "4"},
 		Stat{"Largest leaf module", "module.test1"},
-		Stat{"Size of largest leaf module", "2"},
+		Stat{"Size of largest leaf module", "3"},
 	}
 	assert.Equal(t, Expected, Out)
 }
