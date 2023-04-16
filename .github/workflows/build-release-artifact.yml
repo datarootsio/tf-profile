@@ -10,7 +10,6 @@ jobs:
     strategy:
       matrix:
         os: [linux, darwin, windows]
-        extension: [".linux", ".darwin", ".exe"]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -22,7 +21,11 @@ jobs:
 
       - name: Build Go binaries
         run: |
-          CGO_ENABLED=0 GOOS=${{ matrix.os }} go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o tf-profile${{ matrix.extension }} .
+          if [ ${{ matrix.os }} == "windows"]; then
+            CGO_ENABLED=0 GOOS=${{ matrix.os }} go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o tf-profile .
+          else
+            CGO_ENABLED=0 GOOS=${{ matrix.os }} go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o tf-profile.exe .
+          fi
 
       - name: Extract release version from branch name
         id: release_version
@@ -32,4 +35,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: tf-profile-v${{ steps.release_version.outputs.version }}-${{ matrix.os }}-${{ matrix.extension }}
-          path: ./tf-profile${{ matrix.extension }}
+          path: ./tf-profile*
