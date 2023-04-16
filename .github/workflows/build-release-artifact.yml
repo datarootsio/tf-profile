@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [linux, darwin, windows]
         extension: [".linux", ".darwin", ".exe"]
     steps:
       - name: Checkout code
