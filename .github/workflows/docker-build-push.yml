@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - 'release/*'
-      - 'feature/*' # Remove before merge :)
 
 jobs:
   build:
