@@ -20,6 +20,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Extract release version from branch name
+        id: release_version
         run: echo "::set-output name=version::${GITHUB_REF##*/}"
 
       - name: Build Docker image
