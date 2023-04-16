@@ -34,5 +34,7 @@ jobs:
       - name: Create artifact
         uses: actions/upload-artifact@v2
         with:
-          name: tf-profile-v${{ steps.release_version.outputs.version }}-${{ matrix.os }}-${{ matrix.extension }}
-          path: ./tf-profile*
+          name: tf-profile-v${{ steps.release_version.outputs.version }}-${{ matrix.os }}
+          path: |
+            ./tf-profile
+            ./tf-profile.exe
