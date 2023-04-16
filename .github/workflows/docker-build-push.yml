@@ -19,11 +19,8 @@ jobs:
           username: qbruynseraede
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Test
-        run: echo ${GITHUB_REF##*/}
-
       - name: Extract release version from branch name
-        run: echo "::set-output name=version::${GITHUB_REF#refs/heads/feature/}"
+        run: echo "::set-output name=version::${GITHUB_REF##*/}"
 
       - name: Build Docker image
         run: >
