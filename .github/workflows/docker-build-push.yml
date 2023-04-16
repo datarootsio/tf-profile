@@ -20,15 +20,15 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Extract release version from branch name
-        run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/heads/release/}
+        run: echo "::set-output name=version::${GITHUB_REF#refs/heads/release/}"
 
       - name: Build Docker image
         run: | 
           docker build 
-          -t qbruynseraede/tf-profile:${{ env.RELEASE_VERSION }} 
+          -t qbruynseraede/tf-profile:${{ steps.release_version.outputs.version }}
           -f build/Dockerfile 
           .
 
       - name: Push Docker image
-        run: docker push qbruynseraede/tf-profile:${{ env.RELEASE_VERSION }}
+        run: docker push qbruynseraede/tf-profile:${{ steps.release_version.outputs.version }}
 
