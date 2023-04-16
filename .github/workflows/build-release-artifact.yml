@@ -21,7 +21,7 @@ jobs:
 
       - name: Build Go binaries
         run: |
-          if [ ${{ matrix.os }} == "windows"]; then
+          if [ ${{ matrix.os }} == "windows" ]; then
             CGO_ENABLED=0 GOOS=${{ matrix.os }} go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o tf-profile .
           else
             CGO_ENABLED=0 GOOS=${{ matrix.os }} go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o tf-profile.exe .
