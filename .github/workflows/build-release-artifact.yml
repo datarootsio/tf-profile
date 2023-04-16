@@ -3,7 +3,6 @@ on:
   push:
     branches:
     - 'release/*'
-    - 'feature/*' # Remove before merge :)
 jobs:
   build:
     runs-on: ubuntu-latest
