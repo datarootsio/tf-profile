@@ -23,7 +23,7 @@ jobs:
         run: echo "::set-output name=version::${GITHUB_REF#refs/heads/release/}"
 
       - name: Build Docker image
-        run: | 
+        run: >
           docker build 
           -t qbruynseraede/tf-profile:${{ steps.release_version.outputs.version }}
           -f build/Dockerfile 
