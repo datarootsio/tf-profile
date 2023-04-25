@@ -12,13 +12,44 @@ Main features:
 
 ## Installation
 
-For now, the only supported way is to build the binary yourself. This requires at least version 1.20 of the `go` cli.
+### Binary download
+
+- Head over to the releases page ([https://github.com/QuintenBruynseraede/tf-profile/releases](https://github.com/QuintenBruynseraede/tf-profile/releases)) 
+- Download the correct binary for your operating system
+- Copy it to a path that is on your `$PATH`. On a Linux system, `/usr/local/bin` is the most common location.
+
+### Using docker
+
+If you want to try `tf-profile` without installing anything, you can run it using Docker (or similar).
 
 ```bash
-$ git clone git@github.com:QuintenBruynseraede/tf-profile.git
-$ cd tf-profile && go build .
-$ sudo ln -s $(pwd)/tf-profile /usr/local/bin  # Optional: only if you want to run tf-profile from other directories
-$ tf-profile --help
+❱ cat my_log_file.log | docker run -i qbruynseraede/tf-profile:0.0.1 stats
+
+Key                                Value                                     
+Number of resources created        1510                                      
+                                                                             
+Cumulative duration                36m19s                                    
+Longest apply time                 7m18s                                     
+Longest apply resource             time_sleep.foo[*]                         
+...
+```
+
+Optionally, define an alias:
+
+```bash
+❱ alias tf-profile=docker run -i qbruynseraede/tf-profile:0.0.1
+❱ cat my_log_file.log | tf-profile
+```
+
+### Build from source
+
+This requires at least version 1.20 of the `go` cli.
+
+```bash
+❱ git clone git@github.com:QuintenBruynseraede/tf-profile.git
+❱ cd tf-profile && go build .
+❱ sudo ln -s $(pwd)/tf-profile /usr/local/bin  # Optional: only if you want to run tf-profile from other directories
+❱ tf-profile --help
 tf-profile is a CLI tool to profile Terraform runs
 
 Usage:
@@ -30,8 +61,8 @@ Usage:
 `tf-profile` handles input from stdin and from files. These two commands are therefore equivalent:
 
 ```bash
-$ terraform apply -auto-approve | tf-profile table
-$ terraform apply -auto-approve > log.txt && tf-profile table log.txt
+❱ terraform apply -auto-approve | tf-profile table
+❱ terraform apply -auto-approve > log.txt && tf-profile table log.txt
 ```
 
 Three major commands are supported:
@@ -46,9 +77,9 @@ Three major commands are supported:
 `tf-profile stats` is the most basic command. Given a Terraform log, it will only provide high-level statistics.
 
 ```bash
-$ terraform apply -auto-approve > log.txt
-$ tf-profile stats log.txt
-> tf-profile stats test/many_modules.log
+❱ terraform apply -auto-approve > log.txt
+❱ tf-profile stats log.txt
+❱ tf-profile stats test/many_modules.log
 
 Key                                Value    
 -----------------------------------------------------------------                       
@@ -84,8 +115,8 @@ Size of largest leaf module        40
    
     With resource aggregation, more informative statuses have precedence over less informative statuses. For example, `AllCreated` will be shown over `AllStarted`.
 ```bash
-$ terraform apply -auto-approve > log.txt
-$ tf-profile table log.txt
+❱ terraform apply -auto-approve > log.txt
+❱ tf-profile table log.txt
 
 resource                            n  tot_time  idx_creation  idx_created  status    
 -------------------------------------------------------------------------------------- 
@@ -102,15 +133,9 @@ Entries in this table can be sorted by providing a `--sort` (shorthand `-s`) arg
 - `tot_time=asc,resource=desc,status=asc`: sort by total time, resource name and creation status in that order
 
 ```bash
-$ terraform apply -auto-approve > log.txt
-$ tf-profile table --sort "tot_time=asc,resource=desc" log.txt
-
-resource                            n  tot_time  idx_creation  idx_created  status      
---------------------------------------------------------------------------------------
-module.test[0].time_sleep.count[*]  3  4000      9             7            AllCreated  
-module.test[1].time_sleep.count[*]  3  5000      3             9            AllCreated  
-time_sleep.foreach[*]               3  7000      4             11           AllCreated  
-time_sleep.count[*]                 5  11000     0             13           AllCreated 
+❱ terraform apply -auto-approve > log.txt
+❱ tf-profile table --sort "tot_time=asc,resource=desc" log.txt
+❱ tf-profile table --sort "n=desc,index_creation=desc" log.txt
 ```
 
 ### Mirroring input with `--tee`
@@ -119,7 +144,7 @@ When piping stdinput into `tf-profile`, it is convenient to use the `--tee` flag
 
 Example:
 ```bash
-$ terraform apply -auto-approve | tf-profile table --tee
+❱ terraform apply -auto-approve | tf-profile table --tee
 
 Terraform used the selected providers to generate the following execution
 plan. Resource actions are indicated with the following symbols:
@@ -129,13 +154,7 @@ Terraform will perform the following actions:
 
   # aws_subnet.test[0] will be created
   ...
-
-resource                            n  tot_time  idx_creation  idx_created  status    
--------------------------------------------------------------------------------------- 
-time_sleep.count[*]                 5  11000     0             13           AllCreated  
-time_sleep.foreach[*]               3  7000      4             11           AllCreated  
-module.test[1].time_sleep.count[*]  3  5000      3             9            AllCreated  
-module.test[0].time_sleep.count[*]  3  4000      9             7            AllCreated 
+  < result of tf-profile will appear after the logs>
 ```
 
 ### Limit output with `--max_depth`
@@ -144,7 +163,7 @@ module.test[0].time_sleep.count[*]  3  4000      9             7            AllC
 When working with a large codebase, viewing statistics for every resource may be too detailed. You can limit the maximum module depth that `tf-profile` parses with `--max_depth` (default: -1, no limit). Any nested modules deeper than `--max_depth` are simply shown as their module name. Statistics of resources within that module are aggregated.
 
 ```bash
-$ terraform apply -auto-approve | tf-profile table --max_depth 1 --tee
+❱ terraform apply -auto-approve | tf-profile table --max_depth 1 --tee
 
 resource                            n  tot_time  idx_creation  idx_created  status    
 -------------------------------------------------------------------------------------- 
@@ -163,3 +182,11 @@ module.test[0]                      3  4000      9             7            AllC
 ![stats.png](https://github.com/QuintenBruynseraede/tf-profile/blob/main/.github/stats.png?raw=true)
 
 ![table.png](https://github.com/QuintenBruynseraede/tf-profile/blob/main/.github/table.png?raw=true)
+
+## Roadmap
+
+- [x] Release v0.0.1 as binary and as a Docker image
+- [ ] Improve parser
+  - [ ] Detect failed resources
+  - [ ] Use plan and refresh phase to discover more resources
+- [ ] Implement a basic [flame graph](https://github.com/brendangregg/FlameGraph) in `tf-profile graph`
