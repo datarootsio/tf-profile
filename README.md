@@ -189,4 +189,10 @@ module.test[0]                      3  4000      9             7            AllC
 - [ ] Improve parser
   - [x] Detect failed resources (see [#13](https://github.com/QuintenBruynseraede/tf-profile/pull/13))
   - [ ] Use plan and refresh phase to discover more resources
-- [ ] Implement a basic [flame graph](https://github.com/brendangregg/FlameGraph) in `tf-profile graph`
+- [ ] Implement a basic Gantt chart in `tf-profile graph`
+- [ ] Implement a single-resource view in `tf-profile detail <resource.`
+  - This command should filter logs down to 1 single resource (i.e. refresh, plan, changes, and result)
+- [ ] Small improvements:
+  - [ ] Add `no-agg` option to disable aggregation of for_each and count
+  - [ ] Add `max_depth` option to aggregate deep submodules
+  - [ ] Find a way to rename the columns in `tf-profile table` without breaking `--sort`
