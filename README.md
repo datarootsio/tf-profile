@@ -187,6 +187,6 @@ module.test[0]                      3  4000      9             7            AllC
 
 - [x] Release v0.0.1 as binary and as a Docker image
 - [ ] Improve parser
-  - [ ] Detect failed resources
+  - [x] Detect failed resources (see [#13](https://github.com/QuintenBruynseraede/tf-profile/pull/13))
   - [ ] Use plan and refresh phase to discover more resources
 - [ ] Implement a basic [flame graph](https://github.com/brendangregg/FlameGraph) in `tf-profile graph`
