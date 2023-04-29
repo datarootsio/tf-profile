@@ -66,3 +66,33 @@ func TestFullParse(t *testing.T) {
 		t.Fatalf("Expected %v, got %v\n", expected2, metrics2)
 	}
 }
+
+func TestFailureParseLine(t *testing.T) {
+	r, err := ParseCreationFailed(" with aws_ssm_parameter.bad2[0],  ")
+	assert.Nil(t, err)
+	assert.Equal(t, "aws_ssm_parameter.bad2[0]", r)
+}
+
+func TestFailureParse(t *testing.T) {
+	file, _ := os.Open("../../../test/failures.log")
+	s := bufio.NewScanner(file)
+
+	log, err := Parse(s, false)
+	assert.Nil(t, err)
+
+	metrics, exists := log.Resources["aws_ssm_parameter.good2[0]"]
+	assert.True(t, exists)
+	assert.Equal(t, metrics.CreationStatus, Created)
+
+	metrics, exists = log.Resources["aws_ssm_parameter.good"]
+	assert.True(t, exists)
+	assert.Equal(t, metrics.CreationStatus, Created)
+
+	metrics, exists = log.Resources["aws_ssm_parameter.bad2[1]"]
+	assert.True(t, exists)
+	assert.Equal(t, metrics.CreationStatus, Failed)
+
+	metrics, exists = log.Resources["aws_ssm_parameter.bad"]
+	assert.True(t, exists)
+	assert.Equal(t, metrics.CreationStatus, Failed)
+}

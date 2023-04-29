@@ -13,6 +13,7 @@ var (
 	ResourceName            = `[a-zA-Z0-9_.["\]]*` // Simplified regex but it will do
 	ResourceCreated         = fmt.Sprintf("%v: Creation complete after", ResourceName)
 	ResourceCreationStarted = fmt.Sprintf("%v: Creating...", ResourceName)
+	ResourceCreationFailed  = "Error: "
 )
 
 const (
@@ -58,6 +59,9 @@ func (e *LineParseError) Error() string {
 func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 	CreationStarted := 0
 	CreationCompleted := 0
+	// In case a resource update fails, the resource name comes three lines after
+	// the error. This counter keeps track of when we can read the resource name
+	LineSinceFailure := -1
 
 	tflog := ParsedLog{0, 0, make(map[string]ResourceMetric)}
 
@@ -71,8 +75,7 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 		if match {
 			resource, time, err := ParseResourceCreated(line)
 			if err != nil {
-				msg := `This line was detected to contain resource creation, 
-				            but tf-profile is unable to parse it!`
+				msg := `This line was detected to contain resource creation, but tf-profile is unable to parse it!`
 				return ParsedLog{}, &LineParseError{msg}
 			}
 			FinishResourceCreation(tflog, resource, time, CreationCompleted)
@@ -83,12 +86,28 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 		if match {
 			resource, err := ParseResourceCreationStarted(line)
 			if err != nil {
-				msg := `This line was detected to contain resource creation, 
-				            but tf-profile is unable to parse it!`
+				msg := `This line was detected to contain resource creation, but tf-profile is unable to parse it!`
 				return ParsedLog{}, &LineParseError{msg}
 			}
 			InsertResourceMetric(tflog, resource, CreationStarted)
 			CreationStarted += 1
+		}
+
+		match, _ = regexp.MatchString(ResourceCreationFailed, line)
+		if match {
+			LineSinceFailure = 0 // Start counting
+		}
+		if LineSinceFailure != -1 {
+			LineSinceFailure += 1
+			if LineSinceFailure == 4 {
+				resource, err := ParseCreationFailed(line)
+				if err != nil {
+					msg := `This line was detected to contain a resource name, but tf-profile is unable to parse it!`
+					return ParsedLog{}, &LineParseError{msg}
+				}
+				MarkAsFailed(tflog, resource)
+				LineSinceFailure = -1 // Stop line counting
+			}
 		}
 	}
 
@@ -123,6 +142,18 @@ func FinishResourceCreation(log ParsedLog, resource string, duration float64, id
 	return nil
 }
 
+// Mark a resource in the log as Failed
+func MarkAsFailed(log ParsedLog, resource string) error {
+	record, exists := log.Resources[resource]
+	if exists == false {
+		msg := fmt.Sprintf("Creation of resource %v failed, but its was not seen before!\n", resource)
+		return &LineParseError{msg}
+	}
+	record.CreationStatus = Failed
+	log.Resources[resource] = record
+	return nil
+}
+
 // Parse one line containing resource creation text
 func ParseResourceCreated(line string) (string, float64, error) {
 	tokens := strings.Split(line, ":")
@@ -150,6 +181,18 @@ func ParseResourceCreationStarted(line string) (string, error) {
 		return "", &LineParseError{msg}
 	}
 	return tokens[0], nil
+}
+
+// Parse one line containing resource failure ("with <resource-name>,")
+func ParseCreationFailed(line string) (string, error) {
+	tokens := strings.Split(line, "with ")
+	if len(tokens) < 2 {
+		msg := fmt.Sprintf("Unable to parse failure line: %v\n", line)
+		return "", &LineParseError{msg}
+	}
+	line = strings.TrimSpace(line)
+	resource := strings.Split(line, "with ")[1] // Everything after 'with'
+	return resource[:len(resource)-1], nil
 }
 
 // Convert a create duration string into milliseconds
