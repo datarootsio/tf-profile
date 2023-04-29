@@ -7,7 +7,7 @@ CLI tool to profile Terraform runs, written in Go.
 Main features:
 - Modern CLI ([cobra](https://github.com/spf13/cobra)-based), including autocomplete
 - Read logs straight from your Terraform process (using pipe) or a log file
-- Can generate global stats, resource-level stats or vizualization
+- Can generate global stats, resource-level stats or visualizations
 - Provides many levels of granularity and aggregation, customizable outputs
 
 ## Installation
@@ -190,7 +190,7 @@ module.test[0]                      3  4000      9             7            AllC
   - [x] Detect failed resources (see [#13](https://github.com/QuintenBruynseraede/tf-profile/pull/13))
   - [ ] Use plan and refresh phase to discover more resources
 - [ ] Implement a basic Gantt chart in `tf-profile graph`
-- [ ] Implement a single-resource view in `tf-profile detail <resource.`
+- [ ] Implement a single-resource view in `tf-profile detail <resource>`
   - This command should filter logs down to 1 single resource (i.e. refresh, plan, changes, and result)
 - [ ] Small improvements:
   - [ ] Add `no-agg` option to disable aggregation of for_each and count
