@@ -80,7 +80,7 @@ func GetBasicStats(log ParsedLog) []Stat {
 		NumCalls += resource.NumCalls
 	}
 	return []Stat{
-		Stat{"Number of resources created", fmt.Sprint(NumCalls)},
+		Stat{"Number of resources in configuration", fmt.Sprint(NumCalls)},
 	}
 }
 
@@ -97,8 +97,8 @@ func GetTimeStats(log ParsedLog) []Stat {
 		}
 	}
 	return []Stat{
-		Stat{"Cumulative duration", formatDuration(TotalTime)},
-		Stat{"Longest apply time", formatDuration(HighestTime / 1000)},
+		Stat{"Cumulative duration", FormatDuration(TotalTime)},
+		Stat{"Longest apply time", FormatDuration(HighestTime / 1000)},
 		Stat{"Longest apply resource", HighestResource},
 	}
 }

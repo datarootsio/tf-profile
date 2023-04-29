@@ -18,7 +18,7 @@ func TestBasicStats(t *testing.T) {
 	}
 	Out := GetBasicStats(In)
 	assert.Equal(t, 1, len(Out))
-	assert.Equal(t, "Number of resources created", Out[0].name)
+	assert.Equal(t, "Number of resources in configuration", Out[0].name)
 	assert.Equal(t, "4", Out[0].value)
 }
 

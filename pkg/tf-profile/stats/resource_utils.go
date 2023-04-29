@@ -1,9 +1,7 @@
 package tfprofile
 
 import (
-	"fmt"
 	"strings"
-	"time"
 )
 
 // Extract the top level module.
@@ -26,17 +24,6 @@ func getTopLevelModule(name string) string {
 func getModuleDepth(name string) int {
 	tokens := len(strings.Split(name, "."))
 	return (tokens - 2) / 2
-}
-
-// Format a duration in seconds into "30s" or "2m30s"
-func formatDuration(seconds int) string {
-	duration := time.Duration(seconds) * time.Second
-	minutes := int(duration.Minutes())
-	seconds = seconds - (minutes * 60)
-	if minutes == 0 {
-		return fmt.Sprintf("%ds", seconds)
-	}
-	return fmt.Sprintf("%dm%ds", minutes, seconds)
 }
 
 // Given a full resource name, return the name of the deepest module it belongs to

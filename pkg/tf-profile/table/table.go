@@ -58,9 +58,9 @@ func PrintTable(log ParsedLog, sort_spec string) error {
 				tbl.AddRow(
 					resource,
 					(metric.NumCalls),
-					(metric.TotalTime),
-					(metric.CreationStartedIndex),
-					(metric.CreationCompletedIndex),
+					FormatDuration(int(metric.TotalTime/1000)), // Display as "10s" or "1m30s"
+					removeMinusOne(metric.CreationStartedIndex),
+					removeMinusOne(metric.CreationCompletedIndex),
 					(metric.CreationStatus),
 				)
 				break
@@ -72,4 +72,14 @@ func PrintTable(log ParsedLog, sort_spec string) error {
 	tbl.Print()
 
 	return nil
+}
+
+// Many metrics use -1 as value for "unknown at the time". When a resource change fails,
+// these initial values remain in the log. Before printing, we replace then with '/'
+func removeMinusOne(val int) string {
+	if val == -1 {
+		return "/"
+	} else {
+		return fmt.Sprintf("%v", val)
+	}
 }
