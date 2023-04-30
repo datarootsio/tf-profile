@@ -193,7 +193,7 @@ _Disclaimer:_ Terraform's logs do not contain any absolute timestamps. We can on
 
 ![table.png](https://github.com/QuintenBruynseraede/tf-profile/blob/main/.github/table.png?raw=true)
 
-![graph2.png](https://github.com/QuintenBruynseraede/tf-profile/blob/main/.github/grah2.png?raw=true)
+![graph2.png](https://github.com/QuintenBruynseraede/tf-profile/blob/main/.github/graph2.png?raw=true)
 
 ## Roadmap
 
