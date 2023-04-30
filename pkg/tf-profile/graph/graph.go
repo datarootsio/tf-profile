@@ -2,6 +2,7 @@ package tfprofile
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"os"
 	"sort"
@@ -33,7 +34,7 @@ func Graph(args []string, w int, h int, OutFile string) error {
 	}
 
 	CleanFailedResources(tflog)
-	err = PrintGNUPlotOutput(tflog, w, h, OutFile)
+	_, err = PrintGNUPlotOutput(tflog, w, h, OutFile)
 
 	return nil
 }
@@ -62,7 +63,7 @@ func CleanFailedResources(tflog ParsedLog) {
 
 // Use plot.tpl and a ParsedLog to generate all output for gnuplot.
 // This can be piped into gnuplot (optionally providing a filename at runtime)
-func PrintGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) error {
+func PrintGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) (string, error) {
 	// Context object for templating
 	Context := map[string]interface{}{}
 	Context["W"] = w
@@ -90,12 +91,17 @@ func PrintGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) error {
 	Context["Resources"] = Resources
 
 	template, _ := template.New("plot").Parse(Template)
-	err := template.Execute(os.Stdout, Context)
+	err := template.Execute(os.Stdout, Context) // To stdout
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return nil
+	var output bytes.Buffer
+	err = template.Execute(&output, Context) // To variable
+	if err != nil {
+		return "", err
+	}
+	return output.String(), nil
 }
 
 // To create a nice graph, sort the resources chronologically
