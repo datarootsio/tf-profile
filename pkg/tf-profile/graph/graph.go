@@ -37,23 +37,23 @@ func Graph(args []string, w int, h int, OutFile string) error {
 	return nil
 }
 
-// For failed resources, CreationCompletedIndex will always be -1, since we never
-// detect the end of their modifications. We manually set their CreationCompletedIndex
+// For failed resources, CreationCompletedEvent will always be -1, since we never
+// detect the end of their modifications. We manually set their CreationCompletedEvent
 // to the maximum value, leading to a long red bar.
 func CleanFailedResources(tflog ParsedLog) {
 	max := -1
 
 	// Find max creation value
 	for _, metrics := range tflog.Resources {
-		if metrics.CreationCompletedIndex > max {
-			max = metrics.CreationCompletedIndex
+		if metrics.CreationCompletedEvent > max {
+			max = metrics.CreationCompletedEvent
 		}
 	}
 
 	// Update all non-successful resources to end at that index
 	for resource, metrics := range tflog.Resources {
 		if metrics.CreationStatus != Created && metrics.CreationStatus != AllCreated {
-			metrics.CreationCompletedIndex = max
+			metrics.CreationCompletedEvent = max
 			tflog.Resources[resource] = metrics
 		}
 	}
@@ -71,11 +71,13 @@ func PrintGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) error {
 	// Build list of lines and let template do the looping
 	Resources := []string{}
 	for k, v := range tflog.Resources {
+		NameForOutput := strings.Replace(k, "_", `\\\_`, -1)
+		NameForOutput = strings.Replace(NameForOutput, `"`, `'`, -1)
 		// Escape underscores and add the necessary metrics.
 		line := fmt.Sprintf("%v %v %v %v",
-			strings.Replace(k, "_", `\\\_`, -1),
-			v.CreationStartedIndex,
-			v.CreationCompletedIndex,
+			NameForOutput,
+			v.CreationStartedEvent,
+			v.CreationCompletedEvent,
 			v.CreationStatus,
 		)
 		Resources = append(Resources, line)

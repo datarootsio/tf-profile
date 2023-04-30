@@ -100,3 +100,13 @@ func TestFailureParse(t *testing.T) {
 	assert.True(t, exists)
 	assert.Equal(t, metrics.CreationStatus, Failed)
 }
+
+func TestSpecialResourceName(t *testing.T) {
+	// Name contains special characters: :/_
+	line := `module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"]: Creation complete after 0s [id=initial-eks-node-group-20230430082916737400000001-20230430082917966400000003]"`
+	name, duration, err := ParseResourceCreated(line)
+
+	assert.Nil(t, err)
+	assert.Equal(t, `module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"]`, name)
+	assert.Equal(t, float64(0), duration)
+}

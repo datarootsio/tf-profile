@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	ResourceName            = `[a-zA-Z0-9_.["\]]*` // Simplified regex but it will do
+	ResourceName            = `[a-zA-Z0-9_.["\]\/:]*` // Simplified regex but it will do
 	ResourceCreated         = fmt.Sprintf("%v: Creation complete after", ResourceName)
 	ResourceCreationStarted = fmt.Sprintf("%v: Creating...", ResourceName)
 	ResourceCreationFailed  = "Error: "
@@ -68,9 +68,9 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 	CreationStarted := 0
 	CreationCompleted := 0
 	EventIndex := 0 // Any start or ending of a creation/modification/deletion is an event
-	// In case a resource update fails, the resource name comes three lines after
-	// the error. This counter keeps track of when we can read the resource name
-	LineSinceFailure := -1
+	// In case a resource update fails, the resource name comes a couple of lines after
+	// the error. This flag is true when we are looking for the resource after an error.
+	FailureSeen := false
 
 	tflog := ParsedLog{0, 0, make(map[string]ResourceMetric)}
 
@@ -84,7 +84,7 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 		if match {
 			resource, time, err := ParseResourceCreated(line)
 			if err != nil {
-				msg := `This line was detected to contain resource creation, but tf-profile is unable to parse it!`
+				msg := fmt.Sprintf(`Resource name detected (CreationEnded), but unable to parse line "%v"`, line)
 				return ParsedLog{}, &LineParseError{msg}
 			}
 			FinishResourceCreation(tflog, resource, time, CreationCompleted, EventIndex)
@@ -96,7 +96,7 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 		if match {
 			resource, err := ParseResourceCreationStarted(line)
 			if err != nil {
-				msg := `This line was detected to contain resource creation, but tf-profile is unable to parse it!`
+				msg := fmt.Sprintf(`Resource name detected (CreationStarted), but unable to parse line "%v"`, line)
 				return ParsedLog{}, &LineParseError{msg}
 			}
 			InsertResourceMetric(tflog, resource, CreationStarted, EventIndex)
@@ -106,18 +106,17 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 
 		match, _ = regexp.MatchString(ResourceCreationFailed, line)
 		if match {
-			LineSinceFailure = 0 // Start counting
+			FailureSeen = true // Start counting
 		}
-		if LineSinceFailure != -1 {
-			LineSinceFailure += 1
-			if LineSinceFailure == 4 {
+		if FailureSeen == true {
+			if strings.Contains(line, "with ") && strings.Contains(line, ",") {
 				resource, err := ParseCreationFailed(line)
 				if err != nil {
-					msg := `This line was detected to contain a resource name, but tf-profile is unable to parse it!`
+					msg := fmt.Sprintf(`Line contains failed resource name, we can't parse it: "%v"`, line)
 					return ParsedLog{}, &LineParseError{msg}
 				}
 				MarkAsFailed(tflog, resource)
-				LineSinceFailure = -1 // Stop line counting
+				FailureSeen = false
 			}
 		}
 	}
@@ -170,7 +169,7 @@ func MarkAsFailed(log ParsedLog, resource string) error {
 
 // Parse one line containing resource creation text
 func ParseResourceCreated(line string) (string, float64, error) {
-	tokens := strings.Split(line, ":")
+	tokens := strings.Split(line, ": Creation complete after ")
 	if len(tokens) < 2 {
 		msg := fmt.Sprintf("Unable to parse resource creation line: %v\n", line)
 		return "", -1, &LineParseError{msg}
@@ -178,19 +177,19 @@ func ParseResourceCreated(line string) (string, float64, error) {
 	resource := tokens[0]
 
 	// The next token will contain the create time (" Creation complete after ...s [id=...]")
-	tokens2 := strings.Split(tokens[1], " [id=")
+	tokens2 := strings.Split(tokens[1], " ")
 	if len(tokens2) < 2 {
 		msg := fmt.Sprintf("Unable to parse creation duration: %v\n", tokens[1])
 		return "", -1, &LineParseError{msg}
 	}
-	create_duration := ParseCreateDurationString(tokens2[0][25:])
+	create_duration := ParseCreateDurationString(tokens2[0])
 	return resource, create_duration, nil
 }
 
 // Parse one line containing resource creation text
 func ParseResourceCreationStarted(line string) (string, error) {
-	tokens := strings.Split(line, ":")
-	if len(tokens) < 2 {
+	tokens := strings.Split(line, ": Creating...")
+	if len(tokens) < 2 || tokens[1] != "" {
 		msg := fmt.Sprintf("Unable to parse resource creation line: %v\n", line)
 		return "", &LineParseError{msg}
 	}
