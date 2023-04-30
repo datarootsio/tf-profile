@@ -175,7 +175,17 @@ module.test[0]                      3  4000      9             7            AllC
 
 ## `tf-profile graph`
 <a name="anchor_graph"></a>
-🚧 Under construction (not implemented) 🚧
+
+`tf-profile graph` is used to visualize your terraform logs. It generates a [Gantt](https://en.wikipedia.org/wiki/Gantt_chart)-like chart that shows in which order resources were created. `tf-profile` does not actually create the final image, but generates a script file that [Gnuplot](https://en.wikipedia.org/wiki/Gnuplot) understands. 
+
+```bash
+tf-profile graph my_log.log --out graph.png --size 2000,1000 | gnuplot
+```
+
+![graph.png](https://github.com/QuintenBruynseraede/tf-profile/blob/main/.github/graph.png?raw=true)
+
+_Disclaimer:_ Terraform's logs do not contain any sort of absolute timestamps. We can only derive the order in which resources started and finished their modifications. Therefore, the output of `tf-profile graph` gives only a general indication of _how long_ something actually took.
+
 
 ## Screenshots
 
