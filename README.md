@@ -184,7 +184,7 @@ tf-profile graph my_log.log --out graph.png --size 2000,1000 | gnuplot
 
 ![graph.png](https://github.com/QuintenBruynseraede/tf-profile/blob/main/.github/graph.png?raw=true)
 
-_Disclaimer:_ Terraform's logs do not contain any sort of absolute timestamps. We can only derive the order in which resources started and finished their modifications. Therefore, the output of `tf-profile graph` gives only a general indication of _how long_ something actually took.
+_Disclaimer:_ Terraform's logs do not contain any absolute timestamps. We can only derive the order in which resources started and finished their modifications. Therefore, the output of `tf-profile graph` gives only a general indication of _how long_ something actually took. In other words: the X axis is meaningless, apart from the fact that it's monotonically increasing.
 
 
 ## Screenshots
