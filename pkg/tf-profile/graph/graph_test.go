@@ -26,7 +26,7 @@ func TestFailureParse(t *testing.T) {
 
 	err = Graph([]string{"../../../test/does-not-exist"}, 1000, 600, "tf-profile-graph.png")
 	assert.NotNil(t, err)
-	err = Graph([]string{"../../../test/does-not-exist"}, -1, -1, "tf-profile-graph.png")
+	err = Graph([]string{"../../../test/failures.log"}, -1, -1, "tf-profile-graph.png")
 	assert.NotNil(t, err)
 }
 
