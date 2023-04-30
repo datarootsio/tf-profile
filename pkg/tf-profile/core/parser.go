@@ -37,10 +37,18 @@ type (
 
 	// Data structure that holds all metrics for one particular resource
 	ResourceMetric struct {
-		NumCalls               int
-		TotalTime              float64
-		CreationStartedIndex   int // Resource was the Nth to start creation, not implemented
-		CreationCompletedIndex int // Resource was the Nth to finish creation
+		NumCalls  int
+		TotalTime float64
+		// Resource was the Nth to start creation.
+		CreationStartedIndex int
+		// Resource was the Nth to finish creation
+		CreationCompletedIndex int
+		// (Global) event index of when creation started. As this is a global event,
+		// it can be compared chronologically with a CreationCompletedEvent.
+		CreationStartedEvent int
+		// (Global) event index of when creation finished. As this is a global event,
+		// it can be compared chronologically with a CreationStartedEvent.
+		CreationCompletedEvent int // (Global) event index of when creation finished
 		CreationStatus         Status
 	}
 
@@ -59,6 +67,7 @@ func (e *LineParseError) Error() string {
 func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 	CreationStarted := 0
 	CreationCompleted := 0
+	EventIndex := 0 // Any start or ending of a creation/modification/deletion is an event
 	// In case a resource update fails, the resource name comes three lines after
 	// the error. This counter keeps track of when we can read the resource name
 	LineSinceFailure := -1
@@ -78,8 +87,9 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 				msg := `This line was detected to contain resource creation, but tf-profile is unable to parse it!`
 				return ParsedLog{}, &LineParseError{msg}
 			}
-			FinishResourceCreation(tflog, resource, time, CreationCompleted)
+			FinishResourceCreation(tflog, resource, time, CreationCompleted, EventIndex)
 			CreationCompleted += 1
+			EventIndex += 1
 		}
 
 		match, _ = regexp.MatchString(ResourceCreationStarted, line)
@@ -89,8 +99,9 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 				msg := `This line was detected to contain resource creation, but tf-profile is unable to parse it!`
 				return ParsedLog{}, &LineParseError{msg}
 			}
-			InsertResourceMetric(tflog, resource, CreationStarted)
+			InsertResourceMetric(tflog, resource, CreationStarted, EventIndex)
 			CreationStarted += 1
+			EventIndex += 1
 		}
 
 		match, _ = regexp.MatchString(ResourceCreationFailed, line)
@@ -115,29 +126,32 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 }
 
 // Insert a new ResourceMetric into the log
-func InsertResourceMetric(log ParsedLog, resource string, idx int) {
+func InsertResourceMetric(log ParsedLog, resource string, CreationIndex int, EventIndex int) {
 	(log.Resources)[resource] = ResourceMetric{
 		NumCalls:               1,
 		TotalTime:              -1, // Not finished yet, will be overwritten
-		CreationStartedIndex:   idx,
+		CreationStartedIndex:   CreationIndex,
 		CreationCompletedIndex: -1, // Not finished yet, will be overwritten
+		CreationStartedEvent:   EventIndex,
+		CreationCompletedEvent: -1, // Not finished yet, will be overwritten
 		CreationStatus:         Started,
 	}
 }
 
 // When creation is done, update the record in the log
-func FinishResourceCreation(log ParsedLog, resource string, duration float64, idx int) error {
-	record, exists := log.Resources[resource]
+func FinishResourceCreation(Log ParsedLog, Resource string, Duration float64, Idx int, Event int) error {
+	record, exists := Log.Resources[Resource]
 
 	if exists == false {
-		msg := fmt.Sprintf("Resource %v finished creation, but start was not recorded!\n", resource)
+		msg := fmt.Sprintf("Resource %v finished creation, but start was not recorded!\n", Resource)
 		return &LineParseError{msg}
 	}
 
-	record.CreationCompletedIndex = idx
-	record.TotalTime = duration
+	record.CreationCompletedIndex = Idx
+	record.TotalTime = Duration
 	record.CreationStatus = Created
-	log.Resources[resource] = record
+	record.CreationCompletedEvent = Event
+	Log.Resources[Resource] = record
 
 	return nil
 }

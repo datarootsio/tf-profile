@@ -116,6 +116,8 @@ func aggregateResourceMetrics(metrics ...ResourceMetric) ResourceMetric {
 	TotalTime := float64(0)
 	CreationStartedIndex := -1
 	CreationCompletedIndex := -1
+	CreationStartedEvent := -1
+	CreationCompletedEvent := -1
 
 	AllCreatedB := true
 	AllStartedB := true
@@ -125,10 +127,20 @@ func aggregateResourceMetrics(metrics ...ResourceMetric) ResourceMetric {
 
 	for _, metric := range metrics {
 		TotalTime += metric.TotalTime
+
+		// For CreationStartedIndex and CreationStartedEvent, take the first one we see
 		if CreationStartedIndex == -1 {
 			CreationStartedIndex = metric.CreationStartedIndex
 		}
+		if CreationStartedEvent == -1 {
+			CreationStartedEvent = metric.CreationStartedEvent
+		}
+
+		// For CreationCompletedIndex and CreationCompletedEvent, take the maximum
 		CreationCompletedIndex = maxInt(CreationCompletedIndex, metric.CreationCompletedIndex)
+		CreationCompletedEvent = maxInt(CreationCompletedEvent, metric.CreationCompletedEvent)
+
+		// Calculate aggregated statuses by "elimination"
 		if metric.CreationStatus == Created {
 			NoneStartedB = false
 			AllFailedB = false
@@ -172,6 +184,8 @@ func aggregateResourceMetrics(metrics ...ResourceMetric) ResourceMetric {
 		TotalTime:              TotalTime,
 		CreationStartedIndex:   CreationStartedIndex,
 		CreationCompletedIndex: CreationCompletedIndex,
+		CreationStartedEvent:   CreationStartedEvent,
+		CreationCompletedEvent: CreationCompletedEvent,
 		CreationStatus:         FinalStatus,
 	}
 }

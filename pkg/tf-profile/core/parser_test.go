@@ -46,8 +46,10 @@ func TestFullParse(t *testing.T) {
 	expected := ResourceMetric{
 		NumCalls:               1,
 		TotalTime:              10000,
-		CreationStartedIndex:   10, // Not implemented
+		CreationStartedIndex:   10,
 		CreationCompletedIndex: 12,
+		CreationStartedEvent:   11,
+		CreationCompletedEvent: 26,
 		CreationStatus:         Created,
 	}
 	if metrics != expected {
@@ -58,8 +60,10 @@ func TestFullParse(t *testing.T) {
 	expected2 := ResourceMetric{
 		NumCalls:               1,
 		TotalTime:              1000,
-		CreationStartedIndex:   5, // Not implemented
+		CreationStartedIndex:   5,
 		CreationCompletedIndex: 1,
+		CreationStartedEvent:   5,
+		CreationCompletedEvent: 12,
 		CreationStatus:         Created,
 	}
 	if metrics2 != expected2 {
