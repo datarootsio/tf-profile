@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 	"strings"
 	"text/template"
 
@@ -41,7 +42,7 @@ func Graph(args []string, w int, h int, OutFile string) error {
 // detect the end of their modifications. We manually set their CreationCompletedEvent
 // to the maximum value, leading to a long red bar.
 func CleanFailedResources(tflog ParsedLog) {
-	max := -1
+	max := 0
 
 	// Find max creation value
 	for _, metrics := range tflog.Resources {
@@ -68,17 +69,21 @@ func PrintGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) error {
 	Context["H"] = h
 	Context["File"] = OutFile
 
+	SortedResources := sortResourcesForGraph(tflog)
+	Resources := []string{} // Lines passed into template
+
 	// Build list of lines and let template do the looping
-	Resources := []string{}
-	for k, v := range tflog.Resources {
-		NameForOutput := strings.Replace(k, "_", `\\\_`, -1)
+	for _, r := range SortedResources {
+		metrics := tflog.Resources[r]
+
+		NameForOutput := strings.Replace(r, "_", `\\\_`, -1)
 		NameForOutput = strings.Replace(NameForOutput, `"`, `'`, -1)
 		// Escape underscores and add the necessary metrics.
 		line := fmt.Sprintf("%v %v %v %v",
 			NameForOutput,
-			v.CreationStartedEvent,
-			v.CreationCompletedEvent,
-			v.CreationStatus,
+			metrics.CreationStartedEvent,
+			metrics.CreationCompletedEvent,
+			metrics.CreationStatus,
 		)
 		Resources = append(Resources, line)
 	}
@@ -91,6 +96,21 @@ func PrintGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) error {
 	}
 
 	return nil
+}
+
+// To create a nice graph, sort the resources chronologically
+// according to CreationStartedEvent
+func sortResourcesForGraph(log ParsedLog) []string {
+	// Collect keys
+	keys := []string{}
+	for key := range log.Resources {
+		keys = append(keys, key)
+	}
+
+	sort.Slice(keys, func(i, j int) bool {
+		return log.Resources[keys[i]].CreationStartedEvent > log.Resources[keys[j]].CreationStartedEvent
+	})
+	return keys
 }
 
 const Template string = `
