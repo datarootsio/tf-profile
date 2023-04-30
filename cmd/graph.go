@@ -1,20 +1,32 @@
 package cmd
 
 import (
-	"log"
+	"fmt"
+
+	graph "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/graph"
 
 	"github.com/spf13/cobra"
 )
 
+var (
+	Size    []int
+	OutFile string
+)
+
 func init() {
 	rootCmd.AddCommand(graphCmd)
+	graphCmd.Flags().IntSliceVarP(&Size, "size", "s", []int{1000, 600}, "Width and height of generated image")
+	graphCmd.Flags().StringVarP(&OutFile, "out", "o", "tf-profile-graph.png", "Output file used by gnuplot")
 }
 
 var graphCmd = &cobra.Command{
 	Use:   "graph",
 	Short: "Visualize a Terraform run graphically",
 	Long:  `TODO`,
-	Run: func(cmd *cobra.Command, args []string) {
-		log.Fatal("'graph' command has not been implemented yet!")
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if len(Size) != 2 || Size[0] < 0 || Size[1] < 0 {
+			return fmt.Errorf("Expected two positive integers for --size flag, got %v", Size)
+		}
+		return graph.Graph(args, Size[0], Size[1], OutFile)
 	},
 }

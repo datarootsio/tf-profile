@@ -1,0 +1,3266 @@
+module.eks.module.eks_managed_node_group["initial"].data.aws_caller_identity.current: Reading...
+module.eks.data.aws_partition.current: Reading...
+module.eks.data.aws_caller_identity.current: Reading...
+module.eks.module.kms.data.aws_partition.current: Reading...
+module.eks.data.aws_partition.current: Read complete after 0s [id=aws]
+module.eks.module.kms.data.aws_caller_identity.current: Reading...
+module.eks_blueprints_kubernetes_addons.module.karpenter[0].data.aws_partition.current: Reading...
+module.eks.module.kms.data.aws_partition.current: Read complete after 0s [id=aws]
+module.eks_blueprints_kubernetes_addons.data.aws_partition.current: Reading...
+data.aws_availability_zones.available: Reading...
+module.eks_blueprints_kubernetes_addons.data.aws_partition.current: Read complete after 0s [id=aws]
+module.eks_blueprints_kubernetes_addons.module.karpenter[0].data.aws_partition.current: Read complete after 0s [id=aws]
+module.eks.module.eks_managed_node_group["initial"].data.aws_partition.current: Reading...
+module.eks_blueprints_kubernetes_addons.data.aws_caller_identity.current: Reading...
+module.eks_blueprints_kubernetes_addons.data.aws_region.current: Reading...
+module.eks.module.eks_managed_node_group["initial"].data.aws_partition.current: Read complete after 0s [id=aws]
+module.eks.data.aws_iam_policy_document.assume_role_policy[0]: Reading...
+module.eks_blueprints_kubernetes_addons.data.aws_region.current: Read complete after 0s [id=us-west-2]
+module.eks.data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2764486067]
+module.eks.module.eks_managed_node_group["initial"].data.aws_iam_policy_document.assume_role_policy[0]: Reading...
+module.eks.module.eks_managed_node_group["initial"].data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2560088296]
+module.eks.data.aws_caller_identity.current: Read complete after 0s [id=233295694198]
+module.eks.module.eks_managed_node_group["initial"].data.aws_caller_identity.current: Read complete after 0s [id=233295694198]
+module.eks.module.kms.data.aws_caller_identity.current: Read complete after 0s [id=233295694198]
+module.eks.data.aws_iam_session_context.current: Reading...
+module.eks.data.aws_iam_session_context.current: Read complete after 0s [id=arn:aws:iam::233295694198:user/quinten]
+module.eks_blueprints_kubernetes_addons.data.aws_caller_identity.current: Read complete after 0s [id=233295694198]
+data.aws_availability_zones.available: Read complete after 1s [id=us-west-2]
+data.aws_eks_cluster_auth.this: Reading...
+data.aws_eks_cluster_auth.this: Read complete after 0s [id=argocd]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].data.aws_eks_addon_version.this: Reading...
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].data.aws_iam_policy_document.aws_ebs_csi_driver[0]: Reading...
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].data.aws_iam_session_context.current: Reading...
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].data.aws_iam_session_context.current: Read complete after 0s [id=arn:aws:iam::233295694198:user/quinten]
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].data.aws_iam_policy_document.irsa: Reading...
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].data.aws_iam_policy_document.irsa: Read complete after 0s [id=516581548]
+module.eks_blueprints_kubernetes_addons.module.prometheus[0].data.aws_iam_policy_document.query: Reading...
+module.eks_blueprints_kubernetes_addons.module.cert_manager[0].data.aws_iam_policy_document.cert_manager_iam_policy_document: Reading...
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].data.aws_iam_policy_document.aws_ebs_csi_driver[0]: Read complete after 0s [id=1888929143]
+module.eks_blueprints_kubernetes_addons.module.prometheus[0].data.aws_iam_policy_document.ingest: Reading...
+module.eks_blueprints_kubernetes_addons.module.keda[0].data.aws_iam_policy_document.keda_irsa: Reading...
+module.eks_blueprints_kubernetes_addons.module.prometheus[0].data.aws_iam_policy_document.query: Read complete after 0s [id=1572970946]
+module.eks_blueprints_kubernetes_addons.module.cert_manager[0].data.aws_iam_policy_document.cert_manager_iam_policy_document: Read complete after 0s [id=2873133587]
+module.eks_blueprints_kubernetes_addons.module.prometheus[0].data.aws_iam_policy_document.ingest: Read complete after 0s [id=144012245]
+module.eks_blueprints_kubernetes_addons.module.keda[0].data.aws_iam_policy_document.keda_irsa: Read complete after 0s [id=3886047028]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].data.aws_eks_addon_version.this: Read complete after 1s [id=aws-ebs-csi-driver]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # aws_secretsmanager_secret.argocd will be created
+  + resource "aws_secretsmanager_secret" "argocd" {
+      + arn                            = (known after apply)
+      + force_overwrite_replica_secret = false
+      + id                             = (known after apply)
+      + name                           = "argocd"
+      + name_prefix                    = (known after apply)
+      + policy                         = (known after apply)
+      + recovery_window_in_days        = 0
+      + rotation_enabled               = (known after apply)
+      + rotation_lambda_arn            = (known after apply)
+      + tags_all                       = (known after apply)
+
+      + replica {
+          + kms_key_id         = (known after apply)
+          + last_accessed_date = (known after apply)
+          + region             = (known after apply)
+          + status             = (known after apply)
+          + status_message     = (known after apply)
+        }
+
+      + rotation_rules {
+          + automatically_after_days = (known after apply)
+          + duration                 = (known after apply)
+          + schedule_expression      = (known after apply)
+        }
+    }
+
+  # aws_secretsmanager_secret_version.argocd will be created
+  + resource "aws_secretsmanager_secret_version" "argocd" {
+      + arn            = (known after apply)
+      + id             = (known after apply)
+      + secret_id      = (known after apply)
+      + secret_string  = (sensitive value)
+      + version_id     = (known after apply)
+      + version_stages = (known after apply)
+    }
+
+  # bcrypt_hash.argo will be created
+  + resource "bcrypt_hash" "argo" {
+      + cleartext = (sensitive value)
+      + cost      = 10
+      + id        = (known after apply)
+    }
+
+  # random_password.argocd will be created
+  + resource "random_password" "argocd" {
+      + bcrypt_hash      = (sensitive value)
+      + id               = (known after apply)
+      + length           = 16
+      + lower            = true
+      + min_lower        = 0
+      + min_numeric      = 0
+      + min_special      = 0
+      + min_upper        = 0
+      + number           = true
+      + numeric          = true
+      + override_special = "!#$%&*()-_=+[]{}<>:?"
+      + result           = (sensitive value)
+      + special          = true
+      + upper            = true
+    }
+
+  # module.eks.data.aws_eks_addon_version.this["coredns"] will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_eks_addon_version" "this" {
+      + addon_name         = "coredns"
+      + id                 = (known after apply)
+      + kubernetes_version = "1.24"
+      + version            = (known after apply)
+    }
+
+  # module.eks.data.aws_eks_addon_version.this["kube-proxy"] will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_eks_addon_version" "this" {
+      + addon_name         = "kube-proxy"
+      + id                 = (known after apply)
+      + kubernetes_version = "1.24"
+      + version            = (known after apply)
+    }
+
+  # module.eks.data.aws_eks_addon_version.this["vpc-cni"] will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_eks_addon_version" "this" {
+      + addon_name         = "vpc-cni"
+      + id                 = (known after apply)
+      + kubernetes_version = "1.24"
+      + version            = (known after apply)
+    }
+
+  # module.eks.data.tls_certificate.this[0] will be read during apply
+  # (config refers to values not yet known)
+ <= data "tls_certificate" "this" {
+      + certificates = (known after apply)
+      + id           = (known after apply)
+      + url          = (known after apply)
+    }
+
+  # module.eks.aws_cloudwatch_log_group.this[0] will be created
+  + resource "aws_cloudwatch_log_group" "this" {
+      + arn               = (known after apply)
+      + id                = (known after apply)
+      + name              = "/aws/eks/argocd/cluster"
+      + name_prefix       = (known after apply)
+      + retention_in_days = 90
+      + skip_destroy      = false
+      + tags              = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "/aws/eks/argocd/cluster"
+        }
+      + tags_all          = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "/aws/eks/argocd/cluster"
+        }
+    }
+
+  # module.eks.aws_ec2_tag.cluster_primary_security_group["Blueprint"] will be created
+  + resource "aws_ec2_tag" "cluster_primary_security_group" {
+      + id          = (known after apply)
+      + key         = "Blueprint"
+      + resource_id = (known after apply)
+      + value       = "argocd"
+    }
+
+  # module.eks.aws_ec2_tag.cluster_primary_security_group["GithubRepo"] will be created
+  + resource "aws_ec2_tag" "cluster_primary_security_group" {
+      + id          = (known after apply)
+      + key         = "GithubRepo"
+      + resource_id = (known after apply)
+      + value       = "github.com/aws-ia/terraform-aws-eks-blueprints"
+    }
+
+  # module.eks.aws_eks_addon.this["coredns"] will be created
+  + resource "aws_eks_addon" "this" {
+      + addon_name           = "coredns"
+      + addon_version        = (known after apply)
+      + arn                  = (known after apply)
+      + cluster_name         = "argocd"
+      + configuration_values = (known after apply)
+      + created_at           = (known after apply)
+      + id                   = (known after apply)
+      + modified_at          = (known after apply)
+      + resolve_conflicts    = "OVERWRITE"
+      + tags                 = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all             = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+
+      + timeouts {}
+    }
+
+  # module.eks.aws_eks_addon.this["kube-proxy"] will be created
+  + resource "aws_eks_addon" "this" {
+      + addon_name           = "kube-proxy"
+      + addon_version        = (known after apply)
+      + arn                  = (known after apply)
+      + cluster_name         = "argocd"
+      + configuration_values = (known after apply)
+      + created_at           = (known after apply)
+      + id                   = (known after apply)
+      + modified_at          = (known after apply)
+      + resolve_conflicts    = "OVERWRITE"
+      + tags                 = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all             = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+
+      + timeouts {}
+    }
+
+  # module.eks.aws_eks_addon.this["vpc-cni"] will be created
+  + resource "aws_eks_addon" "this" {
+      + addon_name           = "vpc-cni"
+      + addon_version        = (known after apply)
+      + arn                  = (known after apply)
+      + cluster_name         = "argocd"
+      + configuration_values = (known after apply)
+      + created_at           = (known after apply)
+      + id                   = (known after apply)
+      + modified_at          = (known after apply)
+      + resolve_conflicts    = "OVERWRITE"
+      + tags                 = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all             = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+
+      + timeouts {}
+    }
+
+  # module.eks.aws_eks_cluster.this[0] will be created
+  + resource "aws_eks_cluster" "this" {
+      + arn                       = (known after apply)
+      + certificate_authority     = (known after apply)
+      + cluster_id                = (known after apply)
+      + created_at                = (known after apply)
+      + enabled_cluster_log_types = [
+          + "api",
+          + "audit",
+          + "authenticator",
+        ]
+      + endpoint                  = (known after apply)
+      + id                        = (known after apply)
+      + identity                  = (known after apply)
+      + name                      = "argocd"
+      + platform_version          = (known after apply)
+      + role_arn                  = (known after apply)
+      + status                    = (known after apply)
+      + tags                      = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all                  = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + version                   = "1.24"
+
+      + encryption_config {
+          + resources = [
+              + "secrets",
+            ]
+
+          + provider {
+              + key_arn = (known after apply)
+            }
+        }
+
+      + kubernetes_network_config {
+          + ip_family         = (known after apply)
+          + service_ipv4_cidr = (known after apply)
+          + service_ipv6_cidr = (known after apply)
+        }
+
+      + timeouts {}
+
+      + vpc_config {
+          + cluster_security_group_id = (known after apply)
+          + endpoint_private_access   = true
+          + endpoint_public_access    = true
+          + public_access_cidrs       = [
+              + "0.0.0.0/0",
+            ]
+          + security_group_ids        = (known after apply)
+          + subnet_ids                = (known after apply)
+          + vpc_id                    = (known after apply)
+        }
+    }
+
+  # module.eks.aws_iam_openid_connect_provider.oidc_provider[0] will be created
+  + resource "aws_iam_openid_connect_provider" "oidc_provider" {
+      + arn             = (known after apply)
+      + client_id_list  = [
+          + "sts.amazonaws.com",
+        ]
+      + id              = (known after apply)
+      + tags            = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-eks-irsa"
+        }
+      + tags_all        = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-eks-irsa"
+        }
+      + thumbprint_list = (known after apply)
+      + url             = (known after apply)
+    }
+
+  # module.eks.aws_iam_policy.cluster_encryption[0] will be created
+  + resource "aws_iam_policy" "cluster_encryption" {
+      + arn         = (known after apply)
+      + description = "Cluster encryption policy to allow cluster role to utilize CMK provided"
+      + id          = (known after apply)
+      + name        = (known after apply)
+      + name_prefix = "argocd-cluster-ClusterEncryption"
+      + path        = "/"
+      + policy      = (known after apply)
+      + policy_id   = (known after apply)
+      + tags        = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all    = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+    }
+
+  # module.eks.aws_iam_role.this[0] will be created
+  + resource "aws_iam_role" "this" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "eks.amazonaws.com"
+                        }
+                      + Sid       = "EKSClusterAssumeRole"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = true
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = (known after apply)
+      + name_prefix           = "argocd-cluster-"
+      + path                  = "/"
+      + role_last_used        = (known after apply)
+      + tags                  = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all              = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy {
+          + name   = "argocd-cluster"
+          + policy = jsonencode(
+                {
+                  + Statement = [
+                      + {
+                          + Action   = [
+                              + "logs:CreateLogGroup",
+                            ]
+                          + Effect   = "Deny"
+                          + Resource = "*"
+                        },
+                    ]
+                  + Version   = "2012-10-17"
+                }
+            )
+        }
+    }
+
+  # module.eks.aws_iam_role_policy_attachment.cluster_encryption[0] will be created
+  + resource "aws_iam_role_policy_attachment" "cluster_encryption" {
+      + id         = (known after apply)
+      + policy_arn = (known after apply)
+      + role       = (known after apply)
+    }
+
+  # module.eks.aws_iam_role_policy_attachment.this["AmazonEKSClusterPolicy"] will be created
+  + resource "aws_iam_role_policy_attachment" "this" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+      + role       = (known after apply)
+    }
+
+  # module.eks.aws_iam_role_policy_attachment.this["AmazonEKSVPCResourceController"] will be created
+  + resource "aws_iam_role_policy_attachment" "this" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
+      + role       = (known after apply)
+    }
+
+  # module.eks.aws_security_group.cluster[0] will be created
+  + resource "aws_security_group" "cluster" {
+      + arn                    = (known after apply)
+      + description            = "EKS cluster security group"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = (known after apply)
+      + name_prefix            = "argocd-cluster-"
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-cluster"
+        }
+      + tags_all               = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-cluster"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.eks.aws_security_group.node[0] will be created
+  + resource "aws_security_group" "node" {
+      + arn                    = (known after apply)
+      + description            = "EKS node shared security group"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = (known after apply)
+      + name_prefix            = "argocd-node-"
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Blueprint"                    = "argocd"
+          + "GithubRepo"                   = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"                         = "argocd-node"
+          + "kubernetes.io/cluster/argocd" = "owned"
+        }
+      + tags_all               = {
+          + "Blueprint"                    = "argocd"
+          + "GithubRepo"                   = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"                         = "argocd-node"
+          + "kubernetes.io/cluster/argocd" = "owned"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.eks.aws_security_group_rule.cluster["ingress_nodes_443"] will be created
+  + resource "aws_security_group_rule" "cluster" {
+      + description              = "Node groups to cluster API"
+      + from_port                = 443
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 443
+      + type                     = "ingress"
+    }
+
+  # module.eks.aws_security_group_rule.node["egress_all"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + description              = "Allow all egress"
+      + from_port                = 0
+      + id                       = (known after apply)
+      + prefix_list_ids          = []
+      + protocol                 = "-1"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 0
+      + type                     = "egress"
+    }
+
+  # module.eks.aws_security_group_rule.node["ingress_cluster_443"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Cluster API to node groups"
+      + from_port                = 443
+      + id                       = (known after apply)
+      + prefix_list_ids          = []
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 443
+      + type                     = "ingress"
+    }
+
+  # module.eks.aws_security_group_rule.node["ingress_cluster_4443_webhook"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Cluster API to node 4443/tcp webhook"
+      + from_port                = 4443
+      + id                       = (known after apply)
+      + prefix_list_ids          = []
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 4443
+      + type                     = "ingress"
+    }
+
+  # module.eks.aws_security_group_rule.node["ingress_cluster_6443_webhook"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Cluster API to node 6443/tcp webhook"
+      + from_port                = 6443
+      + id                       = (known after apply)
+      + prefix_list_ids          = []
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 6443
+      + type                     = "ingress"
+    }
+
+  # module.eks.aws_security_group_rule.node["ingress_cluster_8443_webhook"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Cluster API to node 8443/tcp webhook"
+      + from_port                = 8443
+      + id                       = (known after apply)
+      + prefix_list_ids          = []
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 8443
+      + type                     = "ingress"
+    }
+
+  # module.eks.aws_security_group_rule.node["ingress_cluster_9443_webhook"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Cluster API to node 9443/tcp webhook"
+      + from_port                = 9443
+      + id                       = (known after apply)
+      + prefix_list_ids          = []
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 9443
+      + type                     = "ingress"
+    }
+
+  # module.eks.aws_security_group_rule.node["ingress_cluster_kubelet"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Cluster API to node kubelets"
+      + from_port                = 10250
+      + id                       = (known after apply)
+      + prefix_list_ids          = []
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 10250
+      + type                     = "ingress"
+    }
+
+  # module.eks.aws_security_group_rule.node["ingress_nodes_ephemeral"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Node to node ingress on ephemeral ports"
+      + from_port                = 1025
+      + id                       = (known after apply)
+      + prefix_list_ids          = []
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = true
+      + source_security_group_id = (known after apply)
+      + to_port                  = 65535
+      + type                     = "ingress"
+    }
+
+  # module.eks.aws_security_group_rule.node["ingress_self_coredns_tcp"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Node to node CoreDNS"
+      + from_port                = 53
+      + id                       = (known after apply)
+      + prefix_list_ids          = []
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = true
+      + source_security_group_id = (known after apply)
+      + to_port                  = 53
+      + type                     = "ingress"
+    }
+
+  # module.eks.aws_security_group_rule.node["ingress_self_coredns_udp"] will be created
+  + resource "aws_security_group_rule" "node" {
+      + description              = "Node to node CoreDNS UDP"
+      + from_port                = 53
+      + id                       = (known after apply)
+      + prefix_list_ids          = []
+      + protocol                 = "udp"
+      + security_group_id        = (known after apply)
+      + security_group_rule_id   = (known after apply)
+      + self                     = true
+      + source_security_group_id = (known after apply)
+      + to_port                  = 53
+      + type                     = "ingress"
+    }
+
+  # module.eks.time_sleep.this[0] will be created
+  + resource "time_sleep" "this" {
+      + create_duration = "30s"
+      + id              = (known after apply)
+      + triggers        = {
+          + "cluster_certificate_authority_data" = (known after apply)
+          + "cluster_endpoint"                   = (known after apply)
+          + "cluster_name"                       = "argocd"
+          + "cluster_version"                    = "1.24"
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.data.aws_eks_cluster.eks_cluster will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_eks_cluster" "eks_cluster" {
+      + arn                       = (known after apply)
+      + certificate_authority     = (known after apply)
+      + cluster_id                = (known after apply)
+      + created_at                = (known after apply)
+      + enabled_cluster_log_types = (known after apply)
+      + endpoint                  = (known after apply)
+      + id                        = (known after apply)
+      + identity                  = (known after apply)
+      + kubernetes_network_config = (known after apply)
+      + name                      = "argocd"
+      + outpost_config            = (known after apply)
+      + platform_version          = (known after apply)
+      + role_arn                  = (known after apply)
+      + status                    = (known after apply)
+      + tags                      = (known after apply)
+      + version                   = (known after apply)
+      + vpc_config                = (known after apply)
+    }
+
+  # module.eks_blueprints_kubernetes_addons.time_sleep.dataplane will be created
+  + resource "time_sleep" "dataplane" {
+      + create_duration = "10s"
+      + id              = (known after apply)
+      + triggers        = {
+          + "data_plane_wait_arn" = ""
+          + "eks_cluster_id"      = "argocd"
+        }
+    }
+
+  # module.vpc.aws_default_network_acl.this[0] will be created
+  + resource "aws_default_network_acl" "this" {
+      + arn                    = (known after apply)
+      + default_network_acl_id = (known after apply)
+      + id                     = (known after apply)
+      + owner_id               = (known after apply)
+      + tags                   = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-default"
+        }
+      + tags_all               = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-default"
+        }
+      + vpc_id                 = (known after apply)
+
+      + egress {
+          + action          = "allow"
+          + from_port       = 0
+          + ipv6_cidr_block = "::/0"
+          + protocol        = "-1"
+          + rule_no         = 101
+          + to_port         = 0
+        }
+      + egress {
+          + action     = "allow"
+          + cidr_block = "0.0.0.0/0"
+          + from_port  = 0
+          + protocol   = "-1"
+          + rule_no    = 100
+          + to_port    = 0
+        }
+
+      + ingress {
+          + action          = "allow"
+          + from_port       = 0
+          + ipv6_cidr_block = "::/0"
+          + protocol        = "-1"
+          + rule_no         = 101
+          + to_port         = 0
+        }
+      + ingress {
+          + action     = "allow"
+          + cidr_block = "0.0.0.0/0"
+          + from_port  = 0
+          + protocol   = "-1"
+          + rule_no    = 100
+          + to_port    = 0
+        }
+    }
+
+  # module.vpc.aws_default_route_table.default[0] will be created
+  + resource "aws_default_route_table" "default" {
+      + arn                    = (known after apply)
+      + default_route_table_id = (known after apply)
+      + id                     = (known after apply)
+      + owner_id               = (known after apply)
+      + route                  = (known after apply)
+      + tags                   = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-default"
+        }
+      + tags_all               = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-default"
+        }
+      + vpc_id                 = (known after apply)
+
+      + timeouts {
+          + create = "5m"
+          + update = "5m"
+        }
+    }
+
+  # module.vpc.aws_default_security_group.this[0] will be created
+  + resource "aws_default_security_group" "this" {
+      + arn                    = (known after apply)
+      + description            = (known after apply)
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = (known after apply)
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-default"
+        }
+      + tags_all               = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-default"
+        }
+      + vpc_id                 = (known after apply)
+    }
+
+  # module.vpc.aws_eip.nat[0] will be created
+  + resource "aws_eip" "nat" {
+      + allocation_id        = (known after apply)
+      + association_id       = (known after apply)
+      + carrier_ip           = (known after apply)
+      + customer_owned_ip    = (known after apply)
+      + domain               = (known after apply)
+      + id                   = (known after apply)
+      + instance             = (known after apply)
+      + network_border_group = (known after apply)
+      + network_interface    = (known after apply)
+      + private_dns          = (known after apply)
+      + private_ip           = (known after apply)
+      + public_dns           = (known after apply)
+      + public_ip            = (known after apply)
+      + public_ipv4_pool     = (known after apply)
+      + tags                 = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-us-west-2a"
+        }
+      + tags_all             = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-us-west-2a"
+        }
+      + vpc                  = true
+    }
+
+  # module.vpc.aws_internet_gateway.this[0] will be created
+  + resource "aws_internet_gateway" "this" {
+      + arn      = (known after apply)
+      + id       = (known after apply)
+      + owner_id = (known after apply)
+      + tags     = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd"
+        }
+      + tags_all = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd"
+        }
+      + vpc_id   = (known after apply)
+    }
+
+  # module.vpc.aws_nat_gateway.this[0] will be created
+  + resource "aws_nat_gateway" "this" {
+      + allocation_id        = (known after apply)
+      + association_id       = (known after apply)
+      + connectivity_type    = "public"
+      + id                   = (known after apply)
+      + network_interface_id = (known after apply)
+      + private_ip           = (known after apply)
+      + public_ip            = (known after apply)
+      + subnet_id            = (known after apply)
+      + tags                 = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-us-west-2a"
+        }
+      + tags_all             = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-us-west-2a"
+        }
+    }
+
+  # module.vpc.aws_route.private_nat_gateway[0] will be created
+  + resource "aws_route" "private_nat_gateway" {
+      + destination_cidr_block = "0.0.0.0/0"
+      + id                     = (known after apply)
+      + instance_id            = (known after apply)
+      + instance_owner_id      = (known after apply)
+      + nat_gateway_id         = (known after apply)
+      + network_interface_id   = (known after apply)
+      + origin                 = (known after apply)
+      + route_table_id         = (known after apply)
+      + state                  = (known after apply)
+
+      + timeouts {
+          + create = "5m"
+        }
+    }
+
+  # module.vpc.aws_route.public_internet_gateway[0] will be created
+  + resource "aws_route" "public_internet_gateway" {
+      + destination_cidr_block = "0.0.0.0/0"
+      + gateway_id             = (known after apply)
+      + id                     = (known after apply)
+      + instance_id            = (known after apply)
+      + instance_owner_id      = (known after apply)
+      + network_interface_id   = (known after apply)
+      + origin                 = (known after apply)
+      + route_table_id         = (known after apply)
+      + state                  = (known after apply)
+
+      + timeouts {
+          + create = "5m"
+        }
+    }
+
+  # module.vpc.aws_route_table.private[0] will be created
+  + resource "aws_route_table" "private" {
+      + arn              = (known after apply)
+      + id               = (known after apply)
+      + owner_id         = (known after apply)
+      + propagating_vgws = (known after apply)
+      + route            = (known after apply)
+      + tags             = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-private"
+        }
+      + tags_all         = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-private"
+        }
+      + vpc_id           = (known after apply)
+    }
+
+  # module.vpc.aws_route_table.public[0] will be created
+  + resource "aws_route_table" "public" {
+      + arn              = (known after apply)
+      + id               = (known after apply)
+      + owner_id         = (known after apply)
+      + propagating_vgws = (known after apply)
+      + route            = (known after apply)
+      + tags             = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-public"
+        }
+      + tags_all         = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd-public"
+        }
+      + vpc_id           = (known after apply)
+    }
+
+  # module.vpc.aws_route_table_association.private[0] will be created
+  + resource "aws_route_table_association" "private" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.aws_route_table_association.private[1] will be created
+  + resource "aws_route_table_association" "private" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.aws_route_table_association.private[2] will be created
+  + resource "aws_route_table_association" "private" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.aws_route_table_association.public[0] will be created
+  + resource "aws_route_table_association" "public" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.aws_route_table_association.public[1] will be created
+  + resource "aws_route_table_association" "public" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.aws_route_table_association.public[2] will be created
+  + resource "aws_route_table_association" "public" {
+      + id             = (known after apply)
+      + route_table_id = (known after apply)
+      + subnet_id      = (known after apply)
+    }
+
+  # module.vpc.aws_subnet.private[0] will be created
+  + resource "aws_subnet" "private" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-west-2a"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.0.0/20"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Blueprint"                       = "argocd"
+          + "GithubRepo"                      = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"                            = "argocd-private-us-west-2a"
+          + "kubernetes.io/role/internal-elb" = "1"
+        }
+      + tags_all                                       = {
+          + "Blueprint"                       = "argocd"
+          + "GithubRepo"                      = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"                            = "argocd-private-us-west-2a"
+          + "kubernetes.io/role/internal-elb" = "1"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_subnet.private[1] will be created
+  + resource "aws_subnet" "private" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-west-2b"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.16.0/20"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Blueprint"                       = "argocd"
+          + "GithubRepo"                      = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"                            = "argocd-private-us-west-2b"
+          + "kubernetes.io/role/internal-elb" = "1"
+        }
+      + tags_all                                       = {
+          + "Blueprint"                       = "argocd"
+          + "GithubRepo"                      = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"                            = "argocd-private-us-west-2b"
+          + "kubernetes.io/role/internal-elb" = "1"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_subnet.private[2] will be created
+  + resource "aws_subnet" "private" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-west-2c"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.32.0/20"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Blueprint"                       = "argocd"
+          + "GithubRepo"                      = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"                            = "argocd-private-us-west-2c"
+          + "kubernetes.io/role/internal-elb" = "1"
+        }
+      + tags_all                                       = {
+          + "Blueprint"                       = "argocd"
+          + "GithubRepo"                      = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"                            = "argocd-private-us-west-2c"
+          + "kubernetes.io/role/internal-elb" = "1"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_subnet.public[0] will be created
+  + resource "aws_subnet" "public" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-west-2a"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.48.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Blueprint"              = "argocd"
+          + "GithubRepo"             = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"                   = "argocd-public-us-west-2a"
+          + "kubernetes.io/role/elb" = "1"
+        }
+      + tags_all                                       = {
+          + "Blueprint"              = "argocd"
+          + "GithubRepo"             = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"                   = "argocd-public-us-west-2a"
+          + "kubernetes.io/role/elb" = "1"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_subnet.public[1] will be created
+  + resource "aws_subnet" "public" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-west-2b"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.49.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Blueprint"              = "argocd"
+          + "GithubRepo"             = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"                   = "argocd-public-us-west-2b"
+          + "kubernetes.io/role/elb" = "1"
+        }
+      + tags_all                                       = {
+          + "Blueprint"              = "argocd"
+          + "GithubRepo"             = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"                   = "argocd-public-us-west-2b"
+          + "kubernetes.io/role/elb" = "1"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_subnet.public[2] will be created
+  + resource "aws_subnet" "public" {
+      + arn                                            = (known after apply)
+      + assign_ipv6_address_on_creation                = false
+      + availability_zone                              = "us-west-2c"
+      + availability_zone_id                           = (known after apply)
+      + cidr_block                                     = "10.0.50.0/24"
+      + enable_dns64                                   = false
+      + enable_resource_name_dns_a_record_on_launch    = false
+      + enable_resource_name_dns_aaaa_record_on_launch = false
+      + id                                             = (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      + ipv6_native                                    = false
+      + map_public_ip_on_launch                        = false
+      + owner_id                                       = (known after apply)
+      + private_dns_hostname_type_on_launch            = (known after apply)
+      + tags                                           = {
+          + "Blueprint"              = "argocd"
+          + "GithubRepo"             = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"                   = "argocd-public-us-west-2c"
+          + "kubernetes.io/role/elb" = "1"
+        }
+      + tags_all                                       = {
+          + "Blueprint"              = "argocd"
+          + "GithubRepo"             = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"                   = "argocd-public-us-west-2c"
+          + "kubernetes.io/role/elb" = "1"
+        }
+      + vpc_id                                         = (known after apply)
+    }
+
+  # module.vpc.aws_vpc.this[0] will be created
+  + resource "aws_vpc" "this" {
+      + arn                                  = (known after apply)
+      + cidr_block                           = "10.0.0.0/16"
+      + default_network_acl_id               = (known after apply)
+      + default_route_table_id               = (known after apply)
+      + default_security_group_id            = (known after apply)
+      + dhcp_options_id                      = (known after apply)
+      + enable_classiclink                   = (known after apply)
+      + enable_classiclink_dns_support       = (known after apply)
+      + enable_dns_hostnames                 = true
+      + enable_dns_support                   = true
+      + enable_network_address_usage_metrics = (known after apply)
+      + id                                   = (known after apply)
+      + instance_tenancy                     = "default"
+      + ipv6_association_id                  = (known after apply)
+      + ipv6_cidr_block                      = (known after apply)
+      + ipv6_cidr_block_network_border_group = (known after apply)
+      + main_route_table_id                  = (known after apply)
+      + owner_id                             = (known after apply)
+      + tags                                 = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd"
+        }
+      + tags_all                             = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "argocd"
+        }
+    }
+
+  # module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0] will be created
+  + resource "aws_eks_node_group" "this" {
+      + ami_type               = (known after apply)
+      + arn                    = (known after apply)
+      + capacity_type          = (known after apply)
+      + cluster_name           = "argocd"
+      + disk_size              = (known after apply)
+      + id                     = (known after apply)
+      + instance_types         = [
+          + "m5.large",
+        ]
+      + node_group_name        = (known after apply)
+      + node_group_name_prefix = "initial-"
+      + node_role_arn          = (known after apply)
+      + release_version        = (known after apply)
+      + resources              = (known after apply)
+      + status                 = (known after apply)
+      + subnet_ids             = (known after apply)
+      + tags                   = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "initial"
+        }
+      + tags_all               = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+          + "Name"       = "initial"
+        }
+      + version                = "1.24"
+
+      + launch_template {
+          + id      = (known after apply)
+          + name    = (known after apply)
+          + version = (known after apply)
+        }
+
+      + scaling_config {
+          + desired_size = 5
+          + max_size     = 10
+          + min_size     = 3
+        }
+
+      + timeouts {}
+
+      + update_config {
+          + max_unavailable_percentage = 33
+        }
+    }
+
+  # module.eks.module.eks_managed_node_group["initial"].aws_iam_role.this[0] will be created
+  + resource "aws_iam_role" "this" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "ec2.amazonaws.com"
+                        }
+                      + Sid       = "EKSNodeAssumeRole"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + description           = "EKS managed node group IAM role"
+      + force_detach_policies = true
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = (known after apply)
+      + name_prefix           = "initial-eks-node-group-"
+      + path                  = "/"
+      + role_last_used        = (known after apply)
+      + tags                  = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all              = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy {
+          + name   = (known after apply)
+          + policy = (known after apply)
+        }
+    }
+
+  # module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"] will be created
+  + resource "aws_iam_role_policy_attachment" "this" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+      + role       = (known after apply)
+    }
+
+  # module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"] will be created
+  + resource "aws_iam_role_policy_attachment" "this" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+      + role       = (known after apply)
+    }
+
+  # module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"] will be created
+  + resource "aws_iam_role_policy_attachment" "this" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+      + role       = (known after apply)
+    }
+
+  # module.eks.module.eks_managed_node_group["initial"].aws_launch_template.this[0] will be created
+  + resource "aws_launch_template" "this" {
+      + arn                    = (known after apply)
+      + default_version        = (known after apply)
+      + description            = "Custom launch template for initial EKS managed node group"
+      + id                     = (known after apply)
+      + latest_version         = (known after apply)
+      + name                   = (known after apply)
+      + name_prefix            = "initial-"
+      + tags                   = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all               = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + update_default_version = true
+      + vpc_security_group_ids = (known after apply)
+
+      + metadata_options {
+          + http_endpoint               = "enabled"
+          + http_protocol_ipv6          = "disabled"
+          + http_put_response_hop_limit = 2
+          + http_tokens                 = "required"
+          + instance_metadata_tags      = "disabled"
+        }
+
+      + monitoring {
+          + enabled = true
+        }
+
+      + tag_specifications {
+          + resource_type = "instance"
+          + tags          = {
+              + "Blueprint"  = "argocd"
+              + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+              + "Name"       = "initial"
+            }
+        }
+      + tag_specifications {
+          + resource_type = "network-interface"
+          + tags          = {
+              + "Blueprint"  = "argocd"
+              + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+              + "Name"       = "initial"
+            }
+        }
+      + tag_specifications {
+          + resource_type = "volume"
+          + tags          = {
+              + "Blueprint"  = "argocd"
+              + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+              + "Name"       = "initial"
+            }
+        }
+    }
+
+  # module.eks.module.kms.data.aws_iam_policy_document.this[0] will be read during apply
+  # (config refers to values not yet known)
+ <= data "aws_iam_policy_document" "this" {
+      + id                        = (known after apply)
+      + json                      = (known after apply)
+      + override_policy_documents = []
+      + source_policy_documents   = []
+
+      + statement {
+          + actions   = [
+              + "kms:CancelKeyDeletion",
+              + "kms:Create*",
+              + "kms:Delete*",
+              + "kms:Describe*",
+              + "kms:Disable*",
+              + "kms:Enable*",
+              + "kms:Get*",
+              + "kms:List*",
+              + "kms:Put*",
+              + "kms:Revoke*",
+              + "kms:ScheduleKeyDeletion",
+              + "kms:TagResource",
+              + "kms:UntagResource",
+              + "kms:Update*",
+            ]
+          + resources = [
+              + "*",
+            ]
+          + sid       = "KeyAdministration"
+
+          + principals {
+              + identifiers = [
+                  + "arn:aws:iam::233295694198:user/quinten",
+                ]
+              + type        = "AWS"
+            }
+        }
+      + statement {
+          + actions   = [
+              + "kms:Decrypt",
+              + "kms:DescribeKey",
+              + "kms:Encrypt",
+              + "kms:GenerateDataKey*",
+              + "kms:ReEncrypt*",
+            ]
+          + resources = [
+              + "*",
+            ]
+          + sid       = "KeyUsage"
+
+          + principals {
+              + identifiers = [
+                  + (known after apply),
+                ]
+              + type        = "AWS"
+            }
+        }
+    }
+
+  # module.eks.module.kms.aws_kms_alias.this["cluster"] will be created
+  + resource "aws_kms_alias" "this" {
+      + arn            = (known after apply)
+      + id             = (known after apply)
+      + name           = "alias/eks/argocd"
+      + name_prefix    = (known after apply)
+      + target_key_arn = (known after apply)
+      + target_key_id  = (known after apply)
+    }
+
+  # module.eks.module.kms.aws_kms_key.this[0] will be created
+  + resource "aws_kms_key" "this" {
+      + arn                                = (known after apply)
+      + bypass_policy_lockout_safety_check = false
+      + customer_master_key_spec           = "SYMMETRIC_DEFAULT"
+      + description                        = "argocd cluster encryption key"
+      + enable_key_rotation                = true
+      + id                                 = (known after apply)
+      + is_enabled                         = true
+      + key_id                             = (known after apply)
+      + key_usage                          = "ENCRYPT_DECRYPT"
+      + multi_region                       = false
+      + policy                             = (known after apply)
+      + tags                               = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all                           = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.argo_rollouts[0].kubernetes_namespace_v1.this[0] will be created
+  + resource "kubernetes_namespace_v1" "this" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "argo-rollouts"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.argocd[0].helm_release.argocd_application["addons"] will be created
+  + resource "helm_release" "argocd_application" {
+      + atomic                     = false
+      + chart                      = "../../modules/kubernetes-addons/argocd/argocd-application/helm"
+      + cleanup_on_fail            = false
+      + create_namespace           = false
+      + dependency_update          = false
+      + disable_crd_hooks          = false
+      + disable_openapi_validation = false
+      + disable_webhooks           = false
+      + force_update               = false
+      + id                         = (known after apply)
+      + lint                       = false
+      + manifest                   = (known after apply)
+      + max_history                = 0
+      + metadata                   = (known after apply)
+      + name                       = "addons"
+      + namespace                  = "argocd"
+      + pass_credentials           = false
+      + recreate_pods              = false
+      + render_subchart_notes      = true
+      + replace                    = false
+      + reset_values               = false
+      + reuse_values               = false
+      + skip_crds                  = false
+      + status                     = "deployed"
+      + timeout                    = 300
+      + values                     = [
+          + <<-EOT
+                "ignoreDifferences": []
+            EOT,
+        ]
+      + verify                     = false
+      + version                    = "0.1.0"
+      + wait                       = true
+      + wait_for_jobs              = false
+
+      + set {
+          + name  = "destination.server"
+          + type  = "string"
+          + value = "https://kubernetes.default.svc"
+        }
+      + set {
+          + name  = "name"
+          + type  = "string"
+          + value = "addons"
+        }
+      + set {
+          + name  = "project"
+          + type  = "string"
+          + value = "default"
+        }
+      + set {
+          + name  = "source.helm.releaseName"
+          + type  = "string"
+          + value = "addons"
+        }
+      + set {
+          + name  = "source.helm.values"
+          + type  = "auto"
+          + value = (known after apply)
+        }
+      + set {
+          + name  = "source.path"
+          + type  = "string"
+          + value = "chart"
+        }
+      + set {
+          + name  = "source.repoUrl"
+          + type  = "string"
+          + value = "https://github.com/aws-samples/eks-blueprints-add-ons.git"
+        }
+      + set {
+          + name  = "source.targetRevision"
+          + type  = "string"
+          + value = "HEAD"
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.argocd[0].helm_release.argocd_application["workloads"] will be created
+  + resource "helm_release" "argocd_application" {
+      + atomic                     = false
+      + chart                      = "../../modules/kubernetes-addons/argocd/argocd-application/helm"
+      + cleanup_on_fail            = false
+      + create_namespace           = false
+      + dependency_update          = false
+      + disable_crd_hooks          = false
+      + disable_openapi_validation = false
+      + disable_webhooks           = false
+      + force_update               = false
+      + id                         = (known after apply)
+      + lint                       = false
+      + manifest                   = (known after apply)
+      + max_history                = 0
+      + metadata                   = (known after apply)
+      + name                       = "workloads"
+      + namespace                  = "argocd"
+      + pass_credentials           = false
+      + recreate_pods              = false
+      + render_subchart_notes      = true
+      + replace                    = false
+      + reset_values               = false
+      + reuse_values               = false
+      + skip_crds                  = false
+      + status                     = "deployed"
+      + timeout                    = 300
+      + values                     = [
+          + <<-EOT
+                "ignoreDifferences": []
+            EOT,
+        ]
+      + verify                     = false
+      + version                    = "0.1.0"
+      + wait                       = true
+      + wait_for_jobs              = false
+
+      + set {
+          + name  = "destination.server"
+          + type  = "string"
+          + value = "https://kubernetes.default.svc"
+        }
+      + set {
+          + name  = "name"
+          + type  = "string"
+          + value = "workloads"
+        }
+      + set {
+          + name  = "project"
+          + type  = "string"
+          + value = "default"
+        }
+      + set {
+          + name  = "source.helm.releaseName"
+          + type  = "string"
+          + value = "workloads"
+        }
+      + set {
+          + name  = "source.helm.values"
+          + type  = "auto"
+          + value = (known after apply)
+        }
+      + set {
+          + name  = "source.path"
+          + type  = "string"
+          + value = "envs/dev"
+        }
+      + set {
+          + name  = "source.repoUrl"
+          + type  = "string"
+          + value = "https://github.com/aws-samples/eks-blueprints-workloads.git"
+        }
+      + set {
+          + name  = "source.targetRevision"
+          + type  = "string"
+          + value = "HEAD"
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.argocd[0].kubernetes_namespace_v1.this[0] will be created
+  + resource "kubernetes_namespace_v1" "this" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "argocd"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0] will be created
+  + resource "aws_eks_addon" "aws_ebs_csi_driver" {
+      + addon_name               = "aws-ebs-csi-driver"
+      + addon_version            = "v1.18.0-eksbuild.1"
+      + arn                      = (known after apply)
+      + cluster_name             = (known after apply)
+      + configuration_values     = (known after apply)
+      + created_at               = (known after apply)
+      + id                       = (known after apply)
+      + modified_at              = (known after apply)
+      + preserve                 = true
+      + resolve_conflicts        = "OVERWRITE"
+      + service_account_role_arn = (known after apply)
+      + tags                     = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all                 = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_iam_policy.aws_ebs_csi_driver[0] will be created
+  + resource "aws_iam_policy" "aws_ebs_csi_driver" {
+      + arn         = (known after apply)
+      + description = "IAM Policy for AWS EBS CSI Driver"
+      + id          = (known after apply)
+      + name        = (known after apply)
+      + name_prefix = (known after apply)
+      + path        = "/"
+      + policy      = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action   = [
+                          + "ec2:ModifyVolume",
+                          + "ec2:DetachVolume",
+                          + "ec2:DescribeVolumesModifications",
+                          + "ec2:DescribeVolumes",
+                          + "ec2:DescribeTags",
+                          + "ec2:DescribeSnapshots",
+                          + "ec2:DescribeInstances",
+                          + "ec2:DescribeAvailabilityZones",
+                          + "ec2:CreateSnapshot",
+                          + "ec2:AttachVolume",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "*"
+                      + Sid      = ""
+                    },
+                  + {
+                      + Action    = "ec2:CreateTags"
+                      + Condition = {
+                          + StringEquals = {
+                              + "ec2:CreateAction" = [
+                                  + "CreateVolume",
+                                  + "CreateSnapshot",
+                                ]
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = [
+                          + "arn:aws:ec2:*:*:volume/*",
+                          + "arn:aws:ec2:*:*:snapshot/*",
+                        ]
+                      + Sid       = ""
+                    },
+                  + {
+                      + Action   = "ec2:DeleteTags"
+                      + Effect   = "Allow"
+                      + Resource = [
+                          + "arn:aws:ec2:*:*:volume/*",
+                          + "arn:aws:ec2:*:*:snapshot/*",
+                        ]
+                      + Sid      = ""
+                    },
+                  + {
+                      + Action    = "ec2:CreateVolume"
+                      + Condition = {
+                          + StringLike = {
+                              + "aws:RequestTag/ebs.csi.aws.com/cluster" = "true"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                      + Sid       = ""
+                    },
+                  + {
+                      + Action    = "ec2:CreateVolume"
+                      + Condition = {
+                          + StringLike = {
+                              + "aws:RequestTag/CSIVolumeName" = "*"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                      + Sid       = ""
+                    },
+                  + {
+                      + Action    = "ec2:CreateVolume"
+                      + Condition = {
+                          + StringLike = {
+                              + "aws:RequestTag/kubernetes.io/cluster/*" = "owned"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                      + Sid       = ""
+                    },
+                  + {
+                      + Action    = "ec2:DeleteVolume"
+                      + Condition = {
+                          + StringLike = {
+                              + "ec2:ResourceTag/ebs.csi.aws.com/cluster" = "true"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                      + Sid       = ""
+                    },
+                  + {
+                      + Action    = "ec2:DeleteVolume"
+                      + Condition = {
+                          + StringLike = {
+                              + "ec2:ResourceTag/CSIVolumeName" = "*"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                      + Sid       = ""
+                    },
+                  + {
+                      + Action    = "ec2:DeleteVolume"
+                      + Condition = {
+                          + StringLike = {
+                              + "ec2:ResourceTag/kubernetes.io/cluster/*" = "owned"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                      + Sid       = ""
+                    },
+                  + {
+                      + Action    = "ec2:DeleteSnapshot"
+                      + Condition = {
+                          + StringLike = {
+                              + "ec2:ResourceTag/CSIVolumeSnapshotName" = "*"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                      + Sid       = ""
+                    },
+                  + {
+                      + Action    = "ec2:DeleteSnapshot"
+                      + Condition = {
+                          + StringLike = {
+                              + "ec2:ResourceTag/ebs.csi.aws.com/cluster" = "true"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "*"
+                      + Sid       = ""
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + policy_id   = (known after apply)
+      + tags        = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all    = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].data.aws_iam_policy_document.kms will be read during apply
+  # (config refers to values not yet known)
+ <= data "aws_iam_policy_document" "kms" {
+      + id   = (known after apply)
+      + json = (known after apply)
+
+      + statement {
+          + actions   = [
+              + "kms:*",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + "*",
+            ]
+          + sid       = "Enable IAM User Permissions"
+
+          + principals {
+              + identifiers = [
+                  + "arn:aws:iam::233295694198:root",
+                  + "arn:aws:iam::233295694198:user/quinten",
+                ]
+              + type        = "AWS"
+            }
+        }
+      + statement {
+          + actions   = [
+              + "kms:Decrypt*",
+              + "kms:Describe*",
+              + "kms:Encrypt*",
+              + "kms:GenerateDataKey*",
+              + "kms:ReEncrypt*",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + "*",
+            ]
+          + sid       = "Enable Encryption for LogGroup"
+
+          + condition {
+              + test     = "ArnEquals"
+              + values   = [
+                  + (known after apply),
+                ]
+              + variable = "kms:EncryptionContext:aws:logs:arn"
+            }
+
+          + principals {
+              + identifiers = [
+                  + "logs.us-west-2.amazonaws.com",
+                ]
+              + type        = "Service"
+            }
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].aws_iam_policy.aws_for_fluent_bit will be created
+  + resource "aws_iam_policy" "aws_for_fluent_bit" {
+      + arn         = (known after apply)
+      + description = "IAM Policy for AWS for FluentBit"
+      + id          = (known after apply)
+      + name        = (known after apply)
+      + name_prefix = (known after apply)
+      + path        = "/"
+      + policy      = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action   = "logs:PutLogEvents"
+                      + Effect   = "Allow"
+                      + Resource = "arn:aws:logs:us-west-2:233295694198:log-group:*:log-stream:*"
+                      + Sid      = "PutLogEvents"
+                    },
+                  + {
+                      + Action   = [
+                          + "logs:DescribeLogStreams",
+                          + "logs:DescribeLogGroups",
+                          + "logs:CreateLogStream",
+                          + "logs:CreateLogGroup",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "arn:aws:logs:us-west-2:233295694198:log-group:*"
+                      + Sid      = "CreateCWLogs"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + policy_id   = (known after apply)
+      + tags        = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all    = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.cert_manager[0].aws_iam_policy.cert_manager will be created
+  + resource "aws_iam_policy" "cert_manager" {
+      + arn         = (known after apply)
+      + description = "cert-manager IAM policy."
+      + id          = (known after apply)
+      + name        = (known after apply)
+      + name_prefix = (known after apply)
+      + path        = "/"
+      + policy      = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action   = "route53:GetChange"
+                      + Effect   = "Allow"
+                      + Resource = "arn:aws:route53:::change/*"
+                      + Sid      = ""
+                    },
+                  + {
+                      + Action   = "route53:ListHostedZonesByName"
+                      + Effect   = "Allow"
+                      + Resource = "*"
+                      + Sid      = ""
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + policy_id   = (known after apply)
+      + tags        = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all    = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].data.aws_iam_policy_document.cluster_autoscaler will be read during apply
+  # (config refers to values not yet known)
+ <= data "aws_iam_policy_document" "cluster_autoscaler" {
+      + id   = (known after apply)
+      + json = (known after apply)
+
+      + statement {
+          + actions   = [
+              + "autoscaling:DescribeAutoScalingGroups",
+              + "autoscaling:DescribeAutoScalingInstances",
+              + "autoscaling:DescribeLaunchConfigurations",
+              + "autoscaling:DescribeTags",
+              + "ec2:DescribeInstanceTypes",
+              + "ec2:DescribeLaunchTemplateVersions",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + "*",
+            ]
+        }
+      + statement {
+          + actions   = [
+              + "ec2:DescribeInstanceTypes",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + "*",
+            ]
+
+          + condition {
+              + test     = "StringEquals"
+              + values   = [
+                  + "owned",
+                ]
+              + variable = (known after apply)
+            }
+        }
+      + statement {
+          + actions   = [
+              + "autoscaling:SetDesiredCapacity",
+              + "autoscaling:TerminateInstanceInAutoScalingGroup",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + "arn:aws:autoscaling:us-west-2:233295694198:autoScalingGroup:*",
+            ]
+
+          + condition {
+              + test     = "StringEquals"
+              + values   = [
+                  + "owned",
+                ]
+              + variable = (known after apply)
+            }
+        }
+      + statement {
+          + actions   = [
+              + "eks:DescribeNodegroup",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + (known after apply),
+            ]
+
+          + condition {
+              + test     = "StringEquals"
+              + values   = [
+                  + "owned",
+                ]
+              + variable = (known after apply)
+            }
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].aws_iam_policy.cluster_autoscaler will be created
+  + resource "aws_iam_policy" "cluster_autoscaler" {
+      + arn         = (known after apply)
+      + description = "Cluster Autoscaler IAM policy"
+      + id          = (known after apply)
+      + name        = (known after apply)
+      + name_prefix = (known after apply)
+      + path        = "/"
+      + policy      = (known after apply)
+      + policy_id   = (known after apply)
+      + tags        = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all    = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.karpenter[0].data.aws_iam_policy_document.karpenter will be read during apply
+  # (config refers to values not yet known)
+ <= data "aws_iam_policy_document" "karpenter" {
+      + id   = (known after apply)
+      + json = (known after apply)
+
+      + statement {
+          + actions   = [
+              + "ec2:DescribeAvailabilityZones",
+              + "ec2:DescribeImages",
+              + "ec2:DescribeInstanceTypeOfferings",
+              + "ec2:DescribeInstanceTypes",
+              + "ec2:DescribeInstances",
+              + "ec2:DescribeLaunchTemplates",
+              + "ec2:DescribeSecurityGroups",
+              + "ec2:DescribeSpotPriceHistory",
+              + "ec2:DescribeSubnets",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + "*",
+            ]
+          + sid       = "AllowEc2DescribeActions"
+        }
+      + statement {
+          + actions   = [
+              + "ec2:CreateFleet",
+              + "ec2:CreateLaunchTemplate",
+              + "ec2:CreateTags",
+              + "ec2:DeleteLaunchTemplate",
+              + "ec2:RunInstances",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + "arn:aws:ec2:us-west-2:233295694198:*",
+              + "arn:aws:ec2:us-west-2::image/*",
+            ]
+          + sid       = "AllowEc2Actions"
+        }
+      + statement {
+          + actions   = [
+              + "iam:PassRole",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + "arn:aws:iam::233295694198:role/*",
+            ]
+          + sid       = "AllowPassRole"
+        }
+      + statement {
+          + actions   = [
+              + "pricing:GetProducts",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + "*",
+            ]
+          + sid       = "AllowGetPrice"
+        }
+      + statement {
+          + actions   = [
+              + "ssm:GetParameter",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + "arn:aws:ssm:us-west-2::parameter/*",
+            ]
+          + sid       = "AllowGetParameters"
+        }
+      + statement {
+          + actions   = [
+              + "eks:DescribeCluster",
+            ]
+          + resources = [
+              + (known after apply),
+            ]
+        }
+      + statement {
+          + actions   = [
+              + "ec2:TerminateInstances",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + "arn:aws:ec2:us-west-2:233295694198:instance/*",
+            ]
+          + sid       = "ConditionalEC2Termination"
+
+          + condition {
+              + test     = "StringLike"
+              + values   = [
+                  + "*karpenter*",
+                ]
+              + variable = "ec2:ResourceTag/Name"
+            }
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.karpenter[0].aws_iam_policy.karpenter will be created
+  + resource "aws_iam_policy" "karpenter" {
+      + arn         = (known after apply)
+      + description = "IAM Policy for Karpenter"
+      + id          = (known after apply)
+      + name        = (known after apply)
+      + name_prefix = (known after apply)
+      + path        = "/"
+      + policy      = (known after apply)
+      + policy_id   = (known after apply)
+      + tags_all    = (known after apply)
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.keda[0].aws_iam_policy.keda_irsa will be created
+  + resource "aws_iam_policy" "keda_irsa" {
+      + arn         = (known after apply)
+      + description = "KEDA IAM role policy for SQS and CloudWatch"
+      + id          = (known after apply)
+      + name        = (known after apply)
+      + name_prefix = (known after apply)
+      + path        = "/"
+      + policy      = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action   = [
+                          + "sqs:ReceiveMessage",
+                          + "sqs:ListQueueTags",
+                          + "sqs:ListDeadLetterSourceQueues",
+                          + "sqs:GetQueueUrl",
+                          + "sqs:GetQueueAttributes",
+                          + "cloudwatch:ListTagsForResource",
+                          + "cloudwatch:GetMetricStream",
+                          + "cloudwatch:GetInsightRuleReport",
+                          + "cloudwatch:GetDashboard",
+                          + "cloudwatch:DescribeAlarms",
+                          + "cloudwatch:DescribeAlarmHistory",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = [
+                          + "arn:aws:sqs:*:233295694198:*",
+                          + "arn:aws:cloudwatch:*:233295694198:metric-stream/*",
+                        ]
+                      + Sid      = ""
+                    },
+                  + {
+                      + Action   = [
+                          + "sqs:ListQueues",
+                          + "cloudwatch:ListMetrics",
+                          + "cloudwatch:ListMetricStreams",
+                          + "cloudwatch:ListDashboards",
+                          + "cloudwatch:GetMetricWidgetImage",
+                          + "cloudwatch:GetMetricStatistics",
+                          + "cloudwatch:GetMetricData",
+                          + "cloudwatch:DescribeInsightRules",
+                          + "cloudwatch:DescribeAnomalyDetectors",
+                          + "cloudwatch:DescribeAlarmsForMetric",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = "*"
+                      + Sid      = ""
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + policy_id   = (known after apply)
+      + tags        = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all    = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.prometheus[0].kubernetes_namespace_v1.prometheus[0] will be created
+  + resource "kubernetes_namespace_v1" "prometheus" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "prometheus"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.traefik[0].kubernetes_namespace_v1.this[0] will be created
+  + resource "kubernetes_namespace_v1" "this" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "traefik"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.vpa[0].kubernetes_namespace_v1.vpa[0] will be created
+  + resource "kubernetes_namespace_v1" "vpa" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "vpa"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.yunikorn[0].kubernetes_namespace_v1.yunikorn[0] will be created
+  + resource "kubernetes_namespace_v1" "yunikorn" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "yunikorn"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.argocd[0].module.helm_addon.helm_release.addon[0] will be created
+  + resource "helm_release" "addon" {
+      + atomic                     = false
+      + chart                      = "argo-cd"
+      + cleanup_on_fail            = false
+      + create_namespace           = true
+      + dependency_update          = false
+      + description                = "The ArgoCD Helm Chart deployment configuration"
+      + disable_crd_hooks          = false
+      + disable_openapi_validation = false
+      + disable_webhooks           = false
+      + force_update               = false
+      + id                         = (known after apply)
+      + lint                       = false
+      + manifest                   = (known after apply)
+      + max_history                = 0
+      + metadata                   = (known after apply)
+      + name                       = "argo-cd"
+      + namespace                  = "argocd"
+      + pass_credentials           = false
+      + recreate_pods              = false
+      + render_subchart_notes      = true
+      + replace                    = false
+      + repository                 = "https://argoproj.github.io/argo-helm"
+      + reset_values               = false
+      + reuse_values               = false
+      + skip_crds                  = false
+      + status                     = "deployed"
+      + timeout                    = 1200
+      + values                     = [
+          + <<-EOT
+                redis-ha:
+                  enabled: true
+                
+                controller:
+                  enableStatefulSet: true
+                
+                server:
+                  autoscaling:
+                    enabled: true
+                    minReplicas: 2
+                
+                repoServer:
+                  autoscaling:
+                    enabled: true
+                    minReplicas: 2
+                
+                configs:
+                  cm:
+                    #use annotation for tracking but keep labels for compatibility with other tools
+                    application.resourceTrackingMethod: annotation+label
+            EOT,
+        ]
+      + verify                     = false
+      + version                    = "5.13.8"
+      + wait                       = false
+      + wait_for_jobs              = false
+
+      + postrender {}
+
+      + set_sensitive {
+          + name  = (known after apply)
+          + type  = (known after apply)
+          + value = (sensitive value)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].module.irsa_addon[0].aws_iam_role.irsa[0] will be created
+  + resource "aws_iam_role" "irsa" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = (known after apply)
+      + create_date           = (known after apply)
+      + description           = "AWS IAM Role for the Kubernetes service account ebs-csi-controller-sa."
+      + force_detach_policies = true
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = (known after apply)
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + role_last_used        = (known after apply)
+      + tags_all              = (known after apply)
+      + unique_id             = (known after apply)
+
+      + inline_policy {
+          + name   = (known after apply)
+          + policy = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].module.irsa_addon[0].aws_iam_role_policy_attachment.irsa[0] will be created
+  + resource "aws_iam_role_policy_attachment" "irsa" {
+      + id         = (known after apply)
+      + policy_arn = (known after apply)
+      + role       = (known after apply)
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].module.helm_addon.module.irsa[0].aws_iam_role.irsa[0] will be created
+  + resource "aws_iam_role" "irsa" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = (known after apply)
+      + create_date           = (known after apply)
+      + description           = "AWS IAM Role for the Kubernetes service account aws-for-fluent-bit-sa."
+      + force_detach_policies = true
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = (known after apply)
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + role_last_used        = (known after apply)
+      + tags                  = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all              = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy {
+          + name   = (known after apply)
+          + policy = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].module.helm_addon.module.irsa[0].aws_iam_role_policy_attachment.irsa[0] will be created
+  + resource "aws_iam_role_policy_attachment" "irsa" {
+      + id         = (known after apply)
+      + policy_arn = (known after apply)
+      + role       = (known after apply)
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].module.helm_addon.module.irsa[0].kubernetes_namespace_v1.irsa[0] will be created
+  + resource "kubernetes_namespace_v1" "irsa" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "aws-for-fluent-bit"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+
+      + timeouts {
+          + delete = "15m"
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0] will be created
+  + resource "kubernetes_service_account_v1" "irsa" {
+      + automount_service_account_token = true
+      + default_secret_name             = (known after apply)
+      + id                              = (known after apply)
+
+      + metadata {
+          + annotations      = (known after apply)
+          + generation       = (known after apply)
+          + name             = "aws-for-fluent-bit-sa"
+          + namespace        = "aws-for-fluent-bit"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.cert_manager[0].module.helm_addon.module.irsa[0].aws_iam_role.irsa[0] will be created
+  + resource "aws_iam_role" "irsa" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = (known after apply)
+      + create_date           = (known after apply)
+      + description           = "AWS IAM Role for the Kubernetes service account cert-manager."
+      + force_detach_policies = true
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = (known after apply)
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + role_last_used        = (known after apply)
+      + tags                  = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all              = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy {
+          + name   = (known after apply)
+          + policy = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.cert_manager[0].module.helm_addon.module.irsa[0].aws_iam_role_policy_attachment.irsa[0] will be created
+  + resource "aws_iam_role_policy_attachment" "irsa" {
+      + id         = (known after apply)
+      + policy_arn = (known after apply)
+      + role       = (known after apply)
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.cert_manager[0].module.helm_addon.module.irsa[0].kubernetes_namespace_v1.irsa[0] will be created
+  + resource "kubernetes_namespace_v1" "irsa" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "cert-manager"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+
+      + timeouts {
+          + delete = "15m"
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.cert_manager[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0] will be created
+  + resource "kubernetes_service_account_v1" "irsa" {
+      + automount_service_account_token = true
+      + default_secret_name             = (known after apply)
+      + id                              = (known after apply)
+
+      + metadata {
+          + annotations      = (known after apply)
+          + generation       = (known after apply)
+          + name             = "cert-manager"
+          + namespace        = "cert-manager"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].module.helm_addon.module.irsa[0].aws_iam_role.irsa[0] will be created
+  + resource "aws_iam_role" "irsa" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = (known after apply)
+      + create_date           = (known after apply)
+      + description           = "AWS IAM Role for the Kubernetes service account cluster-autoscaler-sa."
+      + force_detach_policies = true
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = (known after apply)
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + role_last_used        = (known after apply)
+      + tags                  = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all              = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy {
+          + name   = (known after apply)
+          + policy = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].module.helm_addon.module.irsa[0].aws_iam_role_policy_attachment.irsa[0] will be created
+  + resource "aws_iam_role_policy_attachment" "irsa" {
+      + id         = (known after apply)
+      + policy_arn = (known after apply)
+      + role       = (known after apply)
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0] will be created
+  + resource "kubernetes_service_account_v1" "irsa" {
+      + automount_service_account_token = true
+      + default_secret_name             = (known after apply)
+      + id                              = (known after apply)
+
+      + metadata {
+          + annotations      = (known after apply)
+          + generation       = (known after apply)
+          + name             = "cluster-autoscaler-sa"
+          + namespace        = "kube-system"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.karpenter[0].module.helm_addon.module.irsa[0].aws_iam_role.irsa[0] will be created
+  + resource "aws_iam_role" "irsa" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = (known after apply)
+      + create_date           = (known after apply)
+      + description           = "AWS IAM Role for the Kubernetes service account karpenter."
+      + force_detach_policies = true
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = (known after apply)
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + role_last_used        = (known after apply)
+      + tags                  = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all              = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy {
+          + name   = (known after apply)
+          + policy = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.karpenter[0].module.helm_addon.module.irsa[0].aws_iam_role_policy_attachment.irsa[0] will be created
+  + resource "aws_iam_role_policy_attachment" "irsa" {
+      + id         = (known after apply)
+      + policy_arn = (known after apply)
+      + role       = (known after apply)
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.karpenter[0].module.helm_addon.module.irsa[0].kubernetes_namespace_v1.irsa[0] will be created
+  + resource "kubernetes_namespace_v1" "irsa" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "karpenter"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+
+      + timeouts {
+          + delete = "15m"
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.karpenter[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0] will be created
+  + resource "kubernetes_service_account_v1" "irsa" {
+      + automount_service_account_token = true
+      + default_secret_name             = (known after apply)
+      + id                              = (known after apply)
+
+      + metadata {
+          + annotations      = (known after apply)
+          + generation       = (known after apply)
+          + name             = "karpenter"
+          + namespace        = "karpenter"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.keda[0].module.helm_addon.module.irsa[0].aws_iam_role.irsa[0] will be created
+  + resource "aws_iam_role" "irsa" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = (known after apply)
+      + create_date           = (known after apply)
+      + description           = "AWS IAM Role for the Kubernetes service account keda-operator-sa."
+      + force_detach_policies = true
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = (known after apply)
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + role_last_used        = (known after apply)
+      + tags                  = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + tags_all              = {
+          + "Blueprint"  = "argocd"
+          + "GithubRepo" = "github.com/aws-ia/terraform-aws-eks-blueprints"
+        }
+      + unique_id             = (known after apply)
+
+      + inline_policy {
+          + name   = (known after apply)
+          + policy = (known after apply)
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.keda[0].module.helm_addon.module.irsa[0].aws_iam_role_policy_attachment.irsa[0] will be created
+  + resource "aws_iam_role_policy_attachment" "irsa" {
+      + id         = (known after apply)
+      + policy_arn = (known after apply)
+      + role       = (known after apply)
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.keda[0].module.helm_addon.module.irsa[0].kubernetes_namespace_v1.irsa[0] will be created
+  + resource "kubernetes_namespace_v1" "irsa" {
+      + id = (known after apply)
+
+      + metadata {
+          + generation       = (known after apply)
+          + name             = "keda"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+
+      + timeouts {
+          + delete = "15m"
+        }
+    }
+
+  # module.eks_blueprints_kubernetes_addons.module.keda[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0] will be created
+  + resource "kubernetes_service_account_v1" "irsa" {
+      + automount_service_account_token = true
+      + default_secret_name             = (known after apply)
+      + id                              = (known after apply)
+
+      + metadata {
+          + annotations      = (known after apply)
+          + generation       = (known after apply)
+          + name             = "keda-operator-sa"
+          + namespace        = "keda"
+          + resource_version = (known after apply)
+          + uid              = (known after apply)
+        }
+    }
+
+Plan: 100 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + configure_kubectl = "aws eks --region us-west-2 update-kubeconfig --name argocd"
+random_password.argocd: Creating...
+random_password.argocd: Creation complete after 1s [id=none]
+bcrypt_hash.argo: Creating...
+bcrypt_hash.argo: Creation complete after 0s [id=$2a$10$r8zqnxrFTwshHO2rSCmZc.tV5CKLL0T01YTCZ/bLUlCdVKZgm9.YS]
+module.eks.module.eks_managed_node_group["initial"].aws_iam_role.this[0]: Creating...
+module.eks.aws_cloudwatch_log_group.this[0]: Creating...
+aws_secretsmanager_secret.argocd: Creating...
+module.vpc.aws_vpc.this[0]: Creating...
+module.vpc.aws_eip.nat[0]: Creating...
+module.eks.aws_iam_role.this[0]: Creating...
+module.eks.module.eks_managed_node_group["initial"].aws_iam_role.this[0]: Creation complete after 1s [id=initial-eks-node-group-20230430082916737400000001]
+module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"]: Creating...
+module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"]: Creating...
+module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"]: Creating...
+aws_secretsmanager_secret.argocd: Creation complete after 1s [id=arn:aws:secretsmanager:us-west-2:233295694198:secret:argocd-Ys3cJa]
+aws_secretsmanager_secret_version.argocd: Creating...
+module.eks.aws_iam_role.this[0]: Creation complete after 1s [id=argocd-cluster-20230430082916740500000002]
+module.eks.aws_iam_role_policy_attachment.this["AmazonEKSClusterPolicy"]: Creating...
+module.eks.aws_iam_role_policy_attachment.this["AmazonEKSVPCResourceController"]: Creating...
+module.eks.module.kms.data.aws_iam_policy_document.this[0]: Reading...
+module.eks.module.kms.data.aws_iam_policy_document.this[0]: Read complete after 0s [id=3054423382]
+module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"]: Creation complete after 0s [id=initial-eks-node-group-20230430082916737400000001-20230430082917966400000003]
+module.eks.module.kms.aws_kms_key.this[0]: Creating...
+module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"]: Creation complete after 0s [id=initial-eks-node-group-20230430082916737400000001-20230430082918044500000004]
+module.eks.aws_cloudwatch_log_group.this[0]: Creation complete after 1s [id=/aws/eks/argocd/cluster]
+module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"]: Creation complete after 0s [id=initial-eks-node-group-20230430082916737400000001-20230430082918172400000005]
+module.vpc.aws_eip.nat[0]: Creation complete after 1s [id=eipalloc-0d255eee8bedb35e2]
+aws_secretsmanager_secret_version.argocd: Creation complete after 1s [id=arn:aws:secretsmanager:us-west-2:233295694198:secret:argocd-Ys3cJa|193C590F-877A-4654-BC46-87A17D3E318D]
+module.eks.aws_iam_role_policy_attachment.this["AmazonEKSVPCResourceController"]: Creation complete after 1s [id=argocd-cluster-20230430082916740500000002-20230430082918381500000006]
+module.eks.aws_iam_role_policy_attachment.this["AmazonEKSClusterPolicy"]: Creation complete after 1s [id=argocd-cluster-20230430082916740500000002-20230430082918393100000007]
+module.vpc.aws_vpc.this[0]: Still creating... [10s elapsed]
+module.eks.module.kms.aws_kms_key.this[0]: Still creating... [10s elapsed]
+module.vpc.aws_vpc.this[0]: Creation complete after 15s [id=vpc-03913b50480543d8a]
+module.vpc.aws_internet_gateway.this[0]: Creating...
+module.vpc.aws_default_security_group.this[0]: Creating...
+module.vpc.aws_route_table.public[0]: Creating...
+module.vpc.aws_default_route_table.default[0]: Creating...
+module.vpc.aws_subnet.public[0]: Creating...
+module.vpc.aws_route_table.private[0]: Creating...
+module.vpc.aws_subnet.private[2]: Creating...
+module.vpc.aws_subnet.private[0]: Creating...
+module.vpc.aws_default_network_acl.this[0]: Creating...
+module.vpc.aws_default_route_table.default[0]: Creation complete after 1s [id=rtb-0a9ca1d0ec13fe23c]
+module.vpc.aws_subnet.public[2]: Creating...
+module.vpc.aws_internet_gateway.this[0]: Creation complete after 2s [id=igw-034a239603ca9af2e]
+module.vpc.aws_subnet.public[1]: Creating...
+module.vpc.aws_route_table.public[0]: Creation complete after 2s [id=rtb-0034ef26507a5d014]
+module.vpc.aws_subnet.private[1]: Creating...
+module.vpc.aws_route_table.private[0]: Creation complete after 2s [id=rtb-046cf4be36ac208c9]
+module.vpc.aws_subnet.public[0]: Creation complete after 2s [id=subnet-06798f1e7b24efbad]
+module.vpc.aws_subnet.private[2]: Creation complete after 2s [id=subnet-02908d4a90c64d38c]
+module.eks.aws_security_group.cluster[0]: Creating...
+module.eks.aws_security_group.node[0]: Creating...
+module.vpc.aws_route.public_internet_gateway[0]: Creating...
+module.vpc.aws_subnet.private[0]: Creation complete after 2s [id=subnet-0e797109f8f84311d]
+module.vpc.aws_subnet.public[2]: Creation complete after 1s [id=subnet-08e2536c3ceea9a0e]
+module.vpc.aws_subnet.private[1]: Creation complete after 1s [id=subnet-0c316a4900b6410aa]
+module.vpc.aws_subnet.public[1]: Creation complete after 1s [id=subnet-0ec84d4ceb9ce3e9c]
+module.vpc.aws_route_table_association.private[2]: Creating...
+module.vpc.aws_route_table_association.private[1]: Creating...
+module.vpc.aws_route_table_association.private[0]: Creating...
+module.vpc.aws_route_table_association.public[1]: Creating...
+module.vpc.aws_route.public_internet_gateway[0]: Creation complete after 1s [id=r-rtb-0034ef26507a5d0141080289494]
+module.vpc.aws_nat_gateway.this[0]: Creating...
+module.vpc.aws_default_network_acl.this[0]: Creation complete after 3s [id=acl-011648e9005572b06]
+module.vpc.aws_route_table_association.public[2]: Creating...
+module.vpc.aws_default_security_group.this[0]: Creation complete after 3s [id=sg-0f3a7c826a1170c15]
+module.vpc.aws_route_table_association.public[0]: Creating...
+module.vpc.aws_route_table_association.private[1]: Creation complete after 0s [id=rtbassoc-0bfc2024ae6b1ee04]
+module.vpc.aws_route_table_association.public[1]: Creation complete after 0s [id=rtbassoc-03800ae74322888e9]
+module.vpc.aws_route_table_association.private[2]: Creation complete after 0s [id=rtbassoc-09fff0eeb7ad655c9]
+module.vpc.aws_route_table_association.private[0]: Creation complete after 0s [id=rtbassoc-08bdc83bef813aa47]
+module.vpc.aws_route_table_association.public[2]: Creation complete after 1s [id=rtbassoc-00add802ab944c201]
+module.vpc.aws_route_table_association.public[0]: Creation complete after 1s [id=rtbassoc-073da32844d69e139]
+module.eks.aws_security_group.node[0]: Creation complete after 2s [id=sg-02f1fd1029ff0fc83]
+module.eks.aws_security_group.cluster[0]: Creation complete after 2s [id=sg-0c00891f83c822cdb]
+module.eks.aws_security_group_rule.cluster["ingress_nodes_443"]: Creating...
+module.eks.aws_security_group_rule.node["egress_all"]: Creating...
+module.eks.aws_security_group_rule.node["ingress_cluster_9443_webhook"]: Creating...
+module.eks.aws_security_group_rule.node["ingress_self_coredns_tcp"]: Creating...
+module.eks.aws_security_group_rule.node["ingress_self_coredns_udp"]: Creating...
+module.eks.aws_security_group_rule.node["ingress_cluster_8443_webhook"]: Creating...
+module.eks.aws_security_group_rule.node["ingress_cluster_kubelet"]: Creating...
+module.eks.aws_security_group_rule.node["ingress_nodes_ephemeral"]: Creating...
+module.eks.aws_security_group_rule.cluster["ingress_nodes_443"]: Creation complete after 2s [id=sgrule-1569158123]
+module.eks.aws_security_group_rule.node["egress_all"]: Creation complete after 2s [id=sgrule-506030302]
+module.eks.aws_security_group_rule.node["ingress_cluster_6443_webhook"]: Creating...
+module.eks.aws_security_group_rule.node["ingress_cluster_443"]: Creating...
+module.eks.module.kms.aws_kms_key.this[0]: Still creating... [20s elapsed]
+module.eks.aws_security_group_rule.node["ingress_cluster_kubelet"]: Creation complete after 3s [id=sgrule-34833572]
+module.eks.aws_security_group_rule.node["ingress_cluster_4443_webhook"]: Creating...
+module.eks.aws_security_group_rule.node["ingress_self_coredns_tcp"]: Creation complete after 4s [id=sgrule-2386006093]
+module.eks.aws_security_group_rule.node["ingress_cluster_8443_webhook"]: Creation complete after 5s [id=sgrule-1867809139]
+module.eks.aws_security_group_rule.node["ingress_nodes_ephemeral"]: Creation complete after 6s [id=sgrule-4246240157]
+module.eks.aws_security_group_rule.node["ingress_self_coredns_udp"]: Creation complete after 8s [id=sgrule-711472034]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [10s elapsed]
+module.eks.aws_security_group_rule.node["ingress_cluster_9443_webhook"]: Creation complete after 9s [id=sgrule-200651448]
+module.eks.module.kms.aws_kms_key.this[0]: Creation complete after 28s [id=8324edac-2612-485a-9fc3-9c04a10952f9]
+module.eks.module.kms.aws_kms_alias.this["cluster"]: Creating...
+module.eks.aws_iam_policy.cluster_encryption[0]: Creating...
+module.eks.aws_security_group_rule.node["ingress_cluster_6443_webhook"]: Creation complete after 8s [id=sgrule-2080947538]
+module.eks.module.kms.aws_kms_alias.this["cluster"]: Creation complete after 0s [id=alias/eks/argocd]
+module.eks.aws_iam_policy.cluster_encryption[0]: Creation complete after 0s [id=arn:aws:iam::233295694198:policy/argocd-cluster-ClusterEncryption2023043008294595400000000b]
+module.eks.aws_iam_role_policy_attachment.cluster_encryption[0]: Creating...
+module.eks.aws_iam_role_policy_attachment.cluster_encryption[0]: Creation complete after 0s [id=argocd-cluster-20230430082916740500000002-2023043008294678270000000c]
+module.eks.aws_security_group_rule.node["ingress_cluster_443"]: Creation complete after 9s [id=sgrule-4105695581]
+module.eks.aws_security_group_rule.node["ingress_cluster_4443_webhook"]: Creation complete after 10s [id=sgrule-3041581764]
+module.eks.aws_eks_cluster.this[0]: Creating...
+module.vpc.aws_nat_gateway.this[0]: Still creating... [20s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [10s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [30s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [20s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [40s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [30s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [50s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [40s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [1m0s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [50s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [1m10s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [1m0s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [1m20s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [1m10s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Still creating... [1m30s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [1m20s elapsed]
+module.vpc.aws_nat_gateway.this[0]: Creation complete after 1m38s [id=nat-011c32c73eefd6a6c]
+module.vpc.aws_route.private_nat_gateway[0]: Creating...
+module.vpc.aws_route.private_nat_gateway[0]: Creation complete after 1s [id=r-rtb-046cf4be36ac208c91080289494]
+module.eks.aws_eks_cluster.this[0]: Still creating... [1m30s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [1m40s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [1m50s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [2m0s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [2m10s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [2m20s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [2m30s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [2m40s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [2m50s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [3m0s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [3m10s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [3m20s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [3m30s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [3m40s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [3m50s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [4m0s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [4m10s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [4m20s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [4m30s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [4m40s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [4m50s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [5m0s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [5m10s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [5m20s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [5m30s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [5m40s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [5m50s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [6m0s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [6m10s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [6m20s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [6m30s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [6m40s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [6m50s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [7m0s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [7m10s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [7m20s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [7m30s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [7m40s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [7m50s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [8m0s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [8m10s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [8m20s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [8m30s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [8m40s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [8m50s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [9m0s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [9m10s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [9m20s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [9m30s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [9m40s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [9m50s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [10m0s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [10m10s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [10m20s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [10m30s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [10m40s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [10m50s elapsed]
+module.eks.aws_eks_cluster.this[0]: Still creating... [11m0s elapsed]
+module.eks.aws_eks_cluster.this[0]: Creation complete after 11m1s [id=argocd]
+module.eks.data.aws_eks_addon_version.this["coredns"]: Reading...
+module.eks.data.aws_eks_addon_version.this["vpc-cni"]: Reading...
+module.eks.data.aws_eks_addon_version.this["kube-proxy"]: Reading...
+module.eks.aws_ec2_tag.cluster_primary_security_group["Blueprint"]: Creating...
+module.eks.data.tls_certificate.this[0]: Reading...
+module.eks.aws_ec2_tag.cluster_primary_security_group["GithubRepo"]: Creating...
+module.eks.time_sleep.this[0]: Creating...
+module.eks_blueprints_kubernetes_addons.time_sleep.dataplane: Creating...
+module.eks_blueprints_kubernetes_addons.module.argocd[0].kubernetes_namespace_v1.this[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.vpa[0].kubernetes_namespace_v1.vpa[0]: Creating...
+module.eks.data.aws_eks_addon_version.this["kube-proxy"]: Read complete after 1s [id=kube-proxy]
+module.eks.data.aws_eks_addon_version.this["coredns"]: Read complete after 1s [id=coredns]
+module.eks.data.aws_eks_addon_version.this["vpc-cni"]: Read complete after 1s [id=vpc-cni]
+module.eks_blueprints_kubernetes_addons.module.traefik[0].kubernetes_namespace_v1.this[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.argo_rollouts[0].kubernetes_namespace_v1.this[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.prometheus[0].kubernetes_namespace_v1.prometheus[0]: Creating...
+module.eks.data.tls_certificate.this[0]: Read complete after 1s [id=34b882443ccd2d1a84de1dbac994b28b7f371f17]
+module.eks_blueprints_kubernetes_addons.module.yunikorn[0].kubernetes_namespace_v1.yunikorn[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.argo_rollouts[0].kubernetes_namespace_v1.this[0]: Creation complete after 1s [id=argo-rollouts]
+module.eks_blueprints_kubernetes_addons.module.traefik[0].kubernetes_namespace_v1.this[0]: Creation complete after 1s [id=traefik]
+module.eks_blueprints_kubernetes_addons.module.vpa[0].kubernetes_namespace_v1.vpa[0]: Creation complete after 2s [id=vpa]
+module.eks_blueprints_kubernetes_addons.module.argocd[0].kubernetes_namespace_v1.this[0]: Creation complete after 2s [id=argocd]
+module.eks.aws_ec2_tag.cluster_primary_security_group["Blueprint"]: Creation complete after 2s [id=sg-085242b8ac4fc825a,Blueprint]
+module.eks.aws_iam_openid_connect_provider.oidc_provider[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.prometheus[0].kubernetes_namespace_v1.prometheus[0]: Creation complete after 1s [id=prometheus]
+module.eks_blueprints_kubernetes_addons.module.yunikorn[0].kubernetes_namespace_v1.yunikorn[0]: Creation complete after 1s [id=yunikorn]
+module.eks.aws_ec2_tag.cluster_primary_security_group["GithubRepo"]: Creation complete after 2s [id=sg-085242b8ac4fc825a,GithubRepo]
+module.eks.aws_iam_openid_connect_provider.oidc_provider[0]: Creation complete after 1s [id=arn:aws:iam::233295694198:oidc-provider/oidc.eks.us-west-2.amazonaws.com/id/C79A5D5553F75B2774C8355B7194410D]
+module.eks_blueprints_kubernetes_addons.module.argocd[0].module.helm_addon.helm_release.addon[0]: Creating...
+module.eks.time_sleep.this[0]: Still creating... [10s elapsed]
+module.eks_blueprints_kubernetes_addons.time_sleep.dataplane: Still creating... [10s elapsed]
+module.eks_blueprints_kubernetes_addons.time_sleep.dataplane: Creation complete after 10s [id=2023-04-30T08:41:00Z]
+module.eks_blueprints_kubernetes_addons.data.aws_eks_cluster.eks_cluster: Reading...
+module.eks_blueprints_kubernetes_addons.data.aws_eks_cluster.eks_cluster: Read complete after 1s [id=argocd]
+module.eks_blueprints_kubernetes_addons.module.cert_manager[0].aws_iam_policy.cert_manager: Creating...
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].aws_iam_policy.aws_for_fluent_bit: Creating...
+module.eks_blueprints_kubernetes_addons.module.keda[0].aws_iam_policy.keda_irsa: Creating...
+module.eks_blueprints_kubernetes_addons.module.karpenter[0].data.aws_iam_policy_document.karpenter: Reading...
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].data.aws_iam_policy_document.kms: Reading...
+module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].data.aws_iam_policy_document.cluster_autoscaler: Reading...
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_iam_policy.aws_ebs_csi_driver[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].data.aws_iam_policy_document.cluster_autoscaler: Read complete after 0s [id=435484595]
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].data.aws_iam_policy_document.kms: Read complete after 0s [id=2038425774]
+module.eks_blueprints_kubernetes_addons.module.karpenter[0].data.aws_iam_policy_document.karpenter: Read complete after 0s [id=3670545821]
+module.eks_blueprints_kubernetes_addons.module.karpenter[0].aws_iam_policy.karpenter: Creating...
+module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].aws_iam_policy.cluster_autoscaler: Creating...
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].aws_iam_policy.aws_for_fluent_bit: Creation complete after 0s [id=arn:aws:iam::233295694198:policy/argocd-fluentbit]
+module.eks_blueprints_kubernetes_addons.module.keda[0].aws_iam_policy.keda_irsa: Creation complete after 0s [id=arn:aws:iam::233295694198:policy/argocd-keda-irsa]
+module.eks_blueprints_kubernetes_addons.module.karpenter[0].aws_iam_policy.karpenter: Creation complete after 0s [id=arn:aws:iam::233295694198:policy/argocd-karpenter]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_iam_policy.aws_ebs_csi_driver[0]: Creation complete after 0s [id=arn:aws:iam::233295694198:policy/argocd-aws-ebs-csi-driver-irsa]
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].module.helm_addon.module.irsa[0].kubernetes_namespace_v1.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].aws_iam_policy.cluster_autoscaler: Creation complete after 0s [id=arn:aws:iam::233295694198:policy/argocd-cluster-autoscaler-irsa]
+module.eks_blueprints_kubernetes_addons.module.keda[0].module.helm_addon.module.irsa[0].kubernetes_namespace_v1.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].module.helm_addon.module.irsa[0].aws_iam_role.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.karpenter[0].module.helm_addon.module.irsa[0].kubernetes_namespace_v1.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.keda[0].module.helm_addon.module.irsa[0].aws_iam_role.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].module.irsa_addon[0].aws_iam_role.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.karpenter[0].module.helm_addon.module.irsa[0].aws_iam_role.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.cert_manager[0].aws_iam_policy.cert_manager: Creation complete after 1s [id=arn:aws:iam::233295694198:policy/argocd-cert-manager-irsa]
+module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].module.helm_addon.module.irsa[0].aws_iam_role.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].module.helm_addon.module.irsa[0].kubernetes_namespace_v1.irsa[0]: Creation complete after 1s [id=aws-for-fluent-bit]
+module.eks_blueprints_kubernetes_addons.module.keda[0].module.helm_addon.module.irsa[0].kubernetes_namespace_v1.irsa[0]: Creation complete after 1s [id=keda]
+module.eks_blueprints_kubernetes_addons.module.karpenter[0].module.helm_addon.module.irsa[0].kubernetes_namespace_v1.irsa[0]: Creation complete after 1s [id=karpenter]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].module.irsa_addon[0].aws_iam_role.irsa[0]: Creation complete after 1s [id=argocd-ebs-csi-controller-sa-irsa]
+module.eks_blueprints_kubernetes_addons.module.cert_manager[0].module.helm_addon.module.irsa[0].kubernetes_namespace_v1.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.karpenter[0].module.helm_addon.module.irsa[0].aws_iam_role.irsa[0]: Creation complete after 1s [id=argocd-karpenter-irsa]
+module.eks_blueprints_kubernetes_addons.module.cert_manager[0].module.helm_addon.module.irsa[0].aws_iam_role.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].module.helm_addon.module.irsa[0].aws_iam_role.irsa[0]: Creation complete after 1s [id=argocd-aws-for-fluent-bit-sa-irsa]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].module.irsa_addon[0].aws_iam_role_policy_attachment.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.karpenter[0].module.helm_addon.module.irsa[0].aws_iam_role_policy_attachment.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.keda[0].module.helm_addon.module.irsa[0].aws_iam_role.irsa[0]: Creation complete after 1s [id=argocd-keda-operator-sa-irsa]
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].module.helm_addon.module.irsa[0].aws_iam_role_policy_attachment.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.karpenter[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].module.helm_addon.module.irsa[0].aws_iam_role.irsa[0]: Creation complete after 0s [id=argocd-cluster-autoscaler-sa-irsa]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].module.irsa_addon[0].aws_iam_role_policy_attachment.irsa[0]: Creation complete after 0s [id=argocd-ebs-csi-controller-sa-irsa-2023043008410228210000000e]
+module.eks_blueprints_kubernetes_addons.module.keda[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.karpenter[0].module.helm_addon.module.irsa[0].aws_iam_role_policy_attachment.irsa[0]: Creation complete after 0s [id=argocd-karpenter-irsa-2023043008410230180000000f]
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].module.helm_addon.module.irsa[0].aws_iam_role_policy_attachment.irsa[0]: Creation complete after 0s [id=argocd-aws-for-fluent-bit-sa-irsa-20230430084102308600000010]
+module.eks_blueprints_kubernetes_addons.module.keda[0].module.helm_addon.module.irsa[0].aws_iam_role_policy_attachment.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].module.helm_addon.module.irsa[0].aws_iam_role_policy_attachment.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.cert_manager[0].module.helm_addon.module.irsa[0].kubernetes_namespace_v1.irsa[0]: Creation complete after 1s [id=cert-manager]
+module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.cert_manager[0].module.helm_addon.module.irsa[0].aws_iam_role.irsa[0]: Creation complete after 1s [id=argocd-cert-manager-irsa]
+module.eks_blueprints_kubernetes_addons.module.cert_manager[0].module.helm_addon.module.irsa[0].aws_iam_role_policy_attachment.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].module.helm_addon.module.irsa[0].aws_iam_role_policy_attachment.irsa[0]: Creation complete after 1s [id=argocd-cluster-autoscaler-sa-irsa-20230430084102647000000011]
+module.eks_blueprints_kubernetes_addons.module.keda[0].module.helm_addon.module.irsa[0].aws_iam_role_policy_attachment.irsa[0]: Creation complete after 1s [id=argocd-keda-operator-sa-irsa-20230430084102653700000012]
+module.eks_blueprints_kubernetes_addons.module.cert_manager[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.cert_manager[0].module.helm_addon.module.irsa[0].aws_iam_role_policy_attachment.irsa[0]: Creation complete after 0s [id=argocd-cert-manager-irsa-20230430084102885700000013]
+module.eks_blueprints_kubernetes_addons.module.argocd[0].module.helm_addon.helm_release.addon[0]: Still creating... [10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.karpenter[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0]: Creation complete after 1s [id=karpenter/karpenter]
+module.eks_blueprints_kubernetes_addons.module.aws_for_fluent_bit[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0]: Creation complete after 1s [id=aws-for-fluent-bit/aws-for-fluent-bit-sa]
+module.eks_blueprints_kubernetes_addons.module.keda[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0]: Creation complete after 2s [id=keda/keda-operator-sa]
+module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0]: Creation complete after 1s [id=kube-system/cluster-autoscaler-sa]
+module.eks_blueprints_kubernetes_addons.module.cert_manager[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0]: Creation complete after 1s [id=cert-manager/cert-manager]
+module.eks.time_sleep.this[0]: Still creating... [20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.argocd[0].module.helm_addon.helm_release.addon[0]: Still creating... [20s elapsed]
+module.eks.time_sleep.this[0]: Still creating... [30s elapsed]
+module.eks.time_sleep.this[0]: Creation complete after 30s [id=2023-04-30T08:41:20Z]
+module.eks.module.eks_managed_node_group["initial"].aws_launch_template.this[0]: Creating...
+module.eks.module.eks_managed_node_group["initial"].aws_launch_template.this[0]: Creation complete after 1s [id=lt-05a252bbf573b58e5]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Creating...
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.argocd[0].module.helm_addon.helm_release.addon[0]: Still creating... [30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.argocd[0].module.helm_addon.helm_release.addon[0]: Still creating... [40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.argocd[0].module.helm_addon.helm_release.addon[0]: Still creating... [50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.argocd[0].module.helm_addon.helm_release.addon[0]: Still creating... [1m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [1m0s elapsed]
+module.eks_blueprints_kubernetes_addons.module.argocd[0].module.helm_addon.helm_release.addon[0]: Still creating... [1m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [1m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.argocd[0].module.helm_addon.helm_release.addon[0]: Still creating... [1m20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.argocd[0].module.helm_addon.helm_release.addon[0]: Creation complete after 1m22s [id=argo-cd]
+module.eks_blueprints_kubernetes_addons.module.argocd[0].helm_release.argocd_application["workloads"]: Creating...
+module.eks_blueprints_kubernetes_addons.module.argocd[0].helm_release.argocd_application["addons"]: Creating...
+module.eks_blueprints_kubernetes_addons.module.argocd[0].helm_release.argocd_application["workloads"]: Creation complete after 5s [id=workloads]
+module.eks_blueprints_kubernetes_addons.module.argocd[0].helm_release.argocd_application["addons"]: Creation complete after 5s [id=addons]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [1m0s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [1m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [1m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [1m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [1m20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [1m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [1m30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [1m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [1m40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [2m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [1m50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [2m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [2m0s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [2m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [2m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [2m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [2m20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [2m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [2m30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [2m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [2m40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [3m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [2m50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [3m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [3m0s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [3m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [3m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [3m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [3m20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [3m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [3m30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [3m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [3m40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [4m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [3m50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [4m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [4m0s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [4m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [4m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [4m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [4m20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [4m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [4m30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [4m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [4m40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [5m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [4m50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [5m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [5m0s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [5m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [5m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [5m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [5m20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [5m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [5m30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [5m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [5m40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [6m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [5m50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [6m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [6m0s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [6m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [6m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [6m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [6m20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [6m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [6m30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [6m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [6m40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [7m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [6m50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [7m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [7m0s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [7m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [7m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [7m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [7m20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [7m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [7m30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [7m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [7m40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [8m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [7m50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [8m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [8m0s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [8m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [8m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [8m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [8m20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [8m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [8m30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [8m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [8m40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [9m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [8m50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [9m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [9m0s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [9m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [9m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [9m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [9m20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [9m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [9m30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [9m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [9m40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [10m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [9m50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [10m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [10m0s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [10m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [10m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [10m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [10m20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [10m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [10m30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [10m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [10m40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [11m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [10m50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [11m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [11m0s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [11m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [11m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [11m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [11m20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [11m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [11m30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [11m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [11m40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [12m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [11m50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [12m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [12m0s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [12m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [12m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [12m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [12m20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [12m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [12m30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [12m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [12m40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [13m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [12m50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [13m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [13m0s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [13m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [13m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [13m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [13m20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [13m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [13m30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [13m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [13m40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [14m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [13m50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [14m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [14m0s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [14m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [14m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [14m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [14m20s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [14m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [14m30s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [14m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [14m40s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [15m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [14m50s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Still creating... [15m10s elapsed]
+module.eks_blueprints_kubernetes_addons.module.aws_ebs_csi_driver[0].aws_eks_addon.aws_ebs_csi_driver[0]: Creation complete after 15m12s [id=argocd:aws-ebs-csi-driver]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [15m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [15m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [15m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [15m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [15m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [15m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [16m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [16m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [16m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [16m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [16m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [16m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [17m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [17m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [17m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [17m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [17m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [17m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [18m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [18m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [18m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [18m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [18m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [18m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [19m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [19m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [19m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [19m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [19m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [19m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [20m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [20m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [20m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [20m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [20m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [20m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [21m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [21m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [21m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [21m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [21m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [21m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [22m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [22m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [22m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [22m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [22m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [22m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [23m0s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [23m10s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [23m20s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [23m30s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [23m40s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [23m50s elapsed]
+module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0]: Still creating... [24m0s elapsed]
+
+Warning: "default_secret_name" is no longer applicable for Kubernetes v1.24.0 and above
+
+  with module.eks_blueprints_kubernetes_addons.module.cluster_autoscaler[0].module.helm_addon.module.irsa[0].kubernetes_service_account_v1.irsa[0],
+  on ../../modules/irsa/main.tf line 37, in resource "kubernetes_service_account_v1" "irsa":
+  37: resource "kubernetes_service_account_v1" "irsa" {
+
+Starting from version 1.24.0 Kubernetes does not automatically generate a
+token for service accounts, in this case, "default_secret_name" will be empty
+
+(and 4 more similar warnings elsewhere)
+
+Error: waiting for EKS Node Group (argocd:initial-20230430084120980600000016) to create: unexpected state 'CREATE_FAILED', wanted target 'ACTIVE'. last error: 2 errors occurred:
+	* eks-initial-20230430084120980600000016-54c3e8a9-6df6-15e2-6ede-5b019ea7099e: AsgInstanceLaunchFailures: Could not launch On-Demand Instances. VcpuLimitExceeded - You have requested more vCPU capacity than your current vCPU limit of 8 allows for the instance bucket that the specified instance type belongs to. Please visit http://aws.amazon.com/contact-us/ec2-request to request an adjustment to this limit. Launching EC2 instance failed.
+	* i-01eddece9d1bc2b7f, i-036e821410e234ac7, i-0760075e5be80d9d6, i-0c384a0b9058de252: NodeCreationFailure: Instances failed to join the kubernetes cluster
+
+
+
+  with module.eks.module.eks_managed_node_group["initial"].aws_eks_node_group.this[0],
+  on .terraform/modules/eks/modules/eks-managed-node-group/main.tf line 308, in resource "aws_eks_node_group" "this":
+ 308: resource "aws_eks_node_group" "this" {
+

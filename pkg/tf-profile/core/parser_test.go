@@ -46,8 +46,10 @@ func TestFullParse(t *testing.T) {
 	expected := ResourceMetric{
 		NumCalls:               1,
 		TotalTime:              10000,
-		CreationStartedIndex:   10, // Not implemented
+		CreationStartedIndex:   10,
 		CreationCompletedIndex: 12,
+		CreationStartedEvent:   11,
+		CreationCompletedEvent: 26,
 		CreationStatus:         Created,
 	}
 	if metrics != expected {
@@ -58,8 +60,10 @@ func TestFullParse(t *testing.T) {
 	expected2 := ResourceMetric{
 		NumCalls:               1,
 		TotalTime:              1000,
-		CreationStartedIndex:   5, // Not implemented
+		CreationStartedIndex:   5,
 		CreationCompletedIndex: 1,
+		CreationStartedEvent:   5,
+		CreationCompletedEvent: 12,
 		CreationStatus:         Created,
 	}
 	if metrics2 != expected2 {
@@ -95,4 +99,14 @@ func TestFailureParse(t *testing.T) {
 	metrics, exists = log.Resources["aws_ssm_parameter.bad"]
 	assert.True(t, exists)
 	assert.Equal(t, metrics.CreationStatus, Failed)
+}
+
+func TestSpecialResourceName(t *testing.T) {
+	// Name contains special characters: :/_
+	line := `module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"]: Creation complete after 0s [id=initial-eks-node-group-20230430082916737400000001-20230430082917966400000003]"`
+	name, duration, err := ParseResourceCreated(line)
+
+	assert.Nil(t, err)
+	assert.Equal(t, `module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"]`, name)
+	assert.Equal(t, float64(0), duration)
 }
