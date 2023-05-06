@@ -102,6 +102,8 @@ Largest leaf module                module.dbt[4]
 Size of largest leaf module        40  
 ```
 
+For more information, refer to the [reference](./docs/stats.md) for the `stats` command.
+
 ## `tf-profile table`
 <a name="anchor_table"></a>
 `tf-profile table` will parse a log and provide per-resource metrics. By default, resources created with `for_each` and `count` are aggregated into one entry (e.g. `aws_subnet[0]` and `aws_subnet[1]` become `aws_subnet[*]`). The following statistics are shown:
