@@ -20,10 +20,10 @@ A table generated based on the log file or input, sorted according to `-s / --so
 ```
 resource                            n  tot_time  idx_creation  idx_created  status    
 -------------------------------------------------------------------------------------- 
-time_sleep.count[*]                 5  15s     0             13           AllCreated  
-time_sleep.foreach[*]               3  1m30s      4             11           AllCreated  
-module.test[1].time_sleep.count[*]  3  6      3             9            AllCreated  
-module.test[0].time_sleep.count[*]  3  3s      9             7            AllCreated 
+time_sleep.count[*]                 5  15s       0             13           AllCreated  
+time_sleep.foreach[*]               3  1m30s     4             11           AllCreated  
+module.test[1].time_sleep.count[*]  3  6         3             9            AllCreated  
+module.test[0].time_sleep.count[*]  3  3s        9             7            AllCreated 
 ```
 
 The column names are lowercase and separated by underscores to allow for easy referencing in the `--sort` option. The meaning of each column is:
