@@ -114,10 +114,10 @@ For more information, refer to the [reference](./docs/stats.md) for the `stats` 
 
 resource                            n  tot_time  idx_creation  idx_created  status    
 -------------------------------------------------------------------------------------- 
-time_sleep.count[*]                 5  11000     0             13           AllCreated  
-time_sleep.foreach[*]               3  7000      4             11           AllCreated  
-module.test[1].time_sleep.count[*]  3  5000      3             9            AllCreated  
-module.test[0].time_sleep.count[*]  3  4000      9             7            AllCreated 
+time_sleep.count[*]                 5  11s     0             13           AllCreated  
+time_sleep.foreach[*]               3  7s      4             11           AllCreated  
+module.test[1].time_sleep.count[*]  3  5s      3             9            AllCreated  
+module.test[0].time_sleep.count[*]  3  4s      9             7            AllCreated 
 ```
 
 For a full description of the options, see the [reference](./docs/table.md) page.
