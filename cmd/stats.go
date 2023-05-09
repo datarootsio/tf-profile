@@ -8,7 +8,7 @@ import (
 
 func init() {
 	rootCmd.AddCommand(statsCmd)
-	statsCmd.Flags().Bool("tee", false, "Print logs while parsing")
+	statsCmd.Flags().BoolP("tee", "t", false, "Print logs while parsing")
 }
 
 var statsCmd = &cobra.Command{

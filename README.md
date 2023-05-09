@@ -102,18 +102,12 @@ Largest leaf module                module.dbt[4]
 Size of largest leaf module        40  
 ```
 
+For more information, refer to the [reference](./docs/stats.md) for the `stats` command.
+
 ## `tf-profile table`
 <a name="anchor_table"></a>
-`tf-profile table` will parse a log and provide per-resource metrics. By default, resources created with `for_each` and `count` are aggregated into one entry (e.g. `aws_subnet[0]` and `aws_subnet[1]` become `aws_subnet[*]`). The following statistics are shown:
+`tf-profile table` will parse a log and provide per-resource metrics.
 
-- **resource**: Resource name
-- **n**: Number of resources created (usually 1, unless `count` or `for_each` were used)
-- **tot_time** (milliseconds): total time spent creating these resources. Note that for resources where `n` > 1, `tot_time` does not equal wall time, as Terraform usually creates resources in parallel. There is currently no way to accurately find the wall time from a Terraform log.
-- **idx_creation**: order in which resource creation _started_. This means that Terraform started by creation the resource with `idx_creation = 0`. That does not guarantee the creation of this resource finished first as well (see `idx_created`).
-- **idx_created**: order in which resource creation _ended_. this means that the resource with `idx_created = 0` was the first resource to be fully creatd.
-- **status**: For single resources, status can be any of: `Started|NotStarted|Created|Failed`. For aggregated resources, status can be any of: `AllCreated|AllFailed|SomeFailed|NoneStarted|AllStarted|SomeStarted`.
-   
-    With resource aggregation, more informative statuses have precedence over less informative statuses. For example, `AllCreated` will be shown over `AllStarted`.
 ```bash
 ❱ terraform apply -auto-approve > log.txt
 ❱ tf-profile table log.txt
@@ -126,52 +120,8 @@ module.test[1].time_sleep.count[*]  3  5000      3             9            AllC
 module.test[0].time_sleep.count[*]  3  4000      9             7            AllCreated 
 ```
 
-### Sorting the table with `--sort`
+For a full description of the options, see the [reference](./docs/table.md) page.
 
-Entries in this table can be sorted by providing a `--sort` (shorthand `-s`) argument. This argument is a comma-separated list of key-value pairs. Valid example include:
-- `tot_time=desc` (default): sort by total time descending
-- `tot_time=asc,resource=desc,status=asc`: sort by total time, resource name and creation status in that order
-
-```bash
-❱ terraform apply -auto-approve > log.txt
-❱ tf-profile table --sort "tot_time=asc,resource=desc" log.txt
-❱ tf-profile table --sort "n=desc,index_creation=desc" log.txt
-```
-
-### Mirroring input with `--tee`
-
-When piping stdinput into `tf-profile`, it is convenient to use the `--tee` flag. This flag instructs `tf-profile` to print every line it parses. This way you don't lose your detailed Terraform logs, but still get a table at the end.
-
-Example:
-```bash
-❱ terraform apply -auto-approve | tf-profile table --tee
-
-Terraform used the selected providers to generate the following execution
-plan. Resource actions are indicated with the following symbols:
-  + create
-
-Terraform will perform the following actions:
-
-  # aws_subnet.test[0] will be created
-  ...
-  < result of tf-profile will appear after the logs>
-```
-
-### Limit output with `--max_depth`
-🚧 Under construction (not implemented) 🚧
-
-When working with a large codebase, viewing statistics for every resource may be too detailed. You can limit the maximum module depth that `tf-profile` parses with `--max_depth` (default: -1, no limit). Any nested modules deeper than `--max_depth` are simply shown as their module name. Statistics of resources within that module are aggregated.
-
-```bash
-❱ terraform apply -auto-approve | tf-profile table --max_depth 1 --tee
-
-resource                            n  tot_time  idx_creation  idx_created  status    
--------------------------------------------------------------------------------------- 
-time_sleep.count[*]                 5  11000     0             13           AllCreated  
-time_sleep.foreach[*]               3  7000      4             11           AllCreated  
-module.test[1]                      3  5000      3             9            AllCreated  
-module.test[0]                      3  4000      9             7            AllCreated 
-```
 
 ## `tf-profile graph`
 <a name="anchor_graph"></a>
