@@ -61,7 +61,9 @@ func PrintStats(log ParsedLog) error {
 
 	addRows(&tbl, GetBasicStats(log))
 	addRows(&tbl, GetTimeStats(log))
+	addRows(&tbl, GetOperationStats(log))
 	addRows(&tbl, GetAfterStatusStats(log))
+	addRows(&tbl, GetDesiredStateStats(log))
 	addRows(&tbl, GetModuleStats(log))
 
 	fmt.Println() // Create space above the table
@@ -115,7 +117,7 @@ func GetAfterStatusStats(log ParsedLog) []Stat {
 
 	result := []Stat{}
 	for status, count := range StatusCount {
-		StatName := fmt.Sprintf("No. resources in state %v", status)
+		StatName := fmt.Sprintf("Resources in state %v", status)
 		result = append(result, Stat{StatName, fmt.Sprint(count)})
 	}
 
@@ -123,6 +125,43 @@ func GetAfterStatusStats(log ParsedLog) []Stat {
 	sort.Slice(result, func(i int, j int) bool {
 		return result[i].name < result[j].name
 	})
+	return result
+}
+
+func GetDesiredStateStats(log ParsedLog) []Stat {
+	inDesiredState := 0
+	notInDesiredState := 0
+
+	for _, metric := range log.Resources {
+		if metric.AfterStatus == metric.DesiredStatus {
+			inDesiredState += 1
+		} else {
+			notInDesiredState += 1
+		}
+	}
+	sum := inDesiredState + notInDesiredState
+
+	percInDesired := 100 * float64(inDesiredState) / float64(sum)
+	percNotInDesired := 100 * float64(notInDesiredState) / float64(sum)
+
+	return []Stat{
+		{"Resources in desired state", fmt.Sprintf("%v out of %v (%.1f%%)", inDesiredState, sum, percInDesired)},
+		{"Resources not in desired state", fmt.Sprintf("%v out of %v (%.1f%%)", notInDesiredState, sum, percNotInDesired)},
+	}
+}
+
+func GetOperationStats(log ParsedLog) []Stat {
+
+	Operations := make(map[string]int)
+	for _, metrics := range log.Resources {
+		Operations[metrics.Operation.String()] += metrics.NumCalls
+	}
+
+	result := []Stat{}
+	for op, count := range Operations {
+		StatName := fmt.Sprintf("Resources marked for operation %v", op)
+		result = append(result, Stat{StatName, fmt.Sprint(count)})
+	}
 	return result
 }
 

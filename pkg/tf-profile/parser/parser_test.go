@@ -29,6 +29,7 @@ func TestFullParse(t *testing.T) {
 		ModificationStartedEvent:   11,
 		ModificationCompletedEvent: 26,
 		BeforeStatus:               Created,
+		DesiredStatus:              Created,
 		AfterStatus:                Created,
 		Operation:                  Create,
 	}
@@ -45,6 +46,7 @@ func TestFullParse(t *testing.T) {
 		ModificationStartedEvent:   5,
 		ModificationCompletedEvent: 12,
 		BeforeStatus:               Created,
+		DesiredStatus:              Created,
 		AfterStatus:                Created,
 		Operation:                  Create,
 	}
