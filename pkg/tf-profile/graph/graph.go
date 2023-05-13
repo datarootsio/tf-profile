@@ -61,7 +61,7 @@ func CleanFailedResources(tflog ParsedLog) {
 
 	// Update all non-successful resources to end at that index
 	for resource, metrics := range tflog.Resources {
-		if metrics.CreationStatus != Created && metrics.CreationStatus != AllCreated {
+		if metrics.AfterStatus == Failed {
 			metrics.CreationCompletedEvent = max
 			tflog.Resources[resource] = metrics
 		}
@@ -95,7 +95,7 @@ func PrintGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) (string, 
 			NameForOutput,
 			metrics.CreationStartedEvent,
 			metrics.CreationCompletedEvent,
-			metrics.CreationStatus,
+			metrics.AfterStatus,
 		)
 		Resources = append(Resources, line)
 	}

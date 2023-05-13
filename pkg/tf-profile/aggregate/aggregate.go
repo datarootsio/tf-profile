@@ -111,8 +111,7 @@ func aggregateResourceNames(names ...string) string {
 // TotalTime contains the sum of individual apply times.
 // CreationStartedIndex contains the *lowest* CreationStartedIndex of any record.
 // CreationCompletedIndex contains the *highest* CreationStartedIndex of any record.
-// CreationStatus can be any of "AllCreated", "AllStarted", "NoneStarted", "SomeFailed",
-// "AllFailed"
+// AfterStatus can be any of "Created", "Failed", "NotCreated", "Multiple" or "Unknown"
 func aggregateResourceMetrics(metrics ...ResourceMetric) ResourceMetric {
 	NumCalls := len(metrics)
 	TotalTime := float64(0)
@@ -121,11 +120,10 @@ func aggregateResourceMetrics(metrics ...ResourceMetric) ResourceMetric {
 	CreationStartedEvent := -1
 	CreationCompletedEvent := -1
 
-	AllCreatedB := true
-	AllStartedB := true
-	NoneStartedB := true
-	SomeFailedB := false
-	AllFailedB := true
+	BeforeStatus := NoneStatus
+	AfterStatus := NoneStatus
+	DesiredStatus := NoneStatus
+	Operation := NoneOp
 
 	for _, metric := range metrics {
 		TotalTime += metric.TotalTime
@@ -142,43 +140,35 @@ func aggregateResourceMetrics(metrics ...ResourceMetric) ResourceMetric {
 		CreationCompletedIndex = maxInt(CreationCompletedIndex, metric.CreationCompletedIndex)
 		CreationCompletedEvent = maxInt(CreationCompletedEvent, metric.CreationCompletedEvent)
 
-		// Calculate aggregated statuses by "elimination"
-		if metric.CreationStatus == Created {
-			NoneStartedB = false
-			AllFailedB = false
+		// Calculate aggregated statuses:
+		// - if all statuses are equal to X, the result will be X
+		// - if multiple statuses are seen, the result will be "Multiple"
+		if BeforeStatus == NoneStatus {
+			BeforeStatus = metric.BeforeStatus
 		}
-		if metric.CreationStatus == Failed {
-			AllCreatedB = false
-			NoneStartedB = false
-			SomeFailedB = true
+		if AfterStatus == NoneStatus {
+			AfterStatus = metric.AfterStatus
 		}
-		if metric.CreationStatus == Started {
-			AllCreatedB = false
-			NoneStartedB = false
-			AllFailedB = false
+		if DesiredStatus == NoneStatus {
+			DesiredStatus = metric.DesiredStatus
 		}
-		if metric.CreationStatus == NotStarted {
-			AllCreatedB = false
-			AllStartedB = false
-			AllFailedB = false
+		if Operation == NoneOp {
+			Operation = metric.Operation
 		}
-	}
 
-	// FinalStatus should be the most interesting status
-	// we can give based on the metrics seen
-	var FinalStatus Status
-	if AllCreatedB {
-		FinalStatus = AllCreated
-	} else if AllFailedB {
-		FinalStatus = AllFailed
-	} else if SomeFailedB {
-		FinalStatus = SomeFailed
-	} else if NoneStartedB {
-		FinalStatus = NoneStarted
-	} else if AllStartedB {
-		FinalStatus = AllStarted
-	} else {
-		FinalStatus = SomeStarted
+		if BeforeStatus != metric.BeforeStatus {
+			BeforeStatus = Multiple
+		}
+		if AfterStatus != metric.AfterStatus {
+			AfterStatus = Multiple
+		}
+		if DesiredStatus != metric.DesiredStatus {
+			DesiredStatus = Multiple
+		}
+		if Operation != metric.Operation {
+			Operation = MultipleOp
+		}
+
 	}
 
 	return ResourceMetric{
@@ -188,7 +178,10 @@ func aggregateResourceMetrics(metrics ...ResourceMetric) ResourceMetric {
 		CreationCompletedIndex: CreationCompletedIndex,
 		CreationStartedEvent:   CreationStartedEvent,
 		CreationCompletedEvent: CreationCompletedEvent,
-		CreationStatus:         FinalStatus,
+		BeforeStatus:           BeforeStatus,
+		AfterStatus:            AfterStatus,
+		DesiredStatus:          DesiredStatus,
+		Operation:              Operation,
 	}
 }
 

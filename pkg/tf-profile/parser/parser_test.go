@@ -28,7 +28,7 @@ func TestFullParse(t *testing.T) {
 		CreationCompletedIndex: 12,
 		CreationStartedEvent:   11,
 		CreationCompletedEvent: 26,
-		CreationStatus:         Created,
+		AfterStatus:            Created,
 	}
 	if metrics != expected {
 		t.Fatalf("Expected %v, got %v\n", expected, metrics)
@@ -42,7 +42,7 @@ func TestFullParse(t *testing.T) {
 		CreationCompletedIndex: 1,
 		CreationStartedEvent:   5,
 		CreationCompletedEvent: 12,
-		CreationStatus:         Created,
+		AfterStatus:            Created,
 	}
 	if metrics2 != expected2 {
 		t.Fatalf("Expected %v, got %v\n", expected2, metrics2)
@@ -58,19 +58,19 @@ func TestFailureParse(t *testing.T) {
 
 	metrics, exists := log.Resources["aws_ssm_parameter.good2[0]"]
 	assert.True(t, exists)
-	assert.Equal(t, metrics.CreationStatus, Created)
+	assert.Equal(t, metrics.AfterStatus, Created)
 
 	metrics, exists = log.Resources["aws_ssm_parameter.good"]
 	assert.True(t, exists)
-	assert.Equal(t, metrics.CreationStatus, Created)
+	assert.Equal(t, metrics.AfterStatus, Created)
 
 	metrics, exists = log.Resources["aws_ssm_parameter.bad2[1]"]
 	assert.True(t, exists)
-	assert.Equal(t, metrics.CreationStatus, Failed)
+	assert.Equal(t, metrics.AfterStatus, Failed)
 
 	metrics, exists = log.Resources["aws_ssm_parameter.bad"]
 	assert.True(t, exists)
-	assert.Equal(t, metrics.CreationStatus, Failed)
+	assert.Equal(t, metrics.AfterStatus, Failed)
 }
 
 func TestParserSanityCheck(t *testing.T) {

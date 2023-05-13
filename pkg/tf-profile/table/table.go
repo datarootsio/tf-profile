@@ -67,7 +67,7 @@ func PrintTable(log ParsedLog, sort_spec string) error {
 					FormatDuration(int(metric.TotalTime/1000)), // Display as "10s" or "1m30s"
 					removeMinusOne(metric.CreationStartedIndex),
 					removeMinusOne(metric.CreationCompletedIndex),
-					(metric.CreationStatus),
+					(metric.AfterStatus),
 				)
 				break
 			}

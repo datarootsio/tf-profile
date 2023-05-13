@@ -42,9 +42,9 @@ func TestPlotOutput(t *testing.T) {
 
 	assert.Nil(t, err)
 	fmt.Println(out)
-	assert.Contains(t, out, `aws\\\_ssm\\\_parameter.good2[*] 7 11 AllCreated`)
+	assert.Contains(t, out, `aws\\\_ssm\\\_parameter.good2[*] 7 11 Created`)
 	assert.Contains(t, out, `aws\\\_ssm\\\_parameter.bad 5 -1 Failed`)
-	assert.Contains(t, out, `aws\\\_ssm\\\_parameter.bad2[*] 3 -1 AllFailed`)
+	assert.Contains(t, out, `aws\\\_ssm\\\_parameter.bad2[*] 3 -1 Failed`)
 	assert.Contains(t, out, `aws\\\_ssm\\\_parameter.good 0 8 Created`)
 
 }

@@ -40,7 +40,7 @@ func ParseResourceCreated(Line string, log *ParsedLog) (bool, error) {
 
 	// We know the resource and the duration, insert everything into the log
 	log.SetTotalTime(resource, createDuration)
-	log.SetCreationStatus(resource, Created)
+	log.SetAfterStatus(resource, Created)
 	log.SetCreationCompletedEvent(resource, log.CurrentEvent)
 	log.SetCreationCompletedIndex(resource, log.CurrentModificationEndedIndex)
 
@@ -90,6 +90,6 @@ func ParseResourceCreationFailed(Line string, log *ParsedLog) (bool, error) {
 	resource = resource[:len(resource)-1]       // Remove comma at end
 
 	// Knowing the resource whose modifications failed, insert everything in the log
-	log.SetCreationStatus(resource, Failed)
+	log.SetAfterStatus(resource, Failed)
 	return true, nil
 }

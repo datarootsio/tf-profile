@@ -61,7 +61,7 @@ func PrintStats(log ParsedLog) error {
 
 	addRows(&tbl, GetBasicStats(log))
 	addRows(&tbl, GetTimeStats(log))
-	addRows(&tbl, GetCreationStatusStats(log))
+	addRows(&tbl, GetAfterStatusStats(log))
 	addRows(&tbl, GetModuleStats(log))
 
 	fmt.Println() // Create space above the table
@@ -107,10 +107,10 @@ func GetTimeStats(log ParsedLog) []Stat {
 	}
 }
 
-func GetCreationStatusStats(log ParsedLog) []Stat {
+func GetAfterStatusStats(log ParsedLog) []Stat {
 	StatusCount := make(map[string]int)
 	for _, metrics := range log.Resources {
-		StatusCount[metrics.CreationStatus.String()] += metrics.NumCalls
+		StatusCount[metrics.AfterStatus.String()] += metrics.NumCalls
 	}
 
 	result := []Stat{}

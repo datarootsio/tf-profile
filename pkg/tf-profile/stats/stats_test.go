@@ -10,10 +10,10 @@ import (
 func TestBasicStats(t *testing.T) {
 	In := ParsedLog{
 		Resources: map[string]ResourceMetric{
-			"a": ResourceMetric{NumCalls: 1, CreationStatus: Created},
-			"b": ResourceMetric{NumCalls: 1, CreationStatus: Created},
-			"c": ResourceMetric{NumCalls: 1, CreationStatus: Created},
-			"d": ResourceMetric{NumCalls: 1, CreationStatus: Created},
+			"a": ResourceMetric{NumCalls: 1, AfterStatus: Created},
+			"b": ResourceMetric{NumCalls: 1, AfterStatus: Created},
+			"c": ResourceMetric{NumCalls: 1, AfterStatus: Created},
+			"d": ResourceMetric{NumCalls: 1, AfterStatus: Created},
 		},
 	}
 	Out := GetBasicStats(In)
@@ -25,10 +25,10 @@ func TestBasicStats(t *testing.T) {
 func TestTimeStats(t *testing.T) {
 	In := ParsedLog{
 		Resources: map[string]ResourceMetric{
-			"a": ResourceMetric{NumCalls: 1, TotalTime: 1000, CreationStatus: Created},
-			"b": ResourceMetric{NumCalls: 1, TotalTime: 2000, CreationStatus: Created},
-			"c": ResourceMetric{NumCalls: 1, TotalTime: 3000, CreationStatus: Created},
-			"d": ResourceMetric{NumCalls: 1, TotalTime: 59000, CreationStatus: Created},
+			"a": ResourceMetric{NumCalls: 1, TotalTime: 1000, AfterStatus: Created},
+			"b": ResourceMetric{NumCalls: 1, TotalTime: 2000, AfterStatus: Created},
+			"c": ResourceMetric{NumCalls: 1, TotalTime: 3000, AfterStatus: Created},
+			"d": ResourceMetric{NumCalls: 1, TotalTime: 59000, AfterStatus: Created},
 		},
 	}
 	Out := GetTimeStats(In)
@@ -46,20 +46,18 @@ func TestTimeStats(t *testing.T) {
 func TestStatusStats(t *testing.T) {
 	In := ParsedLog{
 		Resources: map[string]ResourceMetric{
-			"a": ResourceMetric{NumCalls: 1, CreationStatus: Created},
-			"b": ResourceMetric{NumCalls: 1, CreationStatus: Failed},
-			"c": ResourceMetric{NumCalls: 1, CreationStatus: Failed},
-			"d": ResourceMetric{NumCalls: 1, CreationStatus: AllCreated},
-			"e": ResourceMetric{NumCalls: 1, CreationStatus: SomeFailed},
+			"a": ResourceMetric{NumCalls: 1, AfterStatus: Created},
+			"b": ResourceMetric{NumCalls: 1, AfterStatus: Failed},
+			"c": ResourceMetric{NumCalls: 1, AfterStatus: Failed},
+			"d": ResourceMetric{NumCalls: 1, AfterStatus: NotCreated},
 		},
 	}
-	Out := GetCreationStatusStats(In)
+	Out := GetAfterStatusStats(In)
 
 	Expected := []Stat{
-		Stat{"No. resources in state AllCreated", "1"},
 		Stat{"No. resources in state Created", "1"},
 		Stat{"No. resources in state Failed", "2"},
-		Stat{"No. resources in state SomeFailed", "1"},
+		Stat{"No. resources in state NotCreated", "1"},
 	}
 	assert.Equal(t, Expected, Out)
 }
@@ -67,13 +65,13 @@ func TestStatusStats(t *testing.T) {
 func TestModuleStats(t *testing.T) {
 	In := ParsedLog{
 		Resources: map[string]ResourceMetric{
-			"r.test":                                            ResourceMetric{NumCalls: 1, CreationStatus: Created},
-			"module.test1.resource.test1":                       ResourceMetric{NumCalls: 1, CreationStatus: Created},
-			"module.test1.resource.test2":                       ResourceMetric{NumCalls: 1, CreationStatus: Created},
-			"module.test1.resource.test3":                       ResourceMetric{NumCalls: 1, CreationStatus: Created},
-			"module.test2.resource.test1":                       ResourceMetric{NumCalls: 1, CreationStatus: Created},
-			"module.test2.resource.test2":                       ResourceMetric{NumCalls: 1, CreationStatus: Created},
-			"module.a.module.b.module.c.module.d.resource.test": ResourceMetric{NumCalls: 1, CreationStatus: Created},
+			"r.test":                                            ResourceMetric{NumCalls: 1, AfterStatus: Created},
+			"module.test1.resource.test1":                       ResourceMetric{NumCalls: 1, AfterStatus: Created},
+			"module.test1.resource.test2":                       ResourceMetric{NumCalls: 1, AfterStatus: Created},
+			"module.test1.resource.test3":                       ResourceMetric{NumCalls: 1, AfterStatus: Created},
+			"module.test2.resource.test1":                       ResourceMetric{NumCalls: 1, AfterStatus: Created},
+			"module.test2.resource.test2":                       ResourceMetric{NumCalls: 1, AfterStatus: Created},
+			"module.a.module.b.module.c.module.d.resource.test": ResourceMetric{NumCalls: 1, AfterStatus: Created},
 		},
 	}
 	Out := GetModuleStats(In)

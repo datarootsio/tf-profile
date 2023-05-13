@@ -3,22 +3,29 @@ package tfprofile
 import "fmt"
 
 const (
-	// For individual resources
-	NotStarted Status = 0
-	Started    Status = 1
+	// Status for individual resources
+	// NotStarted Status = 0
+	// Started    Status = 1
+	NoneStatus Status = -1 // Internal only
+	Unknown    Status = 0
+	NotCreated Status = 1
 	Created    Status = 2
 	Failed     Status = 3
 	// For aggregated resources
-	SomeStarted Status = 4
-	AllStarted  Status = 5
-	NoneStarted Status = 6
-	SomeFailed  Status = 7
-	AllFailed   Status = 8
-	AllCreated  Status = 9
+	Multiple Status = 4
+
+	// Operation types
+	NoneOp     Operation = -1 // Internal only
+	Create     Operation = 1
+	Modify     Operation = 2
+	Replace    Operation = 3
+	Destroy    Operation = 4
+	MultipleOp Operation = 5
 )
 
 type (
-	Status int
+	Status    int
+	Operation int
 
 	// Data structure that holds all metrics for one particular resource
 	ResourceMetric struct {
@@ -34,15 +41,28 @@ type (
 		// (Global) event index of when creation finished. As this is a global event,
 		// it can be compared chronologically with a CreationStartedEvent.
 		CreationCompletedEvent int // (Global) event index of when creation finished
-		CreationStatus         Status
+		// Inferred status before the TF run
+		BeforeStatus Status
+		// Status after the TF run
+		AfterStatus Status
+		// Expected status as planned by TF
+		DesiredStatus Status
+		// Operation to perform to go from BeforeStatus to DesiredStatus
+		Operation Operation
 	}
 
 	// Parsing a log results in a map of resource names and their metrics
 	ParsedLog struct {
+		// Indices to keep track of progress during parse
 		CurrentModificationStartedIndex int
 		CurrentModificationEndedIndex   int
 		CurrentEvent                    int
-		Resources                       map[string]ResourceMetric
+		// Stage information
+		ContainsRefresh bool
+		ContainsPlan    bool
+		ContainsApply   bool
+		// Resources detected
+		Resources map[string]ResourceMetric
 	}
 )
 
@@ -106,12 +126,12 @@ func (log ParsedLog) SetCreationCompletedEvent(Resource string, Idx int) error {
 	return nil
 }
 
-func (log ParsedLog) SetCreationStatus(Resource string, Status Status) error {
+func (log ParsedLog) SetAfterStatus(Resource string, Status Status) error {
 	metric, found := log.Resources[Resource]
 	if found == false {
 		return &ResourceNotFoundError{Resource}
 	}
-	metric.CreationStatus = Status
+	metric.AfterStatus = Status
 	log.Resources[Resource] = metric
 	return nil
 }
@@ -123,33 +143,38 @@ func (log ParsedLog) RegisterNewResource(Resource string) {
 		CreationStartedIndex:   log.CurrentModificationStartedIndex,
 		CreationCompletedIndex: -1, // Not finished yet, will be overwritten
 		CreationStartedEvent:   log.CurrentEvent,
-		CreationCompletedEvent: -1, // Not finished yet, will be overwritten
-		CreationStatus:         Started,
+		CreationCompletedEvent: -1,         // Not finished yet, will be overwritten
+		AfterStatus:            NotCreated, // Not finished yet, will be overwritten
 	}
 }
 
 func (s Status) String() string {
 	switch s {
-	case NotStarted:
-		return "NotStarted"
-	case Started:
-		return "Started"
+	case NotCreated:
+		return "NotCreated"
 	case Created:
 		return "Created"
 	case Failed:
 		return "Failed"
-	case SomeStarted:
-		return "SomeStarted"
-	case AllStarted:
-		return "AllStarted"
-	case NoneStarted:
-		return "NoneStarted"
-	case SomeFailed:
-		return "SomeFailed"
-	case AllFailed:
-		return "AllFailed"
-	case AllCreated:
-		return "AllCreated"
+	case Unknown:
+		return "Unknown"
+	default:
+		return fmt.Sprintf("%d (unknown)", int(s))
+	}
+}
+
+func (s Operation) String() string {
+	switch s {
+	case Destroy:
+		return "Destroy"
+	case Create:
+		return "Create"
+	case Modify:
+		return "Modify"
+	case Replace:
+		return "Replace"
+	case MultipleOp:
+		return "Multiple"
 	default:
 		return fmt.Sprintf("%d (unknown)", int(s))
 	}

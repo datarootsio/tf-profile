@@ -12,9 +12,13 @@ import (
 
 type ParseFunction = func(Line string, log *ParsedLog) (bool, error)
 
-var ParseFunctions = []ParseFunction{
-	ParseResourceCreated,
+var RefreshParsers = []ParseFunction{}
+var PlanParsers = []ParseFunction{
+	ParseStartPlan,
+}
+var ApplyParsers = []ParseFunction{
 	ParseResourceCreationStarted,
+	ParseResourceCreated,
 	ParseResourceCreationFailed,
 }
 
@@ -34,14 +38,38 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 			fmt.Println(line)
 		}
 
-		// Apply parse functions until one modifies the log.
-		// In that case, we consider the line handled and go to the next one.
-		for _, f := range ParseFunctions {
+		// Apply refresh parsers until one modifies the log
+		for _, f := range RefreshParsers {
 			modified, err := f(line, &tflog)
 			if err != nil {
 				return ParsedLog{}, err
 			}
 			if modified {
+				tflog.ContainsRefresh = true
+				break
+			}
+		}
+
+		// Apply plan parsers until one modifies the log
+		for _, f := range PlanParsers {
+			modified, err := f(line, &tflog)
+			if err != nil {
+				return ParsedLog{}, err
+			}
+			if modified {
+				tflog.ContainsPlan = true
+				break
+			}
+		}
+
+		// Apply apply parsers until one modifies the log.
+		for _, f := range ApplyParsers {
+			modified, err := f(line, &tflog)
+			if err != nil {
+				return ParsedLog{}, err
+			}
+			if modified {
+				tflog.ContainsApply = true
 				break
 			}
 		}
