@@ -78,7 +78,6 @@ Three major commands are supported:
 
 ```bash
 ❱ terraform apply -auto-approve > log.txt
-❱ tf-profile stats log.txt
 ❱ tf-profile stats test/many_modules.log
 
 Key                                Value    
