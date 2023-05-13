@@ -1,0 +1,44 @@
+aws_ssm_parameter.good: Creating...
+aws_ssm_parameter.bad2[2]: Creating...
+aws_ssm_parameter.bad2[1]: Creating...
+aws_ssm_parameter.bad2[0]: Creating...
+aws_ssm_parameter.good2[1]: Creating...
+aws_ssm_parameter.bad: Creating...
+aws_ssm_parameter.good2[2]: Creating...
+aws_ssm_parameter.good2[0]: Creating...
+aws_ssm_parameter.good: Creation complete after 1s [id=/no/slash/at/end]
+aws_ssm_parameter.good2[0]: Creation complete after 1s [id=/no/slash/at/end0]
+aws_ssm_parameter.good2[2]: Creation complete after 1s [id=/no/slash/at/end2]
+aws_ssm_parameter.good2[1]: Creation complete after 1s [id=/no/slash/at/end1]
+
+Error: creating SSM Parameter (/slash/at/end/): ValidationException: Parameter name must not end with slash.
+	status code: 400, request id: 99b72eaf-10ec-49d7-99e4-bc960809383e
+
+  with aws_ssm_parameter.bad,
+  on provider.tf line 15, in resource "aws_ssm_parameter" "bad":
+  15: resource "aws_ssm_parameter" "bad" {
+
+
+Error: creating SSM Parameter (/slash/at/end2/): ValidationException: Parameter name must not end with slash.
+	status code: 400, request id: 99a3ae5f-9d97-4bc9-bfd8-ac29b72fc00d
+
+  with aws_ssm_parameter.bad2[2],
+  on provider.tf line 27, in resource "aws_ssm_parameter" "bad2":
+  27: resource "aws_ssm_parameter" "bad2" {
+
+
+Error: creating SSM Parameter (/slash/at/end1/): ValidationException: Parameter name must not end with slash.
+	status code: 400, request id: 77765932-a8b2-48bf-abe2-71a151da56ea
+
+  with aws_ssm_parameter.bad2[1],
+  on provider.tf line 27, in resource "aws_ssm_parameter" "bad2":
+  27: resource "aws_ssm_parameter" "bad2" {
+
+
+Error: creating SSM Parameter (/slash/at/end0/): ValidationException: Parameter name must not end with slash.
+	status code: 400, request id: f78b2744-2fff-4df9-824b-ba7c40ab256a
+
+  with aws_ssm_parameter.bad2[0],
+  on provider.tf line 27, in resource "aws_ssm_parameter" "bad2":
+  27: resource "aws_ssm_parameter" "bad2" {
+

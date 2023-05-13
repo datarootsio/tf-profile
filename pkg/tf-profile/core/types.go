@@ -17,6 +17,7 @@ const (
 
 	// Operation types
 	NoneOp     Operation = -1 // Internal only
+	None       Operation = 0  // Default, "not seen", can occur when upstream resources fail
 	Create     Operation = 1
 	Modify     Operation = 2
 	Replace    Operation = 3
@@ -218,6 +219,8 @@ func (s Operation) String() string {
 		return "Replace"
 	case MultipleOp:
 		return "Multiple"
+	case None:
+		return "None recorded"
 	default:
 		return fmt.Sprintf("%d (unknown)", int(s))
 	}

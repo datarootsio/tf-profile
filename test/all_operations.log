@@ -1,0 +1,112 @@
+aws_ssm_parameter.p4: Refreshing state... [id=p4]
+aws_ssm_parameter.p3: Refreshing state... [id=p3]
+aws_ssm_parameter.p6: Refreshing state... [id=p6]
+aws_ssm_parameter.p2: Refreshing state... [id=p2]
+aws_ssm_parameter.p5: Refreshing state... [id=p5]
+aws_ssm_parameter.p1: Refreshing state... [id=p1]
+
+Terraform used the selected providers to generate the following execution plan. Resource
+actions are indicated with the following symbols:
+  ~ update in-place
+  - destroy
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+  # aws_ssm_parameter.p1 is tainted, so must be replaced
+-/+ resource "aws_ssm_parameter" "p1" {
+      ~ arn            = "arn:aws:ssm:eu-west-1:233295694198:parameter/p1" -> (known after apply)
+      ~ data_type      = "text" -> (known after apply)
+      ~ id             = "p1" -> (known after apply)
+      + insecure_value = (known after apply)
+      + key_id         = (known after apply)
+        name           = "p1"
+      - tags           = {} -> null
+      ~ tags_all       = {} -> (known after apply)
+      ~ tier           = "Standard" -> (known after apply)
+      ~ version        = 1 -> (known after apply)
+        # (2 unchanged attributes hidden)
+    }
+
+  # aws_ssm_parameter.p3 will be replaced, as requested
+-/+ resource "aws_ssm_parameter" "p3" {
+      ~ arn            = "arn:aws:ssm:eu-west-1:233295694198:parameter/p3" -> (known after apply)
+      ~ data_type      = "text" -> (known after apply)
+      ~ id             = "p3" -> (known after apply)
+      + insecure_value = (known after apply)
+      + key_id         = (known after apply)
+        name           = "p3"
+      - tags           = {} -> null
+      ~ tags_all       = {} -> (known after apply)
+      ~ tier           = "Standard" -> (known after apply)
+      ~ version        = 1 -> (known after apply)
+        # (2 unchanged attributes hidden)
+    }
+
+  # aws_ssm_parameter.p4 will be destroyed
+  # (because aws_ssm_parameter.p4 is not in configuration)
+  - resource "aws_ssm_parameter" "p4" {
+      - arn       = "arn:aws:ssm:eu-west-1:233295694198:parameter/p4" -> null
+      - data_type = "text" -> null
+      - id        = "p4" -> null
+      - name      = "p4" -> null
+      - tags      = {} -> null
+      - tags_all  = {} -> null
+      - tier      = "Standard" -> null
+      - type      = "String" -> null
+      - value     = (sensitive value)
+      - version   = 1 -> null
+    }
+
+  # aws_ssm_parameter.p5 will be updated in-place
+  ~ resource "aws_ssm_parameter" "p5" {
+        id             = "p5"
+      + insecure_value = (known after apply)
+        name           = "p5"
+        tags           = {}
+      ~ value          = (sensitive value)
+      ~ version        = 1 -> (known after apply)
+        # (5 unchanged attributes hidden)
+    }
+
+  # aws_ssm_parameter.p6 must be replaced
+-/+ resource "aws_ssm_parameter" "p6" {
+      ~ arn            = "arn:aws:ssm:eu-west-1:233295694198:parameter/p6" -> (known after apply)
+      ~ data_type      = "text" -> (known after apply)
+      ~ id             = "p6" -> (known after apply)
+      + insecure_value = (known after apply)
+      + key_id         = (known after apply)
+      ~ name           = "p6" -> "new-p6" # forces replacement
+      - tags           = {} -> null
+      ~ tags_all       = {} -> (known after apply)
+      ~ tier           = "Standard" -> (known after apply)
+      ~ version        = 1 -> (known after apply)
+        # (2 unchanged attributes hidden)
+    }
+
+Plan: 3 to add, 1 to change, 4 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_ssm_parameter.p4: Destroying... [id=p4]
+aws_ssm_parameter.p1: Destroying... [id=p1]
+aws_ssm_parameter.p6: Destroying... [id=p6]
+aws_ssm_parameter.p3: Destroying... [id=p3]
+aws_ssm_parameter.p5: Modifying... [id=p5]
+aws_ssm_parameter.p3: Destruction complete after 0s
+aws_ssm_parameter.p4: Destruction complete after 0s
+aws_ssm_parameter.p1: Destruction complete after 0s
+aws_ssm_parameter.p6: Destruction complete after 0s
+aws_ssm_parameter.p3: Creating...
+aws_ssm_parameter.p6: Creating...
+aws_ssm_parameter.p1: Creating...
+aws_ssm_parameter.p5: Modifications complete after 0s [id=p5]
+aws_ssm_parameter.p1: Creation complete after 0s [id=p1]
+aws_ssm_parameter.p3: Creation complete after 0s [id=p3]
+aws_ssm_parameter.p6: Creation complete after 0s [id=new-p6]
+
+Apply complete! Resources: 3 added, 1 changed, 4 destroyed.

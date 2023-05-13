@@ -72,6 +72,8 @@ func ParseResourceCreationStarted(Line string, log *ParsedLog) (bool, error) {
 	// Knowing the resource whose creation stared, insert everything in the log
 	log.RegisterNewResource(tokens[0])
 	log.SetOperation(tokens[0], Create)
+	log.SetModificationStartedIndex(tokens[0], log.CurrentModificationStartedIndex)
+	log.SetModificationStartedEvent(tokens[0], log.CurrentEvent)
 	log.CurrentModificationStartedIndex += 1
 	log.CurrentEvent += 1
 	return true, nil

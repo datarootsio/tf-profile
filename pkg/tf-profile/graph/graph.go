@@ -10,7 +10,7 @@ import (
 	"strings"
 	"text/template"
 
-	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/aggregate"
+	// . "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/aggregate"
 	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/core"
 	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/parser"
 	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/readers"

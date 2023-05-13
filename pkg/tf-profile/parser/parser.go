@@ -12,9 +12,17 @@ import (
 
 type ParseFunction = func(Line string, log *ParsedLog) (bool, error)
 
-var RefreshParsers = []ParseFunction{}
+var RefreshParsers = []ParseFunction{
+	DummyParser,
+}
 var PlanParsers = []ParseFunction{
 	ParseStartPlan,
+	ParsePlanTainted,
+	ParsePlanExplicitReplace,
+	ParsePlanWillBeDestroyed,
+	ParsePlanWillBeModified,
+	ParsePlanForcedReplace,
+	ParsePlanWillBeCreated,
 }
 var ApplyParsers = []ParseFunction{
 	ParseResourceCreationStarted,
