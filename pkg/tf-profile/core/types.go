@@ -185,8 +185,9 @@ func (log ParsedLog) RegisterNewResource(Resource string) {
 		ModificationCompletedIndex: -1, // Not finished yet, will be overwritten
 		ModificationStartedEvent:   log.CurrentEvent,
 		ModificationCompletedEvent: -1, // Not finished yet, will be overwritten
-
-		AfterStatus: NotCreated, // Not finished yet, will be overwritten
+		BeforeStatus:               Created,
+		AfterStatus:                Created,
+		Operation:                  NoneOp,
 	}
 }
 
