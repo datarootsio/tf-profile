@@ -27,7 +27,7 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 	FailureSeen := false
 
 	// tflog := ParsedLog{make(map[string]ResourceMetric)}
-	tflog := ParsedLog{map[string]ResourceMetric{}}
+	tflog := ParsedLog{Resources: map[string]ResourceMetric{}}
 
 	for file.Scan() {
 		line := file.Text()
@@ -40,7 +40,7 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 			resource, time, err := ParseResourceCreated(line)
 			if err != nil {
 				msg := fmt.Sprintf(`Resource name detected (CreationEnded), but unable to parse line "%v"`, line)
-				return ParsedLog{}, &LineParseError{msg}
+				return ParsedLog{}, &LineParseError{Msg: msg}
 			}
 			FinishResourceCreation(tflog, resource, time, CreationCompleted, EventIndex)
 			CreationCompleted += 1
@@ -52,7 +52,7 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 			resource, err := ParseResourceCreationStarted(line)
 			if err != nil {
 				msg := fmt.Sprintf(`Resource name detected (CreationStarted), but unable to parse line "%v"`, line)
-				return ParsedLog{}, &LineParseError{msg}
+				return ParsedLog{}, &LineParseError{Msg: msg}
 			}
 			InsertResourceMetric(tflog, resource, CreationStarted, EventIndex)
 			CreationStarted += 1
@@ -68,7 +68,7 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 				resource, err := ParseCreationFailed(line)
 				if err != nil {
 					msg := fmt.Sprintf(`Line contains failed resource name, we can't parse it: "%v"`, line)
-					return ParsedLog{}, &LineParseError{msg}
+					return ParsedLog{}, &LineParseError{Msg: msg}
 				}
 				MarkAsFailed(tflog, resource)
 				FailureSeen = false
@@ -98,7 +98,7 @@ func FinishResourceCreation(Log ParsedLog, Resource string, Duration float64, Id
 
 	if exists == false {
 		msg := fmt.Sprintf("Resource %v finished creation, but start was not recorded!\n", Resource)
-		return &LineParseError{msg}
+		return &LineParseError{Msg: msg}
 	}
 
 	record.CreationCompletedIndex = Idx
@@ -115,7 +115,7 @@ func MarkAsFailed(log ParsedLog, resource string) error {
 	record, exists := log.Resources[resource]
 	if exists == false {
 		msg := fmt.Sprintf("Creation of resource %v failed, but its was not seen before!\n", resource)
-		return &LineParseError{msg}
+		return &LineParseError{Msg: msg}
 	}
 	record.CreationStatus = Failed
 	log.Resources[resource] = record
@@ -127,7 +127,7 @@ func ParseResourceCreated(line string) (string, float64, error) {
 	tokens := strings.Split(line, ": Creation complete after ")
 	if len(tokens) < 2 {
 		msg := fmt.Sprintf("Unable to parse resource creation line: %v\n", line)
-		return "", -1, &LineParseError{msg}
+		return "", -1, &LineParseError{Msg: msg}
 	}
 	resource := tokens[0]
 
@@ -135,7 +135,7 @@ func ParseResourceCreated(line string) (string, float64, error) {
 	tokens2 := strings.Split(tokens[1], " ")
 	if len(tokens2) < 2 {
 		msg := fmt.Sprintf("Unable to parse creation duration: %v\n", tokens[1])
-		return "", -1, &LineParseError{msg}
+		return "", -1, &LineParseError{Msg: msg}
 	}
 	create_duration := ParseCreateDurationString(tokens2[0])
 	return resource, create_duration, nil
@@ -146,7 +146,7 @@ func ParseResourceCreationStarted(line string) (string, error) {
 	tokens := strings.Split(line, ": Creating...")
 	if len(tokens) < 2 || tokens[1] != "" {
 		msg := fmt.Sprintf("Unable to parse resource creation line: %v\n", line)
-		return "", &LineParseError{msg}
+		return "", &LineParseError{Msg: msg}
 	}
 	return tokens[0], nil
 }
@@ -156,7 +156,7 @@ func ParseCreationFailed(line string) (string, error) {
 	tokens := strings.Split(line, "with ")
 	if len(tokens) < 2 {
 		msg := fmt.Sprintf("Unable to parse failure line: %v\n", line)
-		return "", &LineParseError{msg}
+		return "", &LineParseError{Msg: msg}
 	}
 	line = strings.TrimSpace(line)
 	resource := strings.Split(line, "with ")[1] // Everything after 'with'
