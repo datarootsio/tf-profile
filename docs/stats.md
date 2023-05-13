@@ -20,11 +20,11 @@ General:
 
 Duration:
 - **Cumulative duration**: Cumulative duration of modifications. This is the sum of the duration of all modifications in the logs. Because Terraform modifies resources in parallel, this will typically be more than the actual wall time.
-- **Longest apply time**: Lngest time it took to modify a single resource. The next metric shows which resource that was.
-- **Longest apply resource**: the name of the resource that took the longest to modify.
+- **Longest apply time**: Longest time it took to modify a single resource. The next metric shows which resource that was.
+- **Longest apply resource**: The name of the resource that took the longest to modify.
 
 Operations:
-- **Resources marked for operation \<OPERATION\>**: show per operation type how many resources were were planned to undergo this operation. An Operation can be any of: Create, Destroy, Replace, None. Resources that are consistent with the state, will be marked for operation None. 
+- **Resources marked for operation \<OPERATION\>**: The amount of resources marked for a certain operation. An Operation can be any of: Create, Destroy, Modify, Replace, None. Resources that are consistent with the state, will be marked for operation None. 
 
 Resource status:
 - **Resources in state \<STATE\>**: This statistic shows per state how many resources are in that state after the modifications.

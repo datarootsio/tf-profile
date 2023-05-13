@@ -156,9 +156,9 @@ _Disclaimer:_ Terraform's logs do not contain any absolute timestamps. We can on
 ## Roadmap
 
 - [x] Release v0.0.1 as binary and as a Docker image
-- [ ] Improve parser
+- [x] Improve parser
   - [x] Detect failed resources (see [#13](https://github.com/QuintenBruynseraede/tf-profile/pull/13))
-  - [ ] Use plan and refresh phase to discover more resources
+  - [x] Use plan and refresh phase to discover more resources
 - [x] Implement a basic Gantt chart in `tf-profile graph` (see [#14](https://github.com/QuintenBruynseraede/tf-profile/pull/14))
 - [ ] Implement a single-resource view in `tf-profile detail <resource>`
   - This command should filter logs down to 1 single resource (i.e. refresh, plan, changes, and result)

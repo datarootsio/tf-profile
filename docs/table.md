@@ -19,6 +19,7 @@ A table generated based on the log file or input, sorted according to `-s / --so
 
 ```
 resource              n  tot_time  modify_started  modify_ended  desired_state  operation  final_state  
+---------------------------------------------------------------------------------------------------------
 aws_ssm_parameter.p6  1  0s        6               7             Created        Replace    Created      
 aws_ssm_parameter.p1  1  0s        7               5             Created        Replace    Created      
 aws_ssm_parameter.p3  1  0s        5               6             Created        Replace    Created      
@@ -53,7 +54,7 @@ When sorting on resource status (`desired_state` or `final_state`), statuses are
 - Tainted: 4
 - Multiple (for aggregated resources): 5
 
-When sorting on resource operations (`operation`), these are mapped onto integers:
+When sorting on resource operations (`operation`), these are mapped onto integers as well:
 
 - None: 0
 - Create: 1
