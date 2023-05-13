@@ -9,6 +9,7 @@ import (
 )
 
 var (
+	// All regexes that recognize interesting logs during the apply phase
 	ResourceName = `[a-zA-Z0-9_.["\]\/:]*` // Simplified regex but it will do
 
 	ResourceCreated         = fmt.Sprintf("%v: Creation complete after", ResourceName)

@@ -13,7 +13,7 @@ import (
 type ParseFunction = func(Line string, log *ParsedLog) (bool, error)
 
 var RefreshParsers = []ParseFunction{
-	DummyParser,
+	RefreshParser,
 }
 var PlanParsers = []ParseFunction{
 	ParseStartPlan,

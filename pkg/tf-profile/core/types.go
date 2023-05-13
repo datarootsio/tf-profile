@@ -187,7 +187,8 @@ func (log ParsedLog) RegisterNewResource(Resource string) {
 		ModificationCompletedEvent: -1, // Not finished yet, will be overwritten
 		BeforeStatus:               Created,
 		AfterStatus:                Created,
-		Operation:                  NoneOp,
+		DesiredStatus:              Created,
+		Operation:                  None,
 	}
 }
 
@@ -221,7 +222,7 @@ func (s Operation) String() string {
 	case MultipleOp:
 		return "Multiple"
 	case None:
-		return "None recorded"
+		return "None"
 	default:
 		return fmt.Sprintf("%d (unknown)", int(s))
 	}
