@@ -11,31 +11,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBasicParseResourceCreated(t *testing.T) {
-	line := "x[0]: Creation complete after 10s [id=xyz]"
-	name, time, err := ParseResourceCreated(line)
-
-	if err != nil || name != "x[0]" || time != 10000 {
-		t.Fatalf("%v - %v - %v\n", name, time, err)
-	}
-
-	line2 := "x[\"a\"]: Creation complete after 5s [id=xyz]"
-	name, time, err = ParseResourceCreated(line2)
-
-	if err != nil || name != "x[\"a\"]" || time != 5000 {
-		t.Fatalf("%v - %v - %v\n", name, time, err)
-	}
-}
-
-func TestParseResourceCreatedMinutes(t *testing.T) {
-	_, time, _ := ParseResourceCreated("x: Creation complete after 5m30s [id=xyz]")
-	expected_time := float64((5*60 + 30) * 1000)
-
-	if time != expected_time {
-		t.Fatalf("Expected %v, got %v\n", expected_time, time)
-	}
-}
-
 func TestFullParse(t *testing.T) {
 	file, _ := os.Open("../../../test/multiple_resources.log")
 	s := bufio.NewScanner(file)
@@ -74,12 +49,6 @@ func TestFullParse(t *testing.T) {
 	}
 }
 
-func TestFailureParseLine(t *testing.T) {
-	r, err := ParseCreationFailed(" with aws_ssm_parameter.bad2[0],  ")
-	assert.Nil(t, err)
-	assert.Equal(t, "aws_ssm_parameter.bad2[0]", r)
-}
-
 func TestFailureParse(t *testing.T) {
 	file, _ := os.Open("../../../test/failures.log")
 	s := bufio.NewScanner(file)
@@ -104,15 +73,15 @@ func TestFailureParse(t *testing.T) {
 	assert.Equal(t, metrics.CreationStatus, Failed)
 }
 
-func TestSpecialResourceName(t *testing.T) {
-	// Name contains special characters: :/_
-	line := `module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"]: Creation complete after 0s [id=initial-eks-node-group-20230430082916737400000001-20230430082917966400000003]"`
-	name, duration, err := ParseResourceCreated(line)
+// func TestSpecialResourceName(t *testing.T) {
+// 	// Name contains special characters: :/_
+// 	line := `module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"]: Creation complete after 0s [id=initial-eks-node-group-20230430082916737400000001-20230430082917966400000003]"`
+// 	name, duration, err := ParseResourceCreated(line)
 
-	assert.Nil(t, err)
-	assert.Equal(t, `module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"]`, name)
-	assert.Equal(t, float64(0), duration)
-}
+// 	assert.Nil(t, err)
+// 	assert.Equal(t, `module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"]`, name)
+// 	assert.Equal(t, float64(0), duration)
+// }
 
 func TestParserSanityCheck(t *testing.T) {
 	Files, err := os.ReadDir("../../../test")

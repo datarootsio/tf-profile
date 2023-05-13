@@ -39,7 +39,10 @@ type (
 
 	// Parsing a log results in a map of resource names and their metrics
 	ParsedLog struct {
-		Resources map[string]ResourceMetric
+		CurrentModificationStartedIndex int
+		CurrentModificationEndedIndex   int
+		CurrentEvent                    int
+		Resources                       map[string]ResourceMetric
 	}
 )
 
@@ -111,6 +114,18 @@ func (log ParsedLog) SetCreationStatus(Resource string, Status Status) error {
 	metric.CreationStatus = Status
 	log.Resources[Resource] = metric
 	return nil
+}
+
+func (log ParsedLog) RegisterNewResource(Resource string) {
+	(log.Resources)[Resource] = ResourceMetric{
+		NumCalls:               1,
+		TotalTime:              -1, // Not finished yet, will be overwritten
+		CreationStartedIndex:   log.CurrentModificationStartedIndex,
+		CreationCompletedIndex: -1, // Not finished yet, will be overwritten
+		CreationStartedEvent:   log.CurrentEvent,
+		CreationCompletedEvent: -1, // Not finished yet, will be overwritten
+		CreationStatus:         Started,
+	}
 }
 
 func (s Status) String() string {
