@@ -23,8 +23,15 @@ Duration:
 - **Longest apply time**: Lngest time it took to modify a single resource. The next metric shows which resource that was.
 - **Longest apply resource**: the name of the resource that took the longest to modify.
 
+Operations:
+- **Resources marked for operation \<OPERATION\>**: show per operation type how many resources were were planned to undergo this operation. An Operation can be any of: Create, Destroy, Replace, None. Resources that are consistent with the state, will be marked for operation None. 
+
 Resource status:
-- **No. resources in state \<STATE\>**: This statistic shows per state how many resources are in that state after the modifications.
+- **Resources in state \<STATE\>**: This statistic shows per state how many resources are in that state after the modifications.
+
+Desired state:
+- **Resources in desired state**: The amount of resources whose `final_state` is equal to their `desired_state`. In a fully applied configuration, this number should be 100%. 
+- **Resources not in desired state**: Resources whose desired state was not achieved after this run. This can be due to failed creation, failed deletion or because resources upon which a resource depends were not able to get to their desired state.
 
 Modules:
 - **Number of top-level modules**: Number of modules called in the root module.

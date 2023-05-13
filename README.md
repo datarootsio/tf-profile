@@ -83,23 +83,30 @@ Three major commands are supported:
 
 Key                                Value    
 -----------------------------------------------------------------                       
-Number of resources created        1510                            
+Number of resources in configuration        1510                            
                                                                    
-Cumulative duration                36m19s                          
-Longest apply time                 7m18s                           
-Longest apply resource             time_sleep.foo[*]               
-                                                                   
-No. resources in state AllCreated  800                             
-No. resources in state Created     695                             
-No. resources in state Started     15                              
-                                                                   
-Number of top-level modules        13                              
-Largest top-level module           module.core[2]                  
-Size of largest top-level module   170                             
-Deepest module                     module.core[2].module.role[47]  
-Deepest module depth               2                               
-Largest leaf module                module.dbt[4]                   
-Size of largest leaf module        40  
+Cumulative duration                         36m19s                          
+Longest apply time                          7m18s                           
+Longest apply resource                      time_sleep.foo[*]               
+
+Resources marked for operation Create       892
+Resources marked for operation None         18
+Resources marked for operation Replace      412      
+    
+Resources in state AllCreated               800                             
+Resources in state Created                  695                             
+Resources in state Started                  15        
+    
+Resources in desired state                  1492 out of 1510 (98.8%)
+Resources not in desired state              18 out of 1510 (0.01%)
+                                                                
+Number of top-level modules                 13                              
+Largest top-level module                    module.core[2]                  
+Size of largest top-level module            170                             
+Deepest module                              module.core[2].module.role[47]  
+Deepest module depth                        2                               
+Largest leaf module                         module.dbt[4]                   
+Size of largest leaf module                 40  
 ```
 
 For more information, refer to the [reference](./docs/stats.md) for the `stats` command.
@@ -112,12 +119,13 @@ For more information, refer to the [reference](./docs/stats.md) for the `stats` 
 ❱ terraform apply -auto-approve > log.txt
 ❱ tf-profile table log.txt
 
-resource                            n  tot_time  idx_creation  idx_created  status    
--------------------------------------------------------------------------------------- 
-time_sleep.count[*]                 5  11s     0             13           AllCreated  
-time_sleep.foreach[*]               3  7s      4             11           AllCreated  
-module.test[1].time_sleep.count[*]  3  5s      3             9            AllCreated  
-module.test[0].time_sleep.count[*]  3  4s      9             7            AllCreated 
+resource              n  tot_time  modify_started  modify_ended  desired_state  operation  final_state  
+aws_ssm_parameter.p6  1  0s        6               7             Created        Replace    Created      
+aws_ssm_parameter.p1  1  0s        7               5             Created        Replace    Created      
+aws_ssm_parameter.p3  1  0s        5               6             Created        Replace    Created      
+aws_ssm_parameter.p4  1  0s        /               1             NotCreated     Destroy    NotCreated   
+aws_ssm_parameter.p5  1  0s        4               4             Created        Modify     Created      
+aws_ssm_parameter.p2  1  0s        /               /             Created        None       Created      
 ```
 
 For a full description of the options, see the [reference](./docs/table.md) page.

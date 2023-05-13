@@ -13,7 +13,7 @@ const (
 	Failed     Status = 3
 	Tainted    Status = 4
 	// For aggregated resources
-	Multiple Status = 4
+	Multiple Status = 5
 
 	// Operation types
 	NoneOp     Operation = -1 // Internal only

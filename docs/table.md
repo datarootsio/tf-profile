@@ -18,12 +18,13 @@ Log_file: Optional. Instruct `tf-profile` to read input from a text file instead
 A table generated based on the log file or input, sorted according to `-s / --sort` and printed to the terminal. 
 
 ```
-resource                            n  tot_time  idx_creation  idx_created  status    
--------------------------------------------------------------------------------------- 
-time_sleep.count[*]                 5  15s       0             13           AllCreated  
-time_sleep.foreach[*]               3  1m30s     4             11           AllCreated  
-module.test[1].time_sleep.count[*]  3  6         3             9            AllCreated  
-module.test[0].time_sleep.count[*]  3  3s        9             7            AllCreated 
+resource              n  tot_time  modify_started  modify_ended  desired_state  operation  final_state  
+aws_ssm_parameter.p6  1  0s        6               7             Created        Replace    Created      
+aws_ssm_parameter.p1  1  0s        7               5             Created        Replace    Created      
+aws_ssm_parameter.p3  1  0s        5               6             Created        Replace    Created      
+aws_ssm_parameter.p4  1  0s        /               1             NotCreated     Destroy    NotCreated   
+aws_ssm_parameter.p5  1  0s        4               4             Created        Modify     Created      
+aws_ssm_parameter.p2  1  0s        /               /             Created        None       Created      
 ```
 
 The column names are lowercase and separated by underscores to allow for easy referencing in the `--sort` option. The meaning of each column is:
@@ -31,11 +32,11 @@ The column names are lowercase and separated by underscores to allow for easy re
 - **resource**: Name of the resource. In case a resource is created by a `for_each` or `count` statement, resources are aggregated and individual resource identifiers are replaced by an asterisk (*). See 
 - **n**: Number of resources represented by this resource name. For regular resources, this will be 1. For resourced created with `for_each` or `count`, this number represents the number of resources created in that loop.
 - **tot_time**: Total cumulative time of all resources identified by this resource name. This is typically higher than the actual wall time, as Terraform can modify multiple resources at the same time.
-- **idx_creation**: order in which resource creation _started_. This means that Terraform started by creation the resource with `idx_creation = 0`. That does not guarantee the creation of this resource finished first as well (see `idx_created`).
-- **idx_created**: order in which resource creation _ended_. this means that the resource with `idx_created = 0` was the first resource to be fully creatd.
-- **status**: For single resources, status can be any of: `Started|NotStarted|Created|Failed`. For aggregated resources, status can be any of: `AllCreated|AllFailed|SomeFailed|NoneStarted|AllStarted|SomeStarted`.
-   
-    With resource aggregation, more informative statuses have precedence over less informative statuses. For example, `AllCreated` will be shown over `AllStarted`.
+- **modify_started**: order in which resource modification _started_. This means that Terraform started by modifying the resource with `modify_started = 0`. It does not guarantee the changes to this resource finished first as well (see `modify_ended`).
+- **modify_ended**: order in which resource modifications _ended_. This means that the resource with `modify_ended = 0` was the first resource to finish its modifications (either a creation, deletion or replacement). Resources that were already consistent with the desired state do not have this property.
+- **desired_state**: state (Created, NotCreated) that Terraform will try to achieve with this run.
+- **operation**: the name of the operation the Terraform will use to reconcile the current and desired situation. Operations can be: Create, Destroy, Replace, Modify, None.
+- **final_state**: Final state of the resource after this run. In addition to Created and NotCreated, Failed is used to indicate the operation failed.
 
 ## Sorting
 
@@ -43,15 +44,20 @@ Any of the columns above can be used to sort the output table, by means of the `
 - `tot_time=desc,resource=asc`: sort first by total modification time (showing the highest first). For entries with the same modification time, sort alphabetically.
 - `idx_creation=asc`: sort in order of creation, showing the resources that Terraform finished modifying first.
 
-When sorting on resource status (`status`), statuses are mapped onto integers before sorting.
+When sorting on resource status (`desired_state` or `final_state`), statuses are mapped onto integers before sorting.
 
-- NotStarted: 0
-- Started: 1
+- Unknown: 0
+- NotCreated: 1
 - Created: 2
 - Failed: 3
-- SomeStarted: 4
-- AllStarted: 5
-- NoneStarted: 6
-- SomeFailed: 7
-- AllFailed: 8
-- AllCreated: 9
+- Tainted: 4
+- Multiple (for aggregated resources): 5
+
+When sorting on resource operations (`operation`), these are mapped onto integers:
+
+- None: 0
+- Create: 1
+- Modify: 2
+- Replace: 3
+- Destroy: 4
+- Multiple (for aggregated resources): 5
