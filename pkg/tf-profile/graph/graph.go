@@ -37,8 +37,8 @@ func Graph(args []string, w int, h int, OutFile string) error {
 		return err
 	}
 
-	CleanFailedResources(tflog)
-	_, err = PrintGNUPlotOutput(tflog, w, h, OutFile)
+	cleanFailedResources(tflog)
+	_, err = printGNUPlotOutput(tflog, w, h, OutFile)
 
 	if err != nil {
 		return err
@@ -49,7 +49,7 @@ func Graph(args []string, w int, h int, OutFile string) error {
 // For failed resources, ModificationCompletedEvent will always be -1, since we never
 // detect the end of their modifications. We manually set their ModificationCompletedEvent
 // to the maximum value, leading to a long red bar.
-func CleanFailedResources(tflog ParsedLog) {
+func cleanFailedResources(tflog ParsedLog) {
 	max := 0
 
 	// Find max creation value
@@ -70,7 +70,7 @@ func CleanFailedResources(tflog ParsedLog) {
 
 // Use plot.tpl and a ParsedLog to generate all output for gnuplot.
 // This can be piped into gnuplot (optionally providing a filename at runtime)
-func PrintGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) (string, error) {
+func printGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) (string, error) {
 	if w < 1 || h < 1 {
 		return "", errors.New("--size must provided as two positive integers (e.g. '1000,1000').")
 	}

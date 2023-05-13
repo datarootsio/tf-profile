@@ -38,7 +38,7 @@ func TestPlotOutput(t *testing.T) {
 	log, _ := Parse(s, false)
 	log, _ = Aggregate(log)
 
-	out, err := PrintGNUPlotOutput(log, 1000, 600, "tf-profile-graph.png")
+	out, err := printGNUPlotOutput(log, 1000, 600, "tf-profile-graph.png")
 
 	assert.Nil(t, err)
 	fmt.Println(out)

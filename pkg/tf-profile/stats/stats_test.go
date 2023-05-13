@@ -16,7 +16,7 @@ func TestBasicStats(t *testing.T) {
 			"d": ResourceMetric{NumCalls: 1, AfterStatus: Created},
 		},
 	}
-	Out := GetBasicStats(In)
+	Out := getBasicStats(In)
 	assert.Equal(t, 1, len(Out))
 	assert.Equal(t, "Number of resources in configuration", Out[0].name)
 	assert.Equal(t, "4", Out[0].value)
@@ -31,7 +31,7 @@ func TestTimeStats(t *testing.T) {
 			"d": ResourceMetric{NumCalls: 1, TotalTime: 59000, AfterStatus: Created},
 		},
 	}
-	Out := GetTimeStats(In)
+	Out := getTimeStats(In)
 
 	assert.Equal(t, 3, len(Out))
 	assert.Equal(t, "Cumulative duration", Out[0].name)
@@ -52,12 +52,12 @@ func TestStatusStats(t *testing.T) {
 			"d": ResourceMetric{NumCalls: 1, AfterStatus: NotCreated},
 		},
 	}
-	Out := GetAfterStatusStats(In)
+	Out := getAfterStatusStats(In)
 
 	Expected := []Stat{
-		Stat{"No. resources in state Created", "1"},
-		Stat{"No. resources in state Failed", "2"},
-		Stat{"No. resources in state NotCreated", "1"},
+		Stat{"Resources in state Created", "1"},
+		Stat{"Resources in state Failed", "2"},
+		Stat{"Resources in state NotCreated", "1"},
 	}
 	assert.Equal(t, Expected, Out)
 }
@@ -74,7 +74,7 @@ func TestModuleStats(t *testing.T) {
 			"module.a.module.b.module.c.module.d.resource.test": ResourceMetric{NumCalls: 1, AfterStatus: Created},
 		},
 	}
-	Out := GetModuleStats(In)
+	Out := getModuleStats(In)
 	Expected := []Stat{
 		Stat{"Number of top-level modules", "3"},
 		Stat{"Largest top-level module", "module.test1"},

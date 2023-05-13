@@ -10,23 +10,23 @@ import (
 
 var (
 	// All regexes that recognize interesting logs during the apply phase
-	ResourceName = `[a-zA-Z0-9_.["\]\/:]*` // Simplified regex but it will do
+	resourceName = `[a-zA-Z0-9_.["\]\/:]*` // Simplified regex but it will do
 
-	ResourceCreated         = fmt.Sprintf("%v: Creation complete after", ResourceName)
-	ResourceCreationStarted = fmt.Sprintf("%v: Creating...", ResourceName)
-	ResourceOperationFailed = fmt.Sprintf("with %v,", ResourceName)
+	resourceCreated         = fmt.Sprintf("%v: Creation complete after", resourceName)
+	resourceCreationStarted = fmt.Sprintf("%v: Creating...", resourceName)
+	resourceOperationFailed = fmt.Sprintf("with %v,", resourceName)
 
-	ResourceDestructionStarted = fmt.Sprintf("%v: Destroying...", ResourceName)
-	ResourceDestroyed          = fmt.Sprintf("%v: Destruction complete after", ResourceName)
+	resourceDestructionStarted = fmt.Sprintf("%v: Destroying...", resourceName)
+	resourceDestroyed          = fmt.Sprintf("%v: Destruction complete after", resourceName)
 
-	ResourceModificationStarted = fmt.Sprintf("%v: Modifying...", ResourceName)
-	ResourceModified            = fmt.Sprintf("%v: Modifications complete after", ResourceName)
+	resourceModificationStarted = fmt.Sprintf("%v: Modifying...", resourceName)
+	resourceModified            = fmt.Sprintf("%v: Modifications complete after", resourceName)
 )
 
 // Handle line that indicates creation of a resource was completed. E.g:
 // resource: Creation complete after 1s [id=2023-04-09T18:17:33Z]
-func ParseResourceCreated(Line string, log *ParsedLog) (bool, error) {
-	match, _ := regexp.MatchString(ResourceCreated, Line)
+func parseResourceCreated(Line string, log *ParsedLog) (bool, error) {
+	match, _ := regexp.MatchString(resourceCreated, Line)
 	if !match {
 		return false, nil
 	}
@@ -44,7 +44,7 @@ func ParseResourceCreated(Line string, log *ParsedLog) (bool, error) {
 		msg := fmt.Sprintf("Unable to parse creation duration: %v\n", tokens[1])
 		return false, &LineParseError{Msg: msg}
 	}
-	createDuration := ParseCreateDurationString(tokens2[0])
+	createDuration := parseCreateDurationString(tokens2[0])
 
 	// We know the resource and the duration, insert everything into the log
 	log.SetTotalTime(resource, createDuration)
@@ -59,8 +59,8 @@ func ParseResourceCreated(Line string, log *ParsedLog) (bool, error) {
 
 // Handle line that indicates the creation of a resource was started. E.g:
 // aws_ssm_parameter.bad2[2]: Creating...
-func ParseResourceCreationStarted(Line string, log *ParsedLog) (bool, error) {
-	match, _ := regexp.MatchString(ResourceCreationStarted, Line)
+func parseResourceCreationStarted(Line string, log *ParsedLog) (bool, error) {
+	match, _ := regexp.MatchString(resourceCreationStarted, Line)
 	if !match {
 		return false, nil
 	}
@@ -85,8 +85,8 @@ func ParseResourceCreationStarted(Line string, log *ParsedLog) (bool, error) {
 //	 status code: 400, request id: 77765932-a8b2-48bf-abe2-71a151da56ea
 //	 with aws_ssm_parameter.bad2[1],
 // In practice we just detect the "with <resource_name>", as we only receive one line of context
-func ParseResourceCreationFailed(Line string, log *ParsedLog) (bool, error) {
-	match, _ := regexp.MatchString(ResourceOperationFailed, Line)
+func parseResourceCreationFailed(Line string, log *ParsedLog) (bool, error) {
+	match, _ := regexp.MatchString(resourceOperationFailed, Line)
 	if !match {
 		return false, nil
 	}
@@ -108,8 +108,8 @@ func ParseResourceCreationFailed(Line string, log *ParsedLog) (bool, error) {
 
 // Handle line that indicates the destruction of a resource was started. E.g:
 // aws_ssm_parameter.bad2[2]: Destroying...
-func ParseResourceDestructionStarted(Line string, log *ParsedLog) (bool, error) {
-	match, _ := regexp.MatchString(ResourceDestructionStarted, Line)
+func parseResourceDestructionStarted(Line string, log *ParsedLog) (bool, error) {
+	match, _ := regexp.MatchString(resourceDestructionStarted, Line)
 	if !match {
 		return false, nil
 	}
@@ -131,8 +131,8 @@ func ParseResourceDestructionStarted(Line string, log *ParsedLog) (bool, error) 
 
 // Handle line that indicates deletion of a resource was completed. E.g:
 // resource: Destruction complete after 1s [id=2023-04-09T18:17:33Z]
-func ParseResourceDestroyed(Line string, log *ParsedLog) (bool, error) {
-	match, _ := regexp.MatchString(ResourceDestroyed, Line)
+func parseResourceDestroyed(Line string, log *ParsedLog) (bool, error) {
+	match, _ := regexp.MatchString(resourceDestroyed, Line)
 	if !match {
 		return false, nil
 	}
@@ -146,7 +146,7 @@ func ParseResourceDestroyed(Line string, log *ParsedLog) (bool, error) {
 
 	// The next token will contain the create time (" Destruction complete after ...s [id=...]")
 	tokens2 := strings.Split(tokens[1], " ")
-	createDuration := ParseCreateDurationString(tokens2[0])
+	createDuration := parseCreateDurationString(tokens2[0])
 
 	// We know the resource and the duration, insert everything into the log
 	log.SetTotalTime(resource, createDuration)
@@ -161,8 +161,8 @@ func ParseResourceDestroyed(Line string, log *ParsedLog) (bool, error) {
 
 // Handle line that indicates the destruction of a resource was started. E.g:
 // aws_ssm_parameter.bad2[2]: Destroying...
-func ParseResourceModificationStarted(Line string, log *ParsedLog) (bool, error) {
-	match, _ := regexp.MatchString(ResourceModificationStarted, Line)
+func parseResourceModificationStarted(Line string, log *ParsedLog) (bool, error) {
+	match, _ := regexp.MatchString(resourceModificationStarted, Line)
 	if !match {
 		return false, nil
 	}
@@ -184,8 +184,8 @@ func ParseResourceModificationStarted(Line string, log *ParsedLog) (bool, error)
 
 // Handle line that indicates modification of a resource was completed. E.g:
 // resource: Destruction complete after 1s [id=2023-04-09T18:17:33Z]
-func ParseResourceModified(Line string, log *ParsedLog) (bool, error) {
-	match, _ := regexp.MatchString(ResourceModified, Line)
+func parseResourceModified(Line string, log *ParsedLog) (bool, error) {
+	match, _ := regexp.MatchString(resourceModified, Line)
 	if !match {
 		return false, nil
 	}
@@ -203,7 +203,7 @@ func ParseResourceModified(Line string, log *ParsedLog) (bool, error) {
 		msg := fmt.Sprintf("Unable to parse duration: %v\n", tokens[1])
 		return false, &LineParseError{Msg: msg}
 	}
-	Duration := ParseCreateDurationString(tokens2[0])
+	Duration := parseCreateDurationString(tokens2[0])
 
 	// We know the resource and the duration, insert everything into the log
 	log.SetTotalTime(resource, Duration)

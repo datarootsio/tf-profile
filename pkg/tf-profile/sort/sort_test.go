@@ -17,10 +17,10 @@ func TestParseSortSpec(t *testing.T) {
 	assert.Equal(t, p1[0].order, "asc")
 
 	p2 := parseSortSpec("a=asc,b=desc,c=asc")
-	expected := []SortSpecItem{
-		SortSpecItem{"a", "asc"},
-		SortSpecItem{"b", "desc"},
-		SortSpecItem{"c", "asc"},
+	expected := []sortSpecItem{
+		sortSpecItem{"a", "asc"},
+		sortSpecItem{"b", "desc"},
+		sortSpecItem{"c", "asc"},
 	}
 	assert.Equalf(t, p2, expected, "Expected %v after parsing, got %v\n", p2, expected)
 }

@@ -9,8 +9,8 @@ import (
 )
 
 // Parse a refresh line and records the resource in the log.
-func RefreshParser(Line string, log *ParsedLog) (bool, error) {
-	regex := fmt.Sprintf("%v: Refreshing state...", ResourceName)
+func refreshParser(Line string, log *ParsedLog) (bool, error) {
+	regex := fmt.Sprintf("%v: Refreshing state...", resourceName)
 	match, _ := regexp.MatchString(regex, Line)
 	if !match {
 		return false, nil

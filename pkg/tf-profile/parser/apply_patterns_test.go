@@ -10,11 +10,11 @@ import (
 func TestParseCreate(t *testing.T) {
 	log := ParsedLog{Resources: map[string]ResourceMetric{}}
 
-	modified, err := ParseResourceCreationStarted("foo: Creating...", &log)
+	modified, err := parseResourceCreationStarted("foo: Creating...", &log)
 	assert.True(t, modified)
 	assert.Nil(t, err)
 
-	modified, err = ParseResourceCreated("foo: Creation complete after 1s [id=/no/slash/at/end0]", &log)
+	modified, err = parseResourceCreated("foo: Creation complete after 1s [id=/no/slash/at/end0]", &log)
 	assert.True(t, modified)
 	assert.Nil(t, err)
 	assert.Equal(t, float64(1000), log.Resources["foo"].TotalTime)
@@ -24,11 +24,11 @@ func TestParseCreate(t *testing.T) {
 func TestParseCreateFailed(t *testing.T) {
 	log := ParsedLog{Resources: map[string]ResourceMetric{}}
 
-	modified, err := ParseResourceCreationStarted("foo: Creating...", &log)
+	modified, err := parseResourceCreationStarted("foo: Creating...", &log)
 	assert.True(t, modified)
 	assert.Nil(t, err)
 
-	modified, err = ParseResourceCreationFailed("with foo,", &log)
+	modified, err = parseResourceCreationFailed("with foo,", &log)
 	assert.True(t, modified)
 	assert.Nil(t, err)
 	assert.Equal(t, Failed, log.Resources["foo"].AfterStatus)
@@ -37,11 +37,11 @@ func TestParseCreateFailed(t *testing.T) {
 func TestResourceDestruction(t *testing.T) {
 	log := ParsedLog{Resources: map[string]ResourceMetric{}}
 
-	modified, err := ParseResourceDestructionStarted("foo: Destroying...", &log)
+	modified, err := parseResourceDestructionStarted("foo: Destroying...", &log)
 	assert.True(t, modified)
 	assert.Nil(t, err)
 
-	modified, err = ParseResourceDestroyed("foo: Destruction complete after 10s [id=/no/slash/at/end0]", &log)
+	modified, err = parseResourceDestroyed("foo: Destruction complete after 10s [id=/no/slash/at/end0]", &log)
 	assert.True(t, modified)
 	assert.Nil(t, err)
 	assert.Equal(t, float64(10000), log.Resources["foo"].TotalTime)
@@ -51,11 +51,11 @@ func TestResourceDestruction(t *testing.T) {
 func TestResourceModification(t *testing.T) {
 	log := ParsedLog{Resources: map[string]ResourceMetric{}}
 
-	modified, err := ParseResourceModificationStarted("foo: Modifying...", &log)
+	modified, err := parseResourceModificationStarted("foo: Modifying...", &log)
 	assert.True(t, modified)
 	assert.Nil(t, err)
 
-	modified, err = ParseResourceModified("foo: Modifications complete after 10s [id=/no/slash/at/end0]", &log)
+	modified, err = parseResourceModified("foo: Modifications complete after 10s [id=/no/slash/at/end0]", &log)
 	assert.True(t, modified)
 	assert.Nil(t, err)
 	assert.Equal(t, float64(10000), log.Resources["foo"].TotalTime)

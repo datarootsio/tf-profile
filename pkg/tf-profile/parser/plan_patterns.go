@@ -9,19 +9,19 @@ import (
 )
 
 var (
-	StartPlan       = "Terraform will perform the following actions:"
-	IsTainted       = fmt.Sprintf("%v is tainted, so must be replaced", ResourceName)
-	WillBeCreated   = fmt.Sprintf("%v will be created", ResourceName)
-	ExplicitReplace = fmt.Sprintf("%v will be replaced, as requested", ResourceName)
-	WillBeDestroyed = fmt.Sprintf("%v will be destroyed", ResourceName)
-	WillBeModified  = fmt.Sprintf("%v will be updated in-place", ResourceName)
-	ForcedReplace   = fmt.Sprintf("%v must be replaced", ResourceName)
+	startPlan       = "Terraform will perform the following actions:"
+	isTainted       = fmt.Sprintf("%v is tainted, so must be replaced", resourceName)
+	willBeCreated   = fmt.Sprintf("%v will be created", resourceName)
+	explicitReplace = fmt.Sprintf("%v will be replaced, as requested", resourceName)
+	willBeDestroyed = fmt.Sprintf("%v will be destroyed", resourceName)
+	willBeModified  = fmt.Sprintf("%v will be updated in-place", resourceName)
+	forcedReplace   = fmt.Sprintf("%v must be replaced", resourceName)
 )
 
 // Handle line that indicates the start of a Terraform plan:
 // "Terraform will perform the following actions:"
-func ParseStartPlan(Line string, log *ParsedLog) (bool, error) {
-	match, _ := regexp.MatchString(ResourceCreated, Line)
+func parseStartPlan(Line string, log *ParsedLog) (bool, error) {
+	match, _ := regexp.MatchString(resourceCreated, Line)
 	if !match {
 		return false, nil
 	}
@@ -31,8 +31,8 @@ func ParseStartPlan(Line string, log *ParsedLog) (bool, error) {
 
 // Handle line that indicates a resource is tainted. E.g:
 // "  # aws_ssm_parameter.p1 is tainted, so must be replaced"
-func ParsePlanTainted(Line string, log *ParsedLog) (bool, error) {
-	match, _ := regexp.MatchString(IsTainted, Line)
+func parsePlanTainted(Line string, log *ParsedLog) (bool, error) {
+	match, _ := regexp.MatchString(isTainted, Line)
 	if !match {
 		return false, nil
 	}
@@ -51,8 +51,8 @@ func ParsePlanTainted(Line string, log *ParsedLog) (bool, error) {
 
 // Handle line that indicates a resource has been marked to be replaced. E.g:
 // "  # aws_ssm_parameter.p1 will be replaced, as requested"
-func ParsePlanExplicitReplace(Line string, log *ParsedLog) (bool, error) {
-	match, _ := regexp.MatchString(ExplicitReplace, Line)
+func parsePlanExplicitReplace(Line string, log *ParsedLog) (bool, error) {
+	match, _ := regexp.MatchString(explicitReplace, Line)
 	if !match {
 		return false, nil
 	}
@@ -71,8 +71,8 @@ func ParsePlanExplicitReplace(Line string, log *ParsedLog) (bool, error) {
 
 // Handle line that indicates a resource will be destroyed. E.g:
 // "  # aws_ssm_parameter.p1 will be destroyed"
-func ParsePlanWillBeDestroyed(Line string, log *ParsedLog) (bool, error) {
-	match, _ := regexp.MatchString(WillBeDestroyed, Line)
+func parsePlanWillBeDestroyed(Line string, log *ParsedLog) (bool, error) {
+	match, _ := regexp.MatchString(willBeDestroyed, Line)
 	if !match {
 		return false, nil
 	}
@@ -91,8 +91,8 @@ func ParsePlanWillBeDestroyed(Line string, log *ParsedLog) (bool, error) {
 
 // Handle line that indicates a resource will be modified. E.g:
 // " # aws_ssm_parameter.p5 will be updated in-place"
-func ParsePlanWillBeModified(Line string, log *ParsedLog) (bool, error) {
-	match, _ := regexp.MatchString(WillBeModified, Line)
+func parsePlanWillBeModified(Line string, log *ParsedLog) (bool, error) {
+	match, _ := regexp.MatchString(willBeModified, Line)
 	if !match {
 		return false, nil
 	}
@@ -111,8 +111,8 @@ func ParsePlanWillBeModified(Line string, log *ParsedLog) (bool, error) {
 
 // Handle line that indicates a resource must be replaced. E.g:
 // "# aws_ssm_parameter.p6 must be replaced"
-func ParsePlanForcedReplace(Line string, log *ParsedLog) (bool, error) {
-	match, _ := regexp.MatchString(ForcedReplace, Line)
+func parsePlanForcedReplace(Line string, log *ParsedLog) (bool, error) {
+	match, _ := regexp.MatchString(forcedReplace, Line)
 	if !match {
 		return false, nil
 	}
@@ -131,8 +131,8 @@ func ParsePlanForcedReplace(Line string, log *ParsedLog) (bool, error) {
 
 // Handle line that indicates a resource will be created. E.g:
 // "# aws_ssm_parameter.p6 will be created"
-func ParsePlanWillBeCreated(Line string, log *ParsedLog) (bool, error) {
-	match, _ := regexp.MatchString(WillBeCreated, Line)
+func parsePlanWillBeCreated(Line string, log *ParsedLog) (bool, error) {
+	match, _ := regexp.MatchString(willBeCreated, Line)
 	if !match {
 		return false, nil
 	}

@@ -59,12 +59,12 @@ func PrintStats(log ParsedLog) error {
 	tbl := table.New("Key", "Value")
 	tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
 
-	addRows(&tbl, GetBasicStats(log))
-	addRows(&tbl, GetTimeStats(log))
-	addRows(&tbl, GetOperationStats(log))
-	addRows(&tbl, GetAfterStatusStats(log))
-	addRows(&tbl, GetDesiredStateStats(log))
-	addRows(&tbl, GetModuleStats(log))
+	addRows(&tbl, getBasicStats(log))
+	addRows(&tbl, getTimeStats(log))
+	addRows(&tbl, getOperationStats(log))
+	addRows(&tbl, getAfterStatusStats(log))
+	addRows(&tbl, getDesiredStateStats(log))
+	addRows(&tbl, getModuleStats(log))
 
 	fmt.Println() // Create space above the table
 	tbl.Print()
@@ -80,17 +80,17 @@ func addRows(tbl *table.Table, rows []Stat) {
 	(*tbl).AddRow("", "") // Add some spacing between sections
 }
 
-func GetBasicStats(log ParsedLog) []Stat {
+func getBasicStats(log ParsedLog) []Stat {
 	NumCalls := 0
 	for _, resource := range log.Resources {
 		NumCalls += resource.NumCalls
 	}
 	return []Stat{
-		Stat{"Number of resources in configuration", fmt.Sprint(NumCalls)},
+		{"Number of resources in configuration", fmt.Sprint(NumCalls)},
 	}
 }
 
-func GetTimeStats(log ParsedLog) []Stat {
+func getTimeStats(log ParsedLog) []Stat {
 	TotalTime := 0
 	HighestTime := -1
 	HighestResource := ""
@@ -103,13 +103,13 @@ func GetTimeStats(log ParsedLog) []Stat {
 		}
 	}
 	return []Stat{
-		Stat{"Cumulative duration", FormatDuration(TotalTime)},
-		Stat{"Longest apply time", FormatDuration(HighestTime / 1000)},
-		Stat{"Longest apply resource", HighestResource},
+		{"Cumulative duration", FormatDuration(TotalTime)},
+		{"Longest apply time", FormatDuration(HighestTime / 1000)},
+		{"Longest apply resource", HighestResource},
 	}
 }
 
-func GetAfterStatusStats(log ParsedLog) []Stat {
+func getAfterStatusStats(log ParsedLog) []Stat {
 	StatusCount := make(map[string]int)
 	for _, metrics := range log.Resources {
 		StatusCount[metrics.AfterStatus.String()] += metrics.NumCalls
@@ -128,7 +128,7 @@ func GetAfterStatusStats(log ParsedLog) []Stat {
 	return result
 }
 
-func GetDesiredStateStats(log ParsedLog) []Stat {
+func getDesiredStateStats(log ParsedLog) []Stat {
 	inDesiredState := 0
 	notInDesiredState := 0
 
@@ -150,7 +150,7 @@ func GetDesiredStateStats(log ParsedLog) []Stat {
 	}
 }
 
-func GetOperationStats(log ParsedLog) []Stat {
+func getOperationStats(log ParsedLog) []Stat {
 
 	Operations := make(map[string]int)
 	for _, metrics := range log.Resources {
@@ -165,7 +165,7 @@ func GetOperationStats(log ParsedLog) []Stat {
 	return result
 }
 
-func GetModuleStats(log ParsedLog) []Stat {
+func getModuleStats(log ParsedLog) []Stat {
 	LargestTopLevelModule := "/"
 	LargestTopLevelModuleSize := 0
 	DeepestModuleDepth := 0
@@ -220,12 +220,12 @@ func GetModuleStats(log ParsedLog) []Stat {
 	}
 
 	return []Stat{
-		Stat{"Number of top-level modules", fmt.Sprint(len(toplevel))},
-		Stat{"Largest top-level module", LargestTopLevelModule},
-		Stat{"Size of largest top-level module", fmt.Sprint(LargestTopLevelModuleSize)},
-		Stat{"Deepest module", DeepestModuleName},
-		Stat{"Deepest module depth", fmt.Sprint(DeepestModuleDepth)},
-		Stat{"Largest leaf module", LargestLeafModuleName},
-		Stat{"Size of largest leaf module", fmt.Sprint(LargestLeafModuleSize)},
+		{"Number of top-level modules", fmt.Sprint(len(toplevel))},
+		{"Largest top-level module", LargestTopLevelModule},
+		{"Size of largest top-level module", fmt.Sprint(LargestTopLevelModuleSize)},
+		{"Deepest module", DeepestModuleName},
+		{"Deepest module depth", fmt.Sprint(DeepestModuleDepth)},
+		{"Largest leaf module", LargestLeafModuleName},
+		{"Size of largest leaf module", fmt.Sprint(LargestLeafModuleSize)},
 	}
 }

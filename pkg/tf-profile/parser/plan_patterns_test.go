@@ -10,32 +10,32 @@ import (
 func TestParsePlan(t *testing.T) {
 	log := ParsedLog{Resources: map[string]ResourceMetric{}}
 
-	modified, err := ParsePlanTainted("  # foo is tainted, so must be replaced", &log)
+	modified, err := parsePlanTainted("  # foo is tainted, so must be replaced", &log)
 	assert.True(t, modified)
 	assert.Nil(t, err)
 	assert.Equal(t, Created, log.Resources["foo"].DesiredStatus)
 
-	modified, err = ParsePlanExplicitReplace("  # foo will be replaced, as requested", &log)
+	modified, err = parsePlanExplicitReplace("  # foo will be replaced, as requested", &log)
 	assert.True(t, modified)
 	assert.Nil(t, err)
 	assert.Equal(t, Created, log.Resources["foo"].DesiredStatus)
 
-	modified, err = ParsePlanWillBeDestroyed("  # foo will be destroyed", &log)
+	modified, err = parsePlanWillBeDestroyed("  # foo will be destroyed", &log)
 	assert.True(t, modified)
 	assert.Nil(t, err)
 	assert.Equal(t, NotCreated, log.Resources["foo"].DesiredStatus)
 
-	modified, err = ParsePlanWillBeModified("  # foo will be updated in-place", &log)
+	modified, err = parsePlanWillBeModified("  # foo will be updated in-place", &log)
 	assert.True(t, modified)
 	assert.Nil(t, err)
 	assert.Equal(t, Created, log.Resources["foo"].DesiredStatus)
 
-	modified, err = ParsePlanForcedReplace("  # foo must be replaced", &log)
+	modified, err = parsePlanForcedReplace("  # foo must be replaced", &log)
 	assert.True(t, modified)
 	assert.Nil(t, err)
 	assert.Equal(t, Created, log.Resources["foo"].DesiredStatus)
 
-	modified, err = ParsePlanWillBeCreated("  # foo will be created", &log)
+	modified, err = parsePlanWillBeCreated("  # foo will be created", &log)
 	assert.True(t, modified)
 	assert.Nil(t, err)
 	assert.Equal(t, Created, log.Resources["foo"].DesiredStatus)
@@ -45,16 +45,16 @@ func TestParsePlan(t *testing.T) {
 // but still throws an error during parsing
 func TestParseErrors(t *testing.T) {
 	log := ParsedLog{Resources: map[string]ResourceMetric{}}
-	_, err := ParsePlanTainted("foo is tainted, so must be replaced", &log)
+	_, err := parsePlanTainted("foo is tainted, so must be replaced", &log)
 	assert.NotNil(t, err)
-	_, err = ParsePlanExplicitReplace("foo will be replaced, as requested", &log)
+	_, err = parsePlanExplicitReplace("foo will be replaced, as requested", &log)
 	assert.NotNil(t, err)
-	_, err = ParsePlanWillBeDestroyed("foo will be destroyed", &log)
+	_, err = parsePlanWillBeDestroyed("foo will be destroyed", &log)
 	assert.NotNil(t, err)
-	_, err = ParsePlanWillBeModified("foo will be updated in-place", &log)
+	_, err = parsePlanWillBeModified("foo will be updated in-place", &log)
 	assert.NotNil(t, err)
-	_, err = ParsePlanForcedReplace("foo must be replaced", &log)
+	_, err = parsePlanForcedReplace("foo must be replaced", &log)
 	assert.NotNil(t, err)
-	_, err = ParsePlanWillBeCreated("foo will be created", &log)
+	_, err = parsePlanWillBeCreated("foo will be created", &log)
 	assert.NotNil(t, err)
 }
