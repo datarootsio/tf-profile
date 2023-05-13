@@ -46,23 +46,23 @@ func Graph(args []string, w int, h int, OutFile string) error {
 	return nil
 }
 
-// For failed resources, CreationCompletedEvent will always be -1, since we never
-// detect the end of their modifications. We manually set their CreationCompletedEvent
+// For failed resources, ModificationCompletedEvent will always be -1, since we never
+// detect the end of their modifications. We manually set their ModificationCompletedEvent
 // to the maximum value, leading to a long red bar.
 func CleanFailedResources(tflog ParsedLog) {
 	max := 0
 
 	// Find max creation value
 	for _, metrics := range tflog.Resources {
-		if metrics.CreationCompletedEvent > max {
-			max = metrics.CreationCompletedEvent
+		if metrics.ModificationCompletedEvent > max {
+			max = metrics.ModificationCompletedEvent
 		}
 	}
 
 	// Update all non-successful resources to end at that index
 	for resource, metrics := range tflog.Resources {
 		if metrics.AfterStatus == Failed {
-			metrics.CreationCompletedEvent = max
+			metrics.ModificationCompletedEvent = max
 			tflog.Resources[resource] = metrics
 		}
 	}
@@ -93,8 +93,8 @@ func PrintGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) (string, 
 		// Escape underscores and add the necessary metrics.
 		line := fmt.Sprintf("%v %v %v %v",
 			NameForOutput,
-			metrics.CreationStartedEvent,
-			metrics.CreationCompletedEvent,
+			metrics.ModificationStartedEvent,
+			metrics.ModificationCompletedEvent,
 			metrics.AfterStatus,
 		)
 		Resources = append(Resources, line)
@@ -116,7 +116,7 @@ func PrintGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) (string, 
 }
 
 // To create a nice graph, sort the resources chronologically
-// according to CreationStartedEvent
+// according to ModificationStartedEvent
 func sortResourcesForGraph(log ParsedLog) []string {
 	// Collect keys
 	keys := []string{}
@@ -125,7 +125,7 @@ func sortResourcesForGraph(log ParsedLog) []string {
 	}
 
 	sort.Slice(keys, func(i, j int) bool {
-		return log.Resources[keys[i]].CreationStartedEvent > log.Resources[keys[j]].CreationStartedEvent
+		return log.Resources[keys[i]].ModificationStartedEvent > log.Resources[keys[j]].ModificationStartedEvent
 	})
 	return keys
 }

@@ -115,7 +115,7 @@ func TestFullAgg(t *testing.T) {
 			"module.y[1].module.y[1].r[1]": ResourceMetric{1, 1, 0, 0, 0, 0, NotCreated, Created, Created, Create},
 			"module.y[1].module.y[1].r[2]": ResourceMetric{1, 2, 0, 0, 0, 0, NotCreated, Created, Created, Create},
 			"module.y[1].module.y[1].r[3]": ResourceMetric{1, 3, 0, 0, 0, 0, NotCreated, Created, Created, Create},
-			// With CreationStartedIndex and CreationCompletedIndex
+			// With ModificationStartedIndex and ModificationCompletedIndex
 			"module.z[1].module.z[1].r[1]": ResourceMetric{1, 3, 2, 1, 0, 0, NotCreated, Created, Created, Create},
 			"module.z[1].module.z[1].r[2]": ResourceMetric{1, 2, 3, 5, 0, 0, NotCreated, Created, Created, Create},
 			"module.z[1].module.z[1].r[3]": ResourceMetric{1, 1, 5, 9, 0, 0, NotCreated, Created, Created, Create},

@@ -109,16 +109,16 @@ func aggregateResourceNames(names ...string) string {
 // Aggregates a number of ResourceMetrics into one.
 // After aggregating 'NumCalls' contains the number of input records.
 // TotalTime contains the sum of individual apply times.
-// CreationStartedIndex contains the *lowest* CreationStartedIndex of any record.
-// CreationCompletedIndex contains the *highest* CreationStartedIndex of any record.
+// ModificationStartedIndex contains the *lowest* ModificationStartedIndex of any record.
+// ModificationCompletedIndex contains the *highest* ModificationStartedIndex of any record.
 // AfterStatus can be any of "Created", "Failed", "NotCreated", "Multiple" or "Unknown"
 func aggregateResourceMetrics(metrics ...ResourceMetric) ResourceMetric {
 	NumCalls := len(metrics)
 	TotalTime := float64(0)
-	CreationStartedIndex := -1
-	CreationCompletedIndex := -1
-	CreationStartedEvent := -1
-	CreationCompletedEvent := -1
+	ModificationStartedIndex := -1
+	ModificationCompletedIndex := -1
+	ModificationStartedEvent := -1
+	ModificationCompletedEvent := -1
 
 	BeforeStatus := NoneStatus
 	AfterStatus := NoneStatus
@@ -128,17 +128,17 @@ func aggregateResourceMetrics(metrics ...ResourceMetric) ResourceMetric {
 	for _, metric := range metrics {
 		TotalTime += metric.TotalTime
 
-		// For CreationStartedIndex and CreationStartedEvent, take the first one we see
-		if CreationStartedIndex == -1 {
-			CreationStartedIndex = metric.CreationStartedIndex
+		// For ModificationStartedIndex and ModificationStartedEvent, take the first one we see
+		if ModificationStartedIndex == -1 {
+			ModificationStartedIndex = metric.ModificationStartedIndex
 		}
-		if CreationStartedEvent == -1 {
-			CreationStartedEvent = metric.CreationStartedEvent
+		if ModificationStartedEvent == -1 {
+			ModificationStartedEvent = metric.ModificationStartedEvent
 		}
 
-		// For CreationCompletedIndex and CreationCompletedEvent, take the maximum
-		CreationCompletedIndex = maxInt(CreationCompletedIndex, metric.CreationCompletedIndex)
-		CreationCompletedEvent = maxInt(CreationCompletedEvent, metric.CreationCompletedEvent)
+		// For ModificationCompletedIndex and ModificationCompletedEvent, take the maximum
+		ModificationCompletedIndex = maxInt(ModificationCompletedIndex, metric.ModificationCompletedIndex)
+		ModificationCompletedEvent = maxInt(ModificationCompletedEvent, metric.ModificationCompletedEvent)
 
 		// Calculate aggregated statuses:
 		// - if all statuses are equal to X, the result will be X
@@ -172,16 +172,16 @@ func aggregateResourceMetrics(metrics ...ResourceMetric) ResourceMetric {
 	}
 
 	return ResourceMetric{
-		NumCalls:               NumCalls,
-		TotalTime:              TotalTime,
-		CreationStartedIndex:   CreationStartedIndex,
-		CreationCompletedIndex: CreationCompletedIndex,
-		CreationStartedEvent:   CreationStartedEvent,
-		CreationCompletedEvent: CreationCompletedEvent,
-		BeforeStatus:           BeforeStatus,
-		AfterStatus:            AfterStatus,
-		DesiredStatus:          DesiredStatus,
-		Operation:              Operation,
+		NumCalls:                   NumCalls,
+		TotalTime:                  TotalTime,
+		ModificationStartedIndex:   ModificationStartedIndex,
+		ModificationCompletedIndex: ModificationCompletedIndex,
+		ModificationStartedEvent:   ModificationStartedEvent,
+		ModificationCompletedEvent: ModificationCompletedEvent,
+		BeforeStatus:               BeforeStatus,
+		AfterStatus:                AfterStatus,
+		DesiredStatus:              DesiredStatus,
+		Operation:                  Operation,
 	}
 }
 

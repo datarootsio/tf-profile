@@ -11,6 +11,7 @@ const (
 	NotCreated Status = 1
 	Created    Status = 2
 	Failed     Status = 3
+	Tainted    Status = 4
 	// For aggregated resources
 	Multiple Status = 4
 
@@ -32,15 +33,15 @@ type (
 		NumCalls  int
 		TotalTime float64
 		// Resource was the Nth to start creation.
-		CreationStartedIndex int
+		ModificationStartedIndex int
 		// Resource was the Nth to finish creation
-		CreationCompletedIndex int
+		ModificationCompletedIndex int
 		// (Global) event index of when creation started. As this is a global event,
-		// it can be compared chronologically with a CreationCompletedEvent.
-		CreationStartedEvent int
+		// it can be compared chronologically with a ModificationCompletedEvent.
+		ModificationStartedEvent int
 		// (Global) event index of when creation finished. As this is a global event,
-		// it can be compared chronologically with a CreationStartedEvent.
-		CreationCompletedEvent int // (Global) event index of when creation finished
+		// it can be compared chronologically with a ModificationStartedEvent.
+		ModificationCompletedEvent int // (Global) event index of when creation finished
 		// Inferred status before the TF run
 		BeforeStatus Status
 		// Status after the TF run
@@ -86,42 +87,42 @@ func (log ParsedLog) SetTotalTime(Resource string, TotalTime float64) error {
 	return nil
 }
 
-func (log ParsedLog) SetCreationStartedIndex(Resource string, Idx int) error {
+func (log ParsedLog) SetModificationStartedIndex(Resource string, Idx int) error {
 	metric, found := log.Resources[Resource]
 	if found == false {
 		return &ResourceNotFoundError{Resource}
 	}
-	metric.CreationStartedIndex = Idx
+	metric.ModificationStartedIndex = Idx
 	log.Resources[Resource] = metric
 	return nil
 }
 
-func (log ParsedLog) SetCreationCompletedIndex(Resource string, Idx int) error {
+func (log ParsedLog) SetModificationCompletedIndex(Resource string, Idx int) error {
 	metric, found := log.Resources[Resource]
 	if found == false {
 		return &ResourceNotFoundError{Resource}
 	}
-	metric.CreationCompletedIndex = Idx
+	metric.ModificationCompletedIndex = Idx
 	log.Resources[Resource] = metric
 	return nil
 }
 
-func (log ParsedLog) SetCreationStartedEvent(Resource string, Idx int) error {
+func (log ParsedLog) SetModificationStartedEvent(Resource string, Idx int) error {
 	metric, found := log.Resources[Resource]
 	if found == false {
 		return &ResourceNotFoundError{Resource}
 	}
-	metric.CreationStartedEvent = Idx
+	metric.ModificationStartedEvent = Idx
 	log.Resources[Resource] = metric
 	return nil
 }
 
-func (log ParsedLog) SetCreationCompletedEvent(Resource string, Idx int) error {
+func (log ParsedLog) SetModificationCompletedEvent(Resource string, Idx int) error {
 	metric, found := log.Resources[Resource]
 	if found == false {
 		return &ResourceNotFoundError{Resource}
 	}
-	metric.CreationCompletedEvent = Idx
+	metric.ModificationCompletedEvent = Idx
 	log.Resources[Resource] = metric
 	return nil
 }
@@ -136,15 +137,55 @@ func (log ParsedLog) SetAfterStatus(Resource string, Status Status) error {
 	return nil
 }
 
+func (log ParsedLog) SetBeforeStatus(Resource string, Status Status) error {
+	metric, found := log.Resources[Resource]
+	if found == false {
+		return &ResourceNotFoundError{Resource}
+	}
+	metric.BeforeStatus = Status
+	log.Resources[Resource] = metric
+	return nil
+}
+
+func (log ParsedLog) SetDesiredStatus(Resource string, Status Status) error {
+	metric, found := log.Resources[Resource]
+	if found == false {
+		return &ResourceNotFoundError{Resource}
+	}
+	metric.DesiredStatus = Status
+	log.Resources[Resource] = metric
+	return nil
+}
+
+func (log ParsedLog) SetOperation(Resource string, Op Operation) error {
+	metric, found := log.Resources[Resource]
+	if found == false {
+		return &ResourceNotFoundError{Resource}
+	}
+	// If Operation was Destroy before, overwrite Create with Replace
+	if metric.Operation == Destroy && Op == Create {
+		metric.Operation = Replace
+	} else {
+		metric.Operation = Op
+	}
+	log.Resources[Resource] = metric
+	return nil
+}
+
 func (log ParsedLog) RegisterNewResource(Resource string) {
+	_, found := (log.Resources)[Resource]
+	if found {
+		return
+	}
 	(log.Resources)[Resource] = ResourceMetric{
-		NumCalls:               1,
-		TotalTime:              -1, // Not finished yet, will be overwritten
-		CreationStartedIndex:   log.CurrentModificationStartedIndex,
-		CreationCompletedIndex: -1, // Not finished yet, will be overwritten
-		CreationStartedEvent:   log.CurrentEvent,
-		CreationCompletedEvent: -1,         // Not finished yet, will be overwritten
-		AfterStatus:            NotCreated, // Not finished yet, will be overwritten
+		NumCalls:                   1,
+		TotalTime:                  -1, // Not finished yet, will be overwritten
+		ModificationStartedIndex:   log.CurrentModificationStartedIndex,
+		ModificationCompletedIndex: -1, // Not finished yet, will be overwritten
+		ModificationStartedEvent:   log.CurrentEvent,
+		ModificationCompletedEvent: -1, // Not finished yet, will be overwritten
+
+		AfterStatus: NotCreated, // Not finished yet, will be overwritten
 	}
 }
 
@@ -158,6 +199,8 @@ func (s Status) String() string {
 		return "Failed"
 	case Unknown:
 		return "Unknown"
+	case Tainted:
+		return "Tainted"
 	default:
 		return fmt.Sprintf("%d (unknown)", int(s))
 	}

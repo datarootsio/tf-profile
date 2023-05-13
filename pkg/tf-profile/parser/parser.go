@@ -20,6 +20,10 @@ var ApplyParsers = []ParseFunction{
 	ParseResourceCreationStarted,
 	ParseResourceCreated,
 	ParseResourceCreationFailed,
+	ParseResourceDestructionStarted,
+	ParseResourceDestroyed,
+	ParseResourceModificationStarted,
+	ParseResourceModified,
 }
 
 func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {

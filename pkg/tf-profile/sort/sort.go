@@ -58,9 +58,9 @@ func Sort(log ParsedLog, sort_spec string) []string {
 			} else if column == "tot_time" {
 				value = float64(v.TotalTime)
 			} else if column == "idx_creation" {
-				value = float64(v.CreationStartedIndex)
+				value = float64(v.ModificationStartedIndex)
 			} else if column == "idx_created" {
-				value = float64(v.CreationCompletedIndex)
+				value = float64(v.ModificationCompletedIndex)
 			} else if column == "status" {
 				value = float64(v.AfterStatus)
 			}
