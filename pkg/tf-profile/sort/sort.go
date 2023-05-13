@@ -4,6 +4,8 @@ import (
 	"reflect"
 	"sort"
 	"strings"
+
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/core"
 )
 
 type (

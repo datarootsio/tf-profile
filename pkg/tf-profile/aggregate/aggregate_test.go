@@ -3,6 +3,8 @@ package tfprofile
 import (
 	"testing"
 
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/core"
+
 	"github.com/stretchr/testify/assert"
 )
 

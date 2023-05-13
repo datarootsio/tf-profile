@@ -7,6 +7,8 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/core"
 )
 
 var (
@@ -16,54 +18,6 @@ var (
 	ResourceCreationFailed  = "Error: "
 )
 
-const (
-	// For individual resources
-	NotStarted Status = 0
-	Started    Status = 1
-	Created    Status = 2
-	Failed     Status = 3
-	// For aggregated resources
-	SomeStarted Status = 4
-	AllStarted  Status = 5
-	NoneStarted Status = 6
-	SomeFailed  Status = 7
-	AllFailed   Status = 8
-	AllCreated  Status = 9
-)
-
-type (
-	Status         int
-	LineParseError struct{ Msg string }
-
-	// Data structure that holds all metrics for one particular resource
-	ResourceMetric struct {
-		NumCalls  int
-		TotalTime float64
-		// Resource was the Nth to start creation.
-		CreationStartedIndex int
-		// Resource was the Nth to finish creation
-		CreationCompletedIndex int
-		// (Global) event index of when creation started. As this is a global event,
-		// it can be compared chronologically with a CreationCompletedEvent.
-		CreationStartedEvent int
-		// (Global) event index of when creation finished. As this is a global event,
-		// it can be compared chronologically with a CreationStartedEvent.
-		CreationCompletedEvent int // (Global) event index of when creation finished
-		CreationStatus         Status
-	}
-
-	// Parsing a log results in a map of resource names and their metrics
-	ParsedLog struct {
-		creationStartedCount  int
-		createdCompletedCount int
-		Resources             map[string]ResourceMetric
-	}
-)
-
-func (e *LineParseError) Error() string {
-	return e.Msg
-}
-
 func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 	CreationStarted := 0
 	CreationCompleted := 0
@@ -72,7 +26,8 @@ func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
 	// the error. This flag is true when we are looking for the resource after an error.
 	FailureSeen := false
 
-	tflog := ParsedLog{0, 0, make(map[string]ResourceMetric)}
+	// tflog := ParsedLog{make(map[string]ResourceMetric)}
+	tflog := ParsedLog{map[string]ResourceMetric{}}
 
 	for file.Scan() {
 		line := file.Text()
@@ -228,32 +183,5 @@ func ParseCreateDurationString(in string) float64 {
 			log.Fatal("Unable to parse resource create duration.")
 		}
 		return float64(1000.0 * seconds)
-	}
-}
-
-func (s Status) String() string {
-	switch s {
-	case NotStarted:
-		return "NotStarted"
-	case Started:
-		return "Started"
-	case Created:
-		return "Created"
-	case Failed:
-		return "Failed"
-	case SomeStarted:
-		return "SomeStarted"
-	case AllStarted:
-		return "AllStarted"
-	case NoneStarted:
-		return "NoneStarted"
-	case SomeFailed:
-		return "SomeFailed"
-	case AllFailed:
-		return "AllFailed"
-	case AllCreated:
-		return "AllCreated"
-	default:
-		return fmt.Sprintf("%d (unknown)", int(s))
 	}
 }

@@ -3,7 +3,10 @@ package tfprofile
 import (
 	"bufio"
 	"os"
+	"strings"
 	"testing"
+
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/core"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -109,4 +112,20 @@ func TestSpecialResourceName(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, `module.eks.module.eks_managed_node_group["initial"].aws_iam_role_policy_attachment.this["arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"]`, name)
 	assert.Equal(t, float64(0), duration)
+}
+
+func TestParserSanityCheck(t *testing.T) {
+	Files, err := os.ReadDir("../../../test")
+	assert.Nil(t, err)
+
+	// Sanity check: all *.log files must be parseable
+	for _, File := range Files {
+		if strings.Contains(File.Name(), ".log") {
+			file, _ := os.Open("../../../test/" + File.Name())
+			s := bufio.NewScanner(file)
+
+			_, err := Parse(s, false)
+			assert.Nil(t, err)
+		}
+	}
 }

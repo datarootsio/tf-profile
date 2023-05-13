@@ -3,6 +3,8 @@ package tfprofile
 import (
 	"sort"
 	"strings"
+
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/core"
 )
 
 // Take a parsed log and aggregate resources created

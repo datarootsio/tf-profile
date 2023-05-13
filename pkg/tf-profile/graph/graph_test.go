@@ -7,7 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/core"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/aggregate"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/parser"
 
 	"github.com/stretchr/testify/assert"
 )

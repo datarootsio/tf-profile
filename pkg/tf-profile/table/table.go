@@ -4,6 +4,12 @@ import (
 	"bufio"
 	"fmt"
 
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/aggregate"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/parser"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/readers"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/sort"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/utils"
+
 	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/core"
 	"github.com/fatih/color"
 	"github.com/rodaine/table"

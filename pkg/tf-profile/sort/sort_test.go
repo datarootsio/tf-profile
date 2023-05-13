@@ -5,6 +5,8 @@ import (
 	"os"
 	"testing"
 
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/parser"
+
 	"github.com/stretchr/testify/assert"
 )
 
