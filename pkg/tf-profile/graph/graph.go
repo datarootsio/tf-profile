@@ -10,7 +10,7 @@ import (
 	"strings"
 	"text/template"
 
-	// . "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/aggregate"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/aggregate"
 	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/core"
 	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/parser"
 	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/readers"
@@ -166,14 +166,11 @@ unset table
 # define functions for lookup/index and color
 Lookup(s) = (Index = NaN, sum [i=1:words(List)] \
     (Index = s eq word(List,i) ? i : Index,0), Index)
-Color(s) = (s eq "Created" || s eq "AllCreated") ?  green : red
+Color(s) = (s eq "Failed") ?  red : green
 
 # set range of x-axis and y-axis
 set xrange [-1:]
 set yrange [0.5:words(List)+0.5]
-
-set label "(All)Created" at screen 0.86,0.93 tc rgb green
-set label "Other" at screen 0.86,0.89 tc rgb red
 
 plot $DATA u 2:(Idx=Lookup(strcol(1))): 3 : 2 :(Idx-0.2):(Idx+0.2): \
     (Color(strcol(4))): ytic(strcol(1)) w boxxyerror fill solid 0.7 lw 2.0 lc rgb var notitle`
