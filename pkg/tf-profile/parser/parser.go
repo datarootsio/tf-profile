@@ -34,14 +34,14 @@ var ApplyParsers = []parseFunction{
 	parseResourceModified,
 }
 
+// Parse a Terraform log into a ParsedLog object. This function will
+// pass line by line over the file, apply parse functions (see above)
+// until one of them recognizes the line and extracts information. In 
+// that case the line is considered "handled" and the next one is scanned
+// Possible optimization here: since Terraform has distinct refresh,
+// plan, apply phases we could skip parse functions of previous phases.
 func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
-	// CreationStarted := 0
-	// EventIndex := 0 // Any start or ending of a creation/modification/deletion is an event
-	// In case a resource update fails, the resource name comes a couple of lines after
-	// the error. This flag is true when we are looking for the resource after an error.
-	// FailureSeen := false
-
-	// tflog := ParsedLog{make(map[string]ResourceMetric)}
+	
 	tflog := ParsedLog{Resources: map[string]ResourceMetric{}}
 
 	for file.Scan() {
