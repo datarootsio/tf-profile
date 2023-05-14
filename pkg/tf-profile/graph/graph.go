@@ -68,8 +68,8 @@ func cleanFailedResources(tflog ParsedLog) {
 	}
 }
 
-// Use plot.tpl and a ParsedLog to generate all output for gnuplot.
-// This can be piped into gnuplot (optionally providing a filename at runtime)
+// Use the template below and a ParsedLog to generate all output for gnuplot.
+// This can be piped into gnuplot to generate a .png file
 func printGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) (string, error) {
 	if w < 1 || h < 1 {
 		return "", errors.New("--size must provided as two positive integers (e.g. '1000,1000').")
