@@ -5,10 +5,10 @@
 CLI tool to profile Terraform runs, written in Go.
 
 Main features:
-- Modern CLI ([cobra](https://github.com/spf13/cobra)-based), including autocomplete
+- Modern CLI ([cobra](https://github.com/spf13/cobra)-based) with autocomplete
 - Read logs straight from your Terraform process (using pipe) or a log file
 - Can generate global stats, resource-level stats or visualizations
-- Provides many levels of granularity and aggregation, customizable outputs
+- Provides many levels of granularity and aggregation and customizable outputs
 
 ## Installation
 
@@ -23,7 +23,7 @@ Main features:
 If you want to try `tf-profile` without installing anything, you can run it using Docker (or similar).
 
 ```bash
-❱ cat my_log_file.log | docker run -i qbruynseraede/tf-profile:0.0.1 stats
+❱ cat my_log_file.log | docker run -i qbruynseraede/tf-profile:0.2.0 stats
 
 Key                                Value                                     
 Number of resources created        1510                                      
@@ -37,7 +37,7 @@ Longest apply resource             time_sleep.foo[*]
 Optionally, define an alias:
 
 ```bash
-❱ alias tf-profile=docker run -i qbruynseraede/tf-profile:0.0.1
+❱ alias tf-profile=docker run -i qbruynseraede/tf-profile:0.2.0
 ❱ cat my_log_file.log | tf-profile
 ```
 
@@ -68,7 +68,7 @@ Usage:
 Three major commands are supported:
 - [🔗](#anchor_stats) `tf-profile stats`: provide general statistics about a Terraform run
 - [🔗](#anchor_table) `tf-profile table`: provide detailed, resource-level statistics about a Terraform run
-- [🔗](#anchor_graph) `tf-profile graph`: generate visual overview of a Terraform run.
+- [🔗](#anchor_graph) `tf-profile graph`: generate a visual overview of a Terraform run.
 
 
 ## `tf-profile stats`
@@ -78,7 +78,7 @@ Three major commands are supported:
 
 ```bash
 ❱ terraform apply -auto-approve > log.txt
-❱ tf-profile stats test/many_modules.log
+❱ tf-profile stats log.txt
 
 Key                                Value    
 -----------------------------------------------------------------                       
