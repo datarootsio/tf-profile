@@ -4,17 +4,19 @@ import (
 	"reflect"
 	"sort"
 	"strings"
+
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/core"
 )
 
 type (
-	SortSpecItem struct {
+	sortSpecItem struct {
 		col   string
 		order string
 	}
 
 	// Fake record we construct to allow sorting on (multiple) custom columns.
 	// See Sort() for usage.
-	ProxyRecord struct {
+	proxyRecord struct {
 		resource string
 		items    []float64
 	}
@@ -22,13 +24,13 @@ type (
 
 // Parse a sort_spec into a map
 // e.g "n=asc,tot_time=desc" => {n: asc, tot_time: desc}
-func parseSortSpec(in string) []SortSpecItem {
+func parseSortSpec(in string) []sortSpecItem {
 	tokens := strings.Split(in, ",")
 
-	result := []SortSpecItem{}
+	result := []sortSpecItem{}
 	for _, spec := range tokens {
 		split := strings.Split(spec, "=")
-		result = append(result, SortSpecItem{split[0], split[1]})
+		result = append(result, sortSpecItem{split[0], split[1]})
 	}
 	return result
 }
@@ -39,7 +41,7 @@ func Sort(log ParsedLog, sort_spec string) []string {
 	// we "rebuild" the log such that the "sorting" metrics come first,
 	// and values for columns that are to be sorted descendingly are
 	// inverted. This way, the sorting function is always the same
-	proxy_log := []ProxyRecord{}
+	proxy_log := []proxyRecord{}
 
 	sort_spec_p := parseSortSpec(sort_spec)
 
@@ -56,11 +58,11 @@ func Sort(log ParsedLog, sort_spec string) []string {
 			} else if column == "tot_time" {
 				value = float64(v.TotalTime)
 			} else if column == "idx_creation" {
-				value = float64(v.CreationStartedIndex)
+				value = float64(v.ModificationStartedIndex)
 			} else if column == "idx_created" {
-				value = float64(v.CreationCompletedIndex)
+				value = float64(v.ModificationCompletedIndex)
 			} else if column == "status" {
-				value = float64(v.CreationStatus)
+				value = float64(v.AfterStatus)
 			}
 			if order == "desc" {
 				value = -value
@@ -68,10 +70,10 @@ func Sort(log ParsedLog, sort_spec string) []string {
 			proxy_item_values[idx] = value
 		}
 
-		proxy_log = append(proxy_log, ProxyRecord{k, proxy_item_values})
+		proxy_log = append(proxy_log, proxyRecord{k, proxy_item_values})
 	}
 
-	N := reflect.TypeOf(ProxyRecord{}).NumField()
+	N := reflect.TypeOf(proxyRecord{}).NumField()
 
 	// Sort the proxy log
 	sort.Slice(proxy_log, func(i, j int) bool {

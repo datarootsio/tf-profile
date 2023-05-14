@@ -4,6 +4,12 @@ import (
 	"bufio"
 	"fmt"
 
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/aggregate"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/parser"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/readers"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/sort"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/utils"
+
 	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/core"
 	"github.com/fatih/color"
 	"github.com/rodaine/table"
@@ -48,7 +54,7 @@ func PrintTable(log ParsedLog, sort_spec string) error {
 	headerFmt := color.New(color.FgHiBlue, color.Underline).SprintfFunc()
 	columnFmt := color.New(color.FgBlue).SprintfFunc()
 
-	tbl := table.New("resource", "n", "tot_time", "idx_creation", "idx_created", "status")
+	tbl := table.New("resource", "n", "tot_time", "modify_started", "modify_ended", "desired_state", "operation", "final_state")
 	tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
 
 	// Sort the resources according to the sort_spec and create rows
@@ -59,9 +65,11 @@ func PrintTable(log ParsedLog, sort_spec string) error {
 					resource,
 					(metric.NumCalls),
 					FormatDuration(int(metric.TotalTime/1000)), // Display as "10s" or "1m30s"
-					removeMinusOne(metric.CreationStartedIndex),
-					removeMinusOne(metric.CreationCompletedIndex),
-					(metric.CreationStatus),
+					removeMinusOne(metric.ModificationStartedIndex),
+					removeMinusOne(metric.ModificationCompletedIndex),
+					(metric.DesiredStatus),
+					(metric.Operation),
+					(metric.AfterStatus),
 				)
 				break
 			}

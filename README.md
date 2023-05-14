@@ -5,10 +5,10 @@
 CLI tool to profile Terraform runs, written in Go.
 
 Main features:
-- Modern CLI ([cobra](https://github.com/spf13/cobra)-based), including autocomplete
+- Modern CLI ([cobra](https://github.com/spf13/cobra)-based) with autocomplete
 - Read logs straight from your Terraform process (using pipe) or a log file
 - Can generate global stats, resource-level stats or visualizations
-- Provides many levels of granularity and aggregation, customizable outputs
+- Provides many levels of granularity and aggregation and customizable outputs
 
 ## Installation
 
@@ -23,7 +23,7 @@ Main features:
 If you want to try `tf-profile` without installing anything, you can run it using Docker (or similar).
 
 ```bash
-❱ cat my_log_file.log | docker run -i qbruynseraede/tf-profile:0.0.1 stats
+❱ cat my_log_file.log | docker run -i qbruynseraede/tf-profile:0.2.0 stats
 
 Key                                Value                                     
 Number of resources created        1510                                      
@@ -37,7 +37,7 @@ Longest apply resource             time_sleep.foo[*]
 Optionally, define an alias:
 
 ```bash
-❱ alias tf-profile=docker run -i qbruynseraede/tf-profile:0.0.1
+❱ alias tf-profile=docker run -i qbruynseraede/tf-profile:0.2.0
 ❱ cat my_log_file.log | tf-profile
 ```
 
@@ -68,7 +68,7 @@ Usage:
 Three major commands are supported:
 - [🔗](#anchor_stats) `tf-profile stats`: provide general statistics about a Terraform run
 - [🔗](#anchor_table) `tf-profile table`: provide detailed, resource-level statistics about a Terraform run
-- [🔗](#anchor_graph) `tf-profile graph`: generate visual overview of a Terraform run.
+- [🔗](#anchor_graph) `tf-profile graph`: generate a visual overview of a Terraform run.
 
 
 ## `tf-profile stats`
@@ -79,27 +79,33 @@ Three major commands are supported:
 ```bash
 ❱ terraform apply -auto-approve > log.txt
 ❱ tf-profile stats log.txt
-❱ tf-profile stats test/many_modules.log
 
 Key                                Value    
 -----------------------------------------------------------------                       
-Number of resources created        1510                            
+Number of resources in configuration        1510                            
                                                                    
-Cumulative duration                36m19s                          
-Longest apply time                 7m18s                           
-Longest apply resource             time_sleep.foo[*]               
-                                                                   
-No. resources in state AllCreated  800                             
-No. resources in state Created     695                             
-No. resources in state Started     15                              
-                                                                   
-Number of top-level modules        13                              
-Largest top-level module           module.core[2]                  
-Size of largest top-level module   170                             
-Deepest module                     module.core[2].module.role[47]  
-Deepest module depth               2                               
-Largest leaf module                module.dbt[4]                   
-Size of largest leaf module        40  
+Cumulative duration                         36m19s                          
+Longest apply time                          7m18s                           
+Longest apply resource                      time_sleep.foo[*]               
+
+Resources marked for operation Create       892
+Resources marked for operation None         18
+Resources marked for operation Replace      412      
+    
+Resources in state AllCreated               800                             
+Resources in state Created                  695                             
+Resources in state Started                  15        
+    
+Resources in desired state                  1492 out of 1510 (98.8%)
+Resources not in desired state              18 out of 1510 (0.01%)
+                                                                
+Number of top-level modules                 13                              
+Largest top-level module                    module.core[2]                  
+Size of largest top-level module            170                             
+Deepest module                              module.core[2].module.role[47]  
+Deepest module depth                        2                               
+Largest leaf module                         module.dbt[4]                   
+Size of largest leaf module                 40  
 ```
 
 For more information, refer to the [reference](./docs/stats.md) for the `stats` command.
@@ -112,12 +118,13 @@ For more information, refer to the [reference](./docs/stats.md) for the `stats` 
 ❱ terraform apply -auto-approve > log.txt
 ❱ tf-profile table log.txt
 
-resource                            n  tot_time  idx_creation  idx_created  status    
--------------------------------------------------------------------------------------- 
-time_sleep.count[*]                 5  11s     0             13           AllCreated  
-time_sleep.foreach[*]               3  7s      4             11           AllCreated  
-module.test[1].time_sleep.count[*]  3  5s      3             9            AllCreated  
-module.test[0].time_sleep.count[*]  3  4s      9             7            AllCreated 
+resource              n  tot_time  modify_started  modify_ended  desired_state  operation  final_state  
+aws_ssm_parameter.p6  1  0s        6               7             Created        Replace    Created      
+aws_ssm_parameter.p1  1  0s        7               5             Created        Replace    Created      
+aws_ssm_parameter.p3  1  0s        5               6             Created        Replace    Created      
+aws_ssm_parameter.p4  1  0s        /               1             NotCreated     Destroy    NotCreated   
+aws_ssm_parameter.p5  1  0s        4               4             Created        Modify     Created      
+aws_ssm_parameter.p2  1  0s        /               /             Created        None       Created      
 ```
 
 For a full description of the options, see the [reference](./docs/table.md) page.
@@ -148,9 +155,9 @@ _Disclaimer:_ Terraform's logs do not contain any absolute timestamps. We can on
 ## Roadmap
 
 - [x] Release v0.0.1 as binary and as a Docker image
-- [ ] Improve parser
+- [x] Improve parser
   - [x] Detect failed resources (see [#13](https://github.com/QuintenBruynseraede/tf-profile/pull/13))
-  - [ ] Use plan and refresh phase to discover more resources
+  - [x] Use plan and refresh phase to discover more resources
 - [x] Implement a basic Gantt chart in `tf-profile graph` (see [#14](https://github.com/QuintenBruynseraede/tf-profile/pull/14))
 - [ ] Implement a single-resource view in `tf-profile detail <resource>`
   - This command should filter logs down to 1 single resource (i.e. refresh, plan, changes, and result)

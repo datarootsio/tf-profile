@@ -5,7 +5,11 @@ import (
 	"fmt"
 	"sort"
 
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/aggregate"
 	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/core"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/parser"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/readers"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/utils"
 	"github.com/fatih/color"
 	"github.com/rodaine/table"
 )
@@ -55,10 +59,12 @@ func PrintStats(log ParsedLog) error {
 	tbl := table.New("Key", "Value")
 	tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
 
-	addRows(&tbl, GetBasicStats(log))
-	addRows(&tbl, GetTimeStats(log))
-	addRows(&tbl, GetCreationStatusStats(log))
-	addRows(&tbl, GetModuleStats(log))
+	addRows(&tbl, getBasicStats(log))
+	addRows(&tbl, getTimeStats(log))
+	addRows(&tbl, getOperationStats(log))
+	addRows(&tbl, getAfterStatusStats(log))
+	addRows(&tbl, getDesiredStateStats(log))
+	addRows(&tbl, getModuleStats(log))
 
 	fmt.Println() // Create space above the table
 	tbl.Print()
@@ -74,17 +80,17 @@ func addRows(tbl *table.Table, rows []Stat) {
 	(*tbl).AddRow("", "") // Add some spacing between sections
 }
 
-func GetBasicStats(log ParsedLog) []Stat {
+func getBasicStats(log ParsedLog) []Stat {
 	NumCalls := 0
 	for _, resource := range log.Resources {
 		NumCalls += resource.NumCalls
 	}
 	return []Stat{
-		Stat{"Number of resources in configuration", fmt.Sprint(NumCalls)},
+		{"Number of resources in configuration", fmt.Sprint(NumCalls)},
 	}
 }
 
-func GetTimeStats(log ParsedLog) []Stat {
+func getTimeStats(log ParsedLog) []Stat {
 	TotalTime := 0
 	HighestTime := -1
 	HighestResource := ""
@@ -97,21 +103,21 @@ func GetTimeStats(log ParsedLog) []Stat {
 		}
 	}
 	return []Stat{
-		Stat{"Cumulative duration", FormatDuration(TotalTime)},
-		Stat{"Longest apply time", FormatDuration(HighestTime / 1000)},
-		Stat{"Longest apply resource", HighestResource},
+		{"Cumulative duration", FormatDuration(TotalTime)},
+		{"Longest apply time", FormatDuration(HighestTime / 1000)},
+		{"Longest apply resource", HighestResource},
 	}
 }
 
-func GetCreationStatusStats(log ParsedLog) []Stat {
+func getAfterStatusStats(log ParsedLog) []Stat {
 	StatusCount := make(map[string]int)
 	for _, metrics := range log.Resources {
-		StatusCount[metrics.CreationStatus.String()] += metrics.NumCalls
+		StatusCount[metrics.AfterStatus.String()] += metrics.NumCalls
 	}
 
 	result := []Stat{}
 	for status, count := range StatusCount {
-		StatName := fmt.Sprintf("No. resources in state %v", status)
+		StatName := fmt.Sprintf("Resources in state %v", status)
 		result = append(result, Stat{StatName, fmt.Sprint(count)})
 	}
 
@@ -122,7 +128,44 @@ func GetCreationStatusStats(log ParsedLog) []Stat {
 	return result
 }
 
-func GetModuleStats(log ParsedLog) []Stat {
+func getDesiredStateStats(log ParsedLog) []Stat {
+	inDesiredState := 0
+	notInDesiredState := 0
+
+	for _, metric := range log.Resources {
+		if metric.AfterStatus == metric.DesiredStatus {
+			inDesiredState += 1
+		} else {
+			notInDesiredState += 1
+		}
+	}
+	sum := inDesiredState + notInDesiredState
+
+	percInDesired := 100 * float64(inDesiredState) / float64(sum)
+	percNotInDesired := 100 * float64(notInDesiredState) / float64(sum)
+
+	return []Stat{
+		{"Resources in desired state", fmt.Sprintf("%v out of %v (%.1f%%)", inDesiredState, sum, percInDesired)},
+		{"Resources not in desired state", fmt.Sprintf("%v out of %v (%.1f%%)", notInDesiredState, sum, percNotInDesired)},
+	}
+}
+
+func getOperationStats(log ParsedLog) []Stat {
+
+	Operations := make(map[string]int)
+	for _, metrics := range log.Resources {
+		Operations[metrics.Operation.String()] += metrics.NumCalls
+	}
+
+	result := []Stat{}
+	for op, count := range Operations {
+		StatName := fmt.Sprintf("Resources marked for operation %v", op)
+		result = append(result, Stat{StatName, fmt.Sprint(count)})
+	}
+	return result
+}
+
+func getModuleStats(log ParsedLog) []Stat {
 	LargestTopLevelModule := "/"
 	LargestTopLevelModuleSize := 0
 	DeepestModuleDepth := 0
@@ -177,12 +220,12 @@ func GetModuleStats(log ParsedLog) []Stat {
 	}
 
 	return []Stat{
-		Stat{"Number of top-level modules", fmt.Sprint(len(toplevel))},
-		Stat{"Largest top-level module", LargestTopLevelModule},
-		Stat{"Size of largest top-level module", fmt.Sprint(LargestTopLevelModuleSize)},
-		Stat{"Deepest module", DeepestModuleName},
-		Stat{"Deepest module depth", fmt.Sprint(DeepestModuleDepth)},
-		Stat{"Largest leaf module", LargestLeafModuleName},
-		Stat{"Size of largest leaf module", fmt.Sprint(LargestLeafModuleSize)},
+		{"Number of top-level modules", fmt.Sprint(len(toplevel))},
+		{"Largest top-level module", LargestTopLevelModule},
+		{"Size of largest top-level module", fmt.Sprint(LargestTopLevelModuleSize)},
+		{"Deepest module", DeepestModuleName},
+		{"Deepest module depth", fmt.Sprint(DeepestModuleDepth)},
+		{"Largest leaf module", LargestLeafModuleName},
+		{"Size of largest leaf module", fmt.Sprint(LargestLeafModuleSize)},
 	}
 }

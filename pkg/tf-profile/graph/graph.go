@@ -10,7 +10,10 @@ import (
 	"strings"
 	"text/template"
 
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/aggregate"
 	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/core"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/parser"
+	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/readers"
 )
 
 func Graph(args []string, w int, h int, OutFile string) error {
@@ -34,8 +37,8 @@ func Graph(args []string, w int, h int, OutFile string) error {
 		return err
 	}
 
-	CleanFailedResources(tflog)
-	_, err = PrintGNUPlotOutput(tflog, w, h, OutFile)
+	cleanFailedResources(tflog)
+	_, err = printGNUPlotOutput(tflog, w, h, OutFile)
 
 	if err != nil {
 		return err
@@ -43,31 +46,31 @@ func Graph(args []string, w int, h int, OutFile string) error {
 	return nil
 }
 
-// For failed resources, CreationCompletedEvent will always be -1, since we never
-// detect the end of their modifications. We manually set their CreationCompletedEvent
+// For failed resources, ModificationCompletedEvent will always be -1, since we never
+// detect the end of their modifications. We manually set their ModificationCompletedEvent
 // to the maximum value, leading to a long red bar.
-func CleanFailedResources(tflog ParsedLog) {
+func cleanFailedResources(tflog ParsedLog) {
 	max := 0
 
 	// Find max creation value
 	for _, metrics := range tflog.Resources {
-		if metrics.CreationCompletedEvent > max {
-			max = metrics.CreationCompletedEvent
+		if metrics.ModificationCompletedEvent > max {
+			max = metrics.ModificationCompletedEvent
 		}
 	}
 
 	// Update all non-successful resources to end at that index
 	for resource, metrics := range tflog.Resources {
-		if metrics.CreationStatus != Created && metrics.CreationStatus != AllCreated {
-			metrics.CreationCompletedEvent = max
+		if metrics.AfterStatus == Failed {
+			metrics.ModificationCompletedEvent = max
 			tflog.Resources[resource] = metrics
 		}
 	}
 }
 
-// Use plot.tpl and a ParsedLog to generate all output for gnuplot.
-// This can be piped into gnuplot (optionally providing a filename at runtime)
-func PrintGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) (string, error) {
+// Use the template below and a ParsedLog to generate all output for gnuplot.
+// This can be piped into gnuplot to generate a .png file
+func printGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) (string, error) {
 	if w < 1 || h < 1 {
 		return "", errors.New("--size must provided as two positive integers (e.g. '1000,1000').")
 	}
@@ -90,9 +93,9 @@ func PrintGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) (string, 
 		// Escape underscores and add the necessary metrics.
 		line := fmt.Sprintf("%v %v %v %v",
 			NameForOutput,
-			metrics.CreationStartedEvent,
-			metrics.CreationCompletedEvent,
-			metrics.CreationStatus,
+			metrics.ModificationStartedEvent,
+			metrics.ModificationCompletedEvent,
+			metrics.AfterStatus,
 		)
 		Resources = append(Resources, line)
 	}
@@ -113,7 +116,7 @@ func PrintGNUPlotOutput(tflog ParsedLog, w int, h int, OutFile string) (string, 
 }
 
 // To create a nice graph, sort the resources chronologically
-// according to CreationStartedEvent
+// according to ModificationStartedEvent
 func sortResourcesForGraph(log ParsedLog) []string {
 	// Collect keys
 	keys := []string{}
@@ -122,7 +125,7 @@ func sortResourcesForGraph(log ParsedLog) []string {
 	}
 
 	sort.Slice(keys, func(i, j int) bool {
-		return log.Resources[keys[i]].CreationStartedEvent > log.Resources[keys[j]].CreationStartedEvent
+		return log.Resources[keys[i]].ModificationStartedEvent > log.Resources[keys[j]].ModificationStartedEvent
 	})
 	return keys
 }
@@ -163,14 +166,11 @@ unset table
 # define functions for lookup/index and color
 Lookup(s) = (Index = NaN, sum [i=1:words(List)] \
     (Index = s eq word(List,i) ? i : Index,0), Index)
-Color(s) = (s eq "Created" || s eq "AllCreated") ?  green : red
+Color(s) = (s eq "Failed") ?  red : green
 
 # set range of x-axis and y-axis
 set xrange [-1:]
 set yrange [0.5:words(List)+0.5]
-
-set label "(All)Created" at screen 0.86,0.93 tc rgb green
-set label "Other" at screen 0.86,0.89 tc rgb red
 
 plot $DATA u 2:(Idx=Lookup(strcol(1))): 3 : 2 :(Idx-0.2):(Idx+0.2): \
     (Color(strcol(4))): ytic(strcol(1)) w boxxyerror fill solid 0.7 lw 2.0 lc rgb var notitle`

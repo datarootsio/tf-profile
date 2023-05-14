@@ -9,22 +9,29 @@
 
 **Arguments:**
 
-Log_file: Optional. Instruct `tf-profile` to read input from a text file instead of stdin. 
+- log_file: _Optional_. Instruct `tf-profile` to read input from a text file instead of stdin. 
 
 ## Description
 
 The following statistics will be printed:
 
 General:
-- **Number of resources created**: Number of resources detected in your log. 
+- **Number of resources created**: Number of resources detected in your log. Depending on which phases (refresh, plan, apply) were present in the log, this number can differ and may not always match what is defined in your code. For example, doing `terraform apply my_plan_file` will not include a resource that is not to be modified in this plan.
 
 Duration:
 - **Cumulative duration**: Cumulative duration of modifications. This is the sum of the duration of all modifications in the logs. Because Terraform modifies resources in parallel, this will typically be more than the actual wall time.
-- **Longest apply time**: Lngest time it took to modify a single resource. The next metric shows which resource that was.
-- **Longest apply resource**: the name of the resource that took the longest to modify.
+- **Longest apply time**: Longest time it took to modify a single resource. The next metric shows which resource that was.
+- **Longest apply resource**: The name of the resource that took the most time to modify.
+
+Operations:
+- **Resources marked for operation \<OPERATION\>**: The amount of resources marked for a certain operation. An Operation can be any of: Create, Destroy, Modify, Replace, None. Resources that are consistent with the state, will be marked for operation None. 
 
 Resource status:
-- **No. resources in state \<STATE\>**: This statistic shows per state how many resources are in that state after the modifications.
+- **Resources in state \<STATE\>**: This statistic shows per state how many resources are in that state after the modifications. In general, resources can be in three states after a Terraform run: Created, NotCreated or Failed. 
+
+Desired state:
+- **Resources in desired state**: The amount of resources whose `final_state` is equal to their `desired_state`. In a fully applied configuration, this number should be 100%. 
+- **Resources not in desired state**: Resources whose desired state was not achieved after this run. This can be due to failed creation, failed deletion or because "upstream" resources were not able to get to their desired state.
 
 Modules:
 - **Number of top-level modules**: Number of modules called in the root module.
