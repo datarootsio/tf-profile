@@ -12,6 +12,12 @@ Main features:
 
 ## Installation
 
+### Brew install
+```bash
+brew tap datarootsio/tf-profile 
+brew install tf-profile
+```
+
 ### Binary download
 
 - Head over to the releases page ([https://github.com/QuintenBruynseraede/tf-profile/releases](https://github.com/QuintenBruynseraede/tf-profile/releases)) 
