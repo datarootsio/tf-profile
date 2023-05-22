@@ -177,4 +177,4 @@ _Disclaimer:_ Terraform's logs do not contain any absolute timestamps. We can on
   - [ ] Add `no-agg` option to disable aggregation of for_each and count
   - [ ] Add `max_depth` option to aggregate deep submodules
   - [ ] Find a way to rename the columns in `tf-profile table` without breaking `--sort`
-  - [ ] Add go report card: [https://goreportcard.com/report/github.com/QuintenBruynseraede/tf-profile](https://goreportcard.com/report/github.com/QuintenBruynseraede/tf-profile)
+  - [x] Add go report card: [https://goreportcard.com/report/github.com/QuintenBruynseraede/tf-profile](https://goreportcard.com/report/github.com/QuintenBruynseraede/tf-profile)
