@@ -18,9 +18,9 @@ func TestParseSortSpec(t *testing.T) {
 
 	p2 := parseSortSpec("a=asc,b=desc,c=asc")
 	expected := []sortSpecItem{
-		sortSpecItem{"a", "asc"},
-		sortSpecItem{"b", "desc"},
-		sortSpecItem{"c", "asc"},
+		{"a", "asc"},
+		{"b", "desc"},
+		{"c", "asc"},
 	}
 	assert.Equalf(t, p2, expected, "Expected %v after parsing, got %v\n", p2, expected)
 }

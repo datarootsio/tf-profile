@@ -55,9 +55,9 @@ func TestCanAgg(t *testing.T) {
 func TestNoAgg(t *testing.T) {
 	In := ParsedLog{
 		Resources: map[string]ResourceMetric{
-			"resource1": ResourceMetric{},
-			"resource2": ResourceMetric{},
-			"resource3": ResourceMetric{},
+			"resource1": {},
+			"resource2": {},
+			"resource3": {},
 		},
 	}
 	Result, err := Aggregate(In)
