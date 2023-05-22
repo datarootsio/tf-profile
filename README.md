@@ -12,6 +12,17 @@ Main features:
 
 ## Installation
 
+### Brew install
+```bash
+❱ brew tap datarootsio/tf-profile 
+❱ brew install tf-profile
+❱ tf-profile --help
+tf-profile is a CLI tool to profile Terraform runs
+
+Usage:
+  tf-profile [command]
+```
+
 ### Binary download
 
 - Head over to the releases page ([https://github.com/QuintenBruynseraede/tf-profile/releases](https://github.com/QuintenBruynseraede/tf-profile/releases)) 
