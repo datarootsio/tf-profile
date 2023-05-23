@@ -9,6 +9,8 @@ jobs:
     strategy:
       matrix:
         os: [linux, darwin, windows]
+        goarch: [amd64, arm64]
+        
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -21,9 +23,9 @@ jobs:
       - name: Build Go binaries
         run: |
           if [ ${{ matrix.os }} == "windows" ]; then
-            CGO_ENABLED=0 GOOS=${{ matrix.os }} go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o tf-profile.exe .
+            CGO_ENABLED=0 GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o tf-profile.exe .
           else
-            CGO_ENABLED=0 GOOS=${{ matrix.os }} go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o tf-profile .
+            CGO_ENABLED=0 GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -a -tags netgo -ldflags '-w -extldflags "-static"' -o tf-profile .
           fi
 
       - name: Extract release version from branch name
@@ -33,7 +35,7 @@ jobs:
       - name: Create artifact
         uses: actions/upload-artifact@v2
         with:
-          name: tf-profile-v${{ steps.release_version.outputs.version }}-${{ matrix.os }}
+          name: tf-profile-v${{ steps.release_version.outputs.version }}-${{ matrix.os }}-${{ matrix.arch }}
           path: |
             ./tf-profile
             ./tf-profile.exe
