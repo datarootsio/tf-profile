@@ -14,7 +14,7 @@ func Aggregate(log ParsedLog) (ParsedLog, error) {
 
 	// Collect all resource names in slice and sort
 	ResourceNames := []string{}
-	for k, _ := range log.Resources {
+	for k := range log.Resources {
 		ResourceNames = append(ResourceNames, k)
 	}
 	sort.Strings(ResourceNames)
