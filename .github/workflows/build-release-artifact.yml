@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         os: [linux, darwin, windows]
-        goarch: [amd64, arm64]
+        arch: [amd64, arm64]
         
     steps:
       - name: Checkout code
