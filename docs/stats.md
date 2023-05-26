@@ -5,7 +5,8 @@
 **Description:** reads a Terraform log file and print high-level information about the run.
 
 **Options:**
-- -t, --tee: print logs while parsing them. Shorthand for `terraform apply | tee >(tf-profile stats)`
+- -t, --tee: print logs while parsing them. Shorthand for `terraform apply | tee >(tf-profile stats)`. Default: false
+- -a, --aggregate: enable or disable aggregation of resources created by the same `for_each` or `count` expression. Default: true
 
 **Arguments:**
 
