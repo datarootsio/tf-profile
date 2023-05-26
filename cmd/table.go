@@ -27,6 +27,7 @@ func init() {
 		-1,
 		"Max recursive module depth before aggregating.",
 	)
+	tableCmd.Flags().BoolVar(&aggregate, "aggregate", true, "Agregate count[] and for_each[]")
 	tableCmd.Flags().Bool("tee", false, "Print logs while parsing")
 }
 
@@ -37,6 +38,6 @@ var tableCmd = &cobra.Command{
 	Long: `The 'table' command is used to do in-depth profiling on a resource level.
 	It will parse a log, extract metrics about all resources and show tabular output.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return table.Table(args, max_depth, tee, sort)
+		return table.Table(args, max_depth, tee, sort, aggregate)
 	},
 }

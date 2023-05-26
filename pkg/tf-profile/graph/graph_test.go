@@ -20,14 +20,14 @@ func TestFailureParse(t *testing.T) {
 	// Sanity check: all *.log files must be graph-able
 	for _, File := range Files {
 		if strings.Contains(File.Name(), ".log") {
-			err := Graph([]string{"../../../test/" + File.Name()}, 1000, 600, "tf-profile-graph.png")
+			err := Graph([]string{"../../../test/" + File.Name()}, 1000, 600, "tf-profile-graph.png", true)
 			assert.Nil(t, err)
 		}
 	}
 
-	err = Graph([]string{"../../../test/does-not-exist"}, 1000, 600, "tf-profile-graph.png")
+	err = Graph([]string{"../../../test/does-not-exist"}, 1000, 600, "tf-profile-graph.png", true)
 	assert.NotNil(t, err)
-	err = Graph([]string{"../../../test/failures.log"}, -1, -1, "tf-profile-graph.png")
+	err = Graph([]string{"../../../test/failures.log"}, -1, -1, "tf-profile-graph.png", true)
 	assert.NotNil(t, err)
 }
 

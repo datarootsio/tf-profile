@@ -17,6 +17,7 @@ func init() {
 	rootCmd.AddCommand(graphCmd)
 	graphCmd.Flags().IntSliceVarP(&Size, "size", "s", []int{1000, 600}, "Width and height of generated image")
 	graphCmd.Flags().StringVarP(&OutFile, "out", "o", "tf-profile-graph.png", "Output file used by gnuplot")
+	graphCmd.Flags().BoolVar(&aggregate, "aggregate", true, "Agregate count[] and for_each[]")
 }
 
 var graphCmd = &cobra.Command{
@@ -27,6 +28,6 @@ var graphCmd = &cobra.Command{
 		if len(Size) != 2 || Size[0] < 0 || Size[1] < 0 {
 			return fmt.Errorf("Expected two positive integers for --size flag, got %v", Size)
 		}
-		return graph.Graph(args, Size[0], Size[1], OutFile)
+		return graph.Graph(args, Size[0], Size[1], OutFile, aggregate)
 	},
 }

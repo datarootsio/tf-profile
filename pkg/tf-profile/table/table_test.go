@@ -7,11 +7,11 @@ import (
 )
 
 func TestBasicRun(t *testing.T) {
-	err := Table([]string{}, 1, true, "tot_time=asc")
+	err := Table([]string{}, 1, true, "tot_time=asc", true)
 	assert.Nil(t, err)
 }
 
 func TestFileDoesntExist(t *testing.T) {
-	err := Table([]string{"does-not-exist"}, 1, true, "tot_time=asc")
+	err := Table([]string{"does-not-exist"}, 1, true, "tot_time=asc", true)
 	assert.NotNil(t, err)
 }

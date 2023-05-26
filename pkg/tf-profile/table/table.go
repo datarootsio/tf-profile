@@ -16,7 +16,7 @@ import (
 )
 
 // Execute the `tf-profile table` command
-func Table(args []string, max_depth int, tee bool, sort string) error {
+func Table(args []string, max_depth int, tee bool, sort string, aggregate bool) error {
 	var file *bufio.Scanner
 	var err error
 
@@ -35,9 +35,11 @@ func Table(args []string, max_depth int, tee bool, sort string) error {
 		return err
 	}
 
-	tflog, err = Aggregate(tflog)
-	if err != nil {
-		return err
+	if aggregate {
+		tflog, err = Aggregate(tflog)
+		if err != nil {
+			return err
+		}
 	}
 
 	err = PrintTable(tflog, sort)
