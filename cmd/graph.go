@@ -17,7 +17,7 @@ func init() {
 	rootCmd.AddCommand(graphCmd)
 	graphCmd.Flags().IntSliceVarP(&Size, "size", "s", []int{1000, 600}, "Width and height of generated image")
 	graphCmd.Flags().StringVarP(&OutFile, "out", "o", "tf-profile-graph.png", "Output file used by gnuplot")
-	graphCmd.Flags().BoolVar(&aggregate, "aggregate", true, "Agregate count[] and for_each[]")
+	graphCmd.Flags().BoolVarP(&aggregate, "aggregate", "a", true, "Agregate count[] and for_each[]")
 }
 
 var graphCmd = &cobra.Command{

@@ -13,7 +13,7 @@ var (
 func init() {
 	rootCmd.AddCommand(statsCmd)
 	statsCmd.Flags().BoolP("tee", "t", false, "Print logs while parsing")
-	statsCmd.Flags().BoolVar(&aggregate, "aggregate", true, "Agregate count[] and for_each[]")
+	statsCmd.Flags().BoolVarP(&aggregate, "aggregate", "a", true, "Agregate count[] and for_each[]")
 }
 
 var statsCmd = &cobra.Command{

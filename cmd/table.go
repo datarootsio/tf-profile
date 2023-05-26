@@ -27,7 +27,7 @@ func init() {
 		-1,
 		"Max recursive module depth before aggregating.",
 	)
-	tableCmd.Flags().BoolVar(&aggregate, "aggregate", true, "Agregate count[] and for_each[]")
+	tableCmd.Flags().BoolVarP(&aggregate, "aggregate", "a", true, "Agregate count[] and for_each[]")
 	tableCmd.Flags().Bool("tee", false, "Print logs while parsing")
 }
 
