@@ -1,5 +1,5 @@
 # tf-profile
-![Coverage](https://img.shields.io/badge/Coverage-89.9%25-brightgreen)
+![Coverage](https://img.shields.io/badge/Coverage-90.0%25-brightgreen)
 
 [![Go Linting, Verification, and Testing](https://github.com/QuintenBruynseraede/tf-profile/actions/workflows/go-fmt-vet-tests.yml/badge.svg?branch=main)](https://github.com/QuintenBruynseraede/tf-profile/actions/workflows/go-fmt-vet-tests.yml) [![Go Report Card](https://goreportcard.com/badge/github.com/QuintenBruynseraede/tf-profile)](https://goreportcard.com/report/github.com/QuintenBruynseraede/tf-profile) [![Go Reference](https://pkg.go.dev/badge/github.com/QuintenBruynseraede/tf-profile.svg)](https://pkg.go.dev/github.com/QuintenBruynseraede/tf-profile)
 
