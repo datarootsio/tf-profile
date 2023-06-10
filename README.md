@@ -11,6 +11,8 @@ Main features:
 - Can generate global stats, resource-level stats or visualizations
 - Provides many levels of granularity and aggregation and customizable outputs
 
+Featured on: [awesome-go](https://github.com/avelino/awesome-go) | [awesome-terraform](https://github.com/shuaibiyy/awesome-terraform)
+
 ## Installation
 
 ### Brew install
