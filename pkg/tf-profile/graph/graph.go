@@ -16,7 +16,7 @@ import (
 	. "github.com/QuintenBruynseraede/tf-profile/pkg/tf-profile/readers"
 )
 
-func Graph(args []string, w int, h int, OutFile string) error {
+func Graph(args []string, w int, h int, OutFile string, aggregate bool) error {
 	var file *bufio.Scanner
 	var err error
 
@@ -32,9 +32,12 @@ func Graph(args []string, w int, h int, OutFile string) error {
 	if err != nil {
 		return err
 	}
-	tflog, err = Aggregate(tflog)
-	if err != nil {
-		return err
+
+	if aggregate {
+		tflog, err = Aggregate(tflog)
+		if err != nil {
+			return err
+		}
 	}
 
 	cleanFailedResources(tflog)

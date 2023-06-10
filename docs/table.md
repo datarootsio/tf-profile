@@ -5,9 +5,11 @@
 **Description:** reads a Terraform log file and print high-level information about the run.
 
 **Options:**
-- -t, --tee: print logs while parsing them. Shorthand for `terraform apply | tee >(tf-profile stats)`
+- -t, --tee: print logs while parsing them. Shorthand for `terraform apply | tee >(tf-profile stats)`. Default: false
 - -d, --max_depth: aggregate resources nested deeper than `-d` levels into a resource that represents the module at depth `-d`. **Not implented yet**
 - -s, --sort: comma-separated key-value pairs that instruct how to sort the output table. Valid values follow the format `column1:(asc|desc),column2:(asc|desc):...`. By default, `tot_time=desc,resource=asc` is used: sort first by descending modification time, second by resource name in alphabetical order.
+- -a, --aggregate: enable or disable aggregation of resources created by the same `for_each` or `count` expression. Default: true
+
 
 **Arguments:**
 
@@ -30,7 +32,7 @@ aws_ssm_parameter.p2  1  0s        /               /             Created        
 
 The column names are lowercase and separated by underscores to allow for easy referencing in the `--sort` option. The meaning of each column is:
 
-- **resource**: Name of the resource. In case a resource is created by a `for_each` or `count` statement, resources are aggregated and individual resource identifiers are replaced by an asterisk (*).  
+- **resource**: Name of the resource. In case a resource is created by a `for_each` or `count` statement, resources are aggregated and individual resource identifiers are replaced by an asterisk (*). See the also `aggregate` option. 
 - **n**: Number of resources represented by this resource name. For regular resources, this will be 1. For resourced created with `for_each` or `count`, this number represents the number of resources created in that loop.
 - **tot_time**: Total cumulative time of all resources identified by this resource name. This is typically higher than the actual wall time, as Terraform can modify multiple resources at the same time.
 - **modify_started**: order in which resource modification _started_. This means that Terraform started by modifying the resource with `modify_started = 0`. It does not guarantee the changes to this resource finished first as well (see `modify_ended`). Resources that were already consistent with the desired state do not have this property.

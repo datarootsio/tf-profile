@@ -19,7 +19,7 @@ type Stat struct {
 	value string
 }
 
-func Stats(args []string, tee bool) error {
+func Stats(args []string, tee bool, aggregate bool) error {
 	var file *bufio.Scanner
 	var err error
 
@@ -38,9 +38,11 @@ func Stats(args []string, tee bool) error {
 		return err
 	}
 
-	tflog, err = Aggregate(tflog)
-	if err != nil {
-		return err
+	if aggregate {
+		tflog, err = Aggregate(tflog)
+		if err != nil {
+			return err
+		}
 	}
 
 	err = PrintStats(tflog)
