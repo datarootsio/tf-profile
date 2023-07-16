@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"log"
-	"regexp"
 	"strconv"
 	"strings"
 
@@ -42,14 +41,10 @@ var ApplyParsers = []parseFunction{
 // Possible optimization here: since Terraform has distinct refresh,
 // plan, apply phases we could skip parse functions of previous phases.
 func Parse(file *bufio.Scanner, tee bool) (ParsedLog, error) {
-	// regex to detect ANSI terminal formatting directives (https://stackoverflow.com/a/14693789)
-	re := regexp.MustCompile(`(?:\x1B[@-_]|[\x80-\x9F])[0-?]*[ -/]*[@-~]`)
-
 	tflog := ParsedLog{Resources: map[string]ResourceMetric{}}
 
 	for file.Scan() {
-		line := file.Text()
-		line = re.ReplaceAllString(line, "")
+		line := RemoveTerminalFormatting(file.Text())
 
 		if tee {
 			fmt.Println(line)
