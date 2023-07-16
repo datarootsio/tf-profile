@@ -79,14 +79,14 @@ Usage:
 ❱ terraform apply -auto-approve > log.txt && tf-profile table log.txt
 ```
 
-Three major commands are supported:
-- [🔗](#anchor_stats) `tf-profile stats`: provide general statistics about a Terraform run
-- [🔗](#anchor_table) `tf-profile table`: provide detailed, resource-level statistics about a Terraform run
-- [🔗](#anchor_graph) `tf-profile graph`: generate a visual overview of a Terraform run.
+Four major commands are supported:
+- [🔗](#tf-profile-stats) `tf-profile stats`: provide general statistics about a Terraform run
+- [🔗](#tf-profile-table) `tf-profile table`: provide detailed, resource-level statistics about a Terraform run
+- [🔗](#tf-profile-filter) `tf-profile filter`: filter logs to include only certain resources
+- [🔗](#tf-profile-graph) `tf-profile graph`: generate a visual overview of a Terraform run.
 
 
 ## `tf-profile stats`
-<a name="anchor_stats"></a>
 
 `tf-profile stats` is the most basic command. Given a Terraform log, it will only provide high-level statistics.
 
@@ -125,7 +125,7 @@ Size of largest leaf module                 40
 For more information, refer to the [reference](./docs/stats.md) for the `stats` command.
 
 ## `tf-profile table`
-<a name="anchor_table"></a>
+
 `tf-profile table` will parse a log and provide per-resource metrics.
 
 ```bash
@@ -143,9 +143,33 @@ aws_ssm_parameter.p2  1  0s        /               /             Created        
 
 For a full description of the options, see the [reference](./docs/table.md) page.
 
+## `tf-profile filter`
+`tf-profile filter` filters logs to include only certain resources. Wildcards are supported to filter on multiple resources.
+
+```sh
+❱ tf-profile filter "module.*.null_resource.*" log.txt
+
+  # module.mod1.null_resource.foo will be created
+  + resource "null_resource" "foo" {
+    ...
+    }
+
+  # module.mod2.null_resource.bar will be created
+  + resource "null_resource" "bar" {
+    ...
+    }
+
+module.mod1.null_resource.foo: Creating...
+module.mod2.null_resource.bar: Creating...
+module.mod1.null_resource.foo: Creation complete after 1s [id=foo]
+module.mod2.null_resource.bar: Creation complete after 1s [id=bar]
+```
+
+For a full description of the options, see the [reference](./docs/filter.md) page.
+
+
 
 ## `tf-profile graph`
-<a name="anchor_graph"></a>
 
 `tf-profile graph` is used to visualize your terraform logs. It generates a [Gantt](https://en.wikipedia.org/wiki/Gantt_chart)-like chart that shows in which order resources were created. `tf-profile` does not actually create the final image, but generates a script file that [Gnuplot](https://en.wikipedia.org/wiki/Gnuplot) understands. 
 
@@ -173,7 +197,7 @@ _Disclaimer:_ Terraform's logs do not contain any absolute timestamps. We can on
   - [x] Detect failed resources (see [#13](https://github.com/datarootsio/tf-profile/pull/13))
   - [x] Use plan and refresh phase to discover more resources
 - [x] Implement a basic Gantt chart in `tf-profile graph` (see [#14](https://github.com/datarootsio/tf-profile/pull/14))
-- [ ] Implement a single-resource view in `tf-profile detail <resource>`
+- [x] Implement a single-resource view in `tf-profile filter <resource>`
   - This command should filter logs down to 1 single resource (i.e. refresh, plan, changes, and result)
 - [ ] Small improvements:
   - [x] Add `no-agg` option to disable aggregation of for_each and count (see [#28](https://github.com/datarootsio/tf-profile/pull/28))
