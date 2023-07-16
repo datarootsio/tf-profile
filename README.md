@@ -79,9 +79,10 @@ Usage:
 ❱ terraform apply -auto-approve > log.txt && tf-profile table log.txt
 ```
 
-Three major commands are supported:
+Four major commands are supported:
 - [🔗](#anchor_stats) `tf-profile stats`: provide general statistics about a Terraform run
 - [🔗](#anchor_table) `tf-profile table`: provide detailed, resource-level statistics about a Terraform run
+- [🔗](#anchor_filter) `tf-profile filter`: filter logs to include only certain resources
 - [🔗](#anchor_graph) `tf-profile graph`: generate a visual overview of a Terraform run.
 
 
@@ -142,6 +143,32 @@ aws_ssm_parameter.p2  1  0s        /               /             Created        
 ```
 
 For a full description of the options, see the [reference](./docs/table.md) page.
+
+## `tf-profile filter`
+<a name="anchor_filter"></a>
+`tf-profile table` filters logs to include only certain resources. Wilcards are supported to filter on multiple resources.
+
+```sh
+❱ tf-profile detail "module.*.null_resource.*" log.txt
+
+  # module.mod1.null_resource.foo will be created
+  + resource "null_resource" "foo" {
+    ...
+    }
+
+  # module.mod2.null_resource.bar will be created
+  + resource "null_resource" "bar" {
+    ...
+    }
+
+module.mod1.null_resource.foo: Creating...
+module.mod2.null_resource.bar: Creating...
+module.mod1.null_resource.foo: Creation complete after 1s [id=foo]
+module.mod2.null_resource.bar: Creation complete after 1s [id=bar]
+```
+
+For a full description of the options, see the [reference](./docs/filter.md) page.
+
 
 
 ## `tf-profile graph`
