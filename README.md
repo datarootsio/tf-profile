@@ -146,10 +146,10 @@ For a full description of the options, see the [reference](./docs/table.md) page
 
 ## `tf-profile filter`
 <a name="anchor_filter"></a>
-`tf-profile table` filters logs to include only certain resources. Wilcards are supported to filter on multiple resources.
+`tf-profile filter` filters logs to include only certain resources. Wilcards are supported to filter on multiple resources.
 
 ```sh
-❱ tf-profile detail "module.*.null_resource.*" log.txt
+❱ tf-profile filter "module.*.null_resource.*" log.txt
 
   # module.mod1.null_resource.foo will be created
   + resource "null_resource" "foo" {
@@ -200,7 +200,7 @@ _Disclaimer:_ Terraform's logs do not contain any absolute timestamps. We can on
   - [x] Detect failed resources (see [#13](https://github.com/datarootsio/tf-profile/pull/13))
   - [x] Use plan and refresh phase to discover more resources
 - [x] Implement a basic Gantt chart in `tf-profile graph` (see [#14](https://github.com/datarootsio/tf-profile/pull/14))
-- [ ] Implement a single-resource view in `tf-profile detail <resource>`
+- [x] Implement a single-resource view in `tf-profile filter <resource>`
   - This command should filter logs down to 1 single resource (i.e. refresh, plan, changes, and result)
 - [ ] Small improvements:
   - [x] Add `no-agg` option to disable aggregation of for_each and count (see [#28](https://github.com/datarootsio/tf-profile/pull/28))
