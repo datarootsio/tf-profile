@@ -80,14 +80,14 @@ Usage:
 ```
 
 Four major commands are supported:
-- [🔗](#anchor_stats) `tf-profile stats`: provide general statistics about a Terraform run
-- [🔗](#anchor_table) `tf-profile table`: provide detailed, resource-level statistics about a Terraform run
-- [🔗](#anchor_filter) `tf-profile filter`: filter logs to include only certain resources
-- [🔗](#anchor_graph) `tf-profile graph`: generate a visual overview of a Terraform run.
+- [🔗](#tf-profile-stats) `tf-profile stats`: provide general statistics about a Terraform run
+- [🔗](#tf-profile-table) `tf-profile table`: provide detailed, resource-level statistics about a Terraform run
+- [🔗](#tf-profile-filter) `tf-profile filter`: filter logs to include only certain resources
+- [🔗](#tf-profile-graph) `tf-profile graph`: generate a visual overview of a Terraform run.
 
 
 ## `tf-profile stats`
-<a name="anchor_stats"></a>
+<a name="tf-profile-stats"></a>
 
 `tf-profile stats` is the most basic command. Given a Terraform log, it will only provide high-level statistics.
 
@@ -126,7 +126,7 @@ Size of largest leaf module                 40
 For more information, refer to the [reference](./docs/stats.md) for the `stats` command.
 
 ## `tf-profile table`
-<a name="anchor_table"></a>
+<a name="tf-profile-table"></a>
 `tf-profile table` will parse a log and provide per-resource metrics.
 
 ```bash
@@ -145,7 +145,7 @@ aws_ssm_parameter.p2  1  0s        /               /             Created        
 For a full description of the options, see the [reference](./docs/table.md) page.
 
 ## `tf-profile filter`
-<a name="anchor_filter"></a>
+<a name="tf-profile-filter"></a>
 `tf-profile filter` filters logs to include only certain resources. Wilcards are supported to filter on multiple resources.
 
 ```sh
@@ -172,7 +172,7 @@ For a full description of the options, see the [reference](./docs/filter.md) pag
 
 
 ## `tf-profile graph`
-<a name="anchor_graph"></a>
+<a name="tf-profile-graph"></a>
 
 `tf-profile graph` is used to visualize your terraform logs. It generates a [Gantt](https://en.wikipedia.org/wiki/Gantt_chart)-like chart that shows in which order resources were created. `tf-profile` does not actually create the final image, but generates a script file that [Gnuplot](https://en.wikipedia.org/wiki/Gnuplot) understands. 
 
