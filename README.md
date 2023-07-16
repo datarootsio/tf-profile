@@ -144,7 +144,7 @@ aws_ssm_parameter.p2  1  0s        /               /             Created        
 For a full description of the options, see the [reference](./docs/table.md) page.
 
 ## `tf-profile filter`
-`tf-profile filter` filters logs to include only certain resources. Wilcards are supported to filter on multiple resources.
+`tf-profile filter` filters logs to include only certain resources. Wildcards are supported to filter on multiple resources.
 
 ```sh
 ❱ tf-profile filter "module.*.null_resource.*" log.txt

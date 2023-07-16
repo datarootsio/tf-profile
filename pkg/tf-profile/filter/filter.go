@@ -30,26 +30,25 @@ func Filter(args []string) error {
 	return nil
 }
 
-// Read a file one by one and return only lines that contain information
+// Read a file line by line and return only lines that contain information
 // regarding the resources we're filtering to. This includes: plan logs,
 // errors logs and (otherwise) any lines that match the resource regex.
 func FilterLogs(file *bufio.Scanner, regex string) []string {
 	output := []string{}
 
 	// If we're currently seeing plan logs, collect the lines into a
-	// buffer until detecting the end, then print all at once.
+	// buffer until detecting the end, then add all at once.
 	var CollectingPlan = false
 	var PlanBuffer = []string{}
 
 	// If we're seeing errors logs, collect lines into a buffer until
-	// the end of the message, then print all at once.
+	// the end of the message, then print add at once.
 	var CollectingError = false
 	var ErrorBuffer = []string{}
 
 	for file.Scan() {
 		line := RemoveTerminalFormatting(file.Text())
 
-		// PLANS
 		if CollectingPlan && isEndOfPlan(line) {
 			// End of plan, print the buffer and reset
 			PlanBuffer = append(PlanBuffer, line)
