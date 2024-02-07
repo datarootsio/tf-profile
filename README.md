@@ -190,17 +190,3 @@ _Disclaimer:_ Terraform's logs do not contain any absolute timestamps. We can on
 
 ![graph2.png](https://github.com/QuintenBruynseraede/tf-profile/blob/main/.github/graph2.png?raw=true)
 
-## Roadmap
-
-- [x] Release v0.0.1 as binary and as a Docker image
-- [x] Improve parser
-  - [x] Detect failed resources (see [#13](https://github.com/datarootsio/tf-profile/pull/13))
-  - [x] Use plan and refresh phase to discover more resources
-- [x] Implement a basic Gantt chart in `tf-profile graph` (see [#14](https://github.com/datarootsio/tf-profile/pull/14))
-- [x] Implement a single-resource view in `tf-profile filter <resource>`
-  - This command should filter logs down to 1 single resource (i.e. refresh, plan, changes, and result)
-- [ ] Small improvements:
-  - [x] Add `no-agg` option to disable aggregation of for_each and count (see [#28](https://github.com/datarootsio/tf-profile/pull/28))
-  - [ ] Add `max_depth` option to aggregate deep submodules
-  - [ ] Find a way to rename the columns in `tf-profile table` without breaking `--sort`
-  - [x] Add go report card: [https://goreportcard.com/report/github.com/QuintenBruynseraede/tf-profile](https://goreportcard.com/report/github.com/datarootsio/tf-profile)
