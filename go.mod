@@ -1,6 +1,6 @@
 module github.com/QuintenBruynseraede/tf-profile
 
-go 1.20
+go 1.23
 
 require (
 	github.com/fatih/color v1.17.0

@@ -57,7 +57,7 @@ Optionally, define an alias:
 
 ### Build from source
 
-This requires at least version 1.20 of the `go` cli.
+This requires at least version 1.23 of the `go` cli.
 
 ```bash
 ❱ git clone git@github.com:QuintenBruynseraede/tf-profile.git
