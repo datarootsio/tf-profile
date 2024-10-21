@@ -37,7 +37,7 @@ Usage:
 If you want to try `tf-profile` without installing anything, you can run it using Docker (or similar).
 
 ```bash
-❱ cat my_log_file.log | docker run -i qbruynseraede/tf-profile:0.2.0 stats
+❱ cat my_log_file.log | docker run -i qbruynseraede/tf-profile:0.5.0 stats
 
 Key                                Value                                     
 Number of resources created        1510                                      
@@ -51,7 +51,7 @@ Longest apply resource             time_sleep.foo[*]
 Optionally, define an alias:
 
 ```bash
-❱ alias tf-profile=docker run -i qbruynseraede/tf-profile:0.2.0
+❱ alias tf-profile=docker run -i qbruynseraede/tf-profile:0.5.0
 ❱ cat my_log_file.log | tf-profile
 ```
 
