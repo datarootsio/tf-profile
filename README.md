@@ -1,5 +1,5 @@
 # tf-profile
-![Coverage](https://img.shields.io/badge/Coverage-91.1%25-brightgreen)
+![Coverage](https://img.shields.io/badge/Coverage-86.2%25-brightgreen)
 
 [![Go Linting, Verification, and Testing](https://github.com/QuintenBruynseraede/tf-profile/actions/workflows/go-fmt-vet-tests.yml/badge.svg?branch=main)](https://github.com/QuintenBruynseraede/tf-profile/actions/workflows/go-fmt-vet-tests.yml) [![Go Report Card](https://goreportcard.com/badge/github.com/QuintenBruynseraede/tf-profile)](https://goreportcard.com/report/github.com/QuintenBruynseraede/tf-profile) [![Go Reference](https://pkg.go.dev/badge/github.com/QuintenBruynseraede/tf-profile.svg)](https://pkg.go.dev/github.com/QuintenBruynseraede/tf-profile)
 
@@ -57,7 +57,7 @@ Optionally, define an alias:
 
 ### Build from source
 
-This requires at least version 1.20 of the `go` cli.
+This requires at least version 1.23 of the `go` cli.
 
 ```bash
 ❱ git clone git@github.com:QuintenBruynseraede/tf-profile.git

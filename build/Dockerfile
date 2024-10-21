@@ -1,5 +1,5 @@
 # Build the application from source
-FROM golang:1.20 AS build
+FROM golang:1.23 AS build
 
 WORKDIR /app
 
