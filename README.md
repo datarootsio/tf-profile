@@ -13,6 +13,10 @@ Main features:
 
 Featured on: [awesome-go](https://github.com/avelino/awesome-go) | [awesome-terraform](https://github.com/shuaibiyy/awesome-terraform)
 
+> [!WARNING]
+> tf-profile is no longer being actively developed. I do not intend to add new features or support newer versions of Terraform.
+
+
 ## Installation
 
 ### Brew install
